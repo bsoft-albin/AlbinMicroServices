@@ -1,0 +1,6 @@
+@AlbinMicroService.Gateway_HostAddress = http://localhost:5093
+
+GET {{AlbinMicroService.Gateway_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
