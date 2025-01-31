@@ -11,15 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Contracts\" />
-    <Folder Include="Application\Impl\" />
-    <Folder Include="Domain\Contracts\" />
-    <Folder Include="Domain\Impl\" />
-    <Folder Include="Infrastructure\Contracts\" />
-    <Folder Include="Infrastructure\Impl\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\AlbinMicroService.Core\AlbinMicroService.Core.csproj" />
   </ItemGroup>
 
