@@ -1,7 +1,6 @@
 ﻿namespace AlbinMicroService.Core
 {
-    public class Class1
+    public class BaseApiResponseModel
     {
-
     }
 }
