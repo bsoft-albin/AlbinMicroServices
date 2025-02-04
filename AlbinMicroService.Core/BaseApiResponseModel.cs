@@ -32,4 +32,31 @@ namespace AlbinMicroService.Core
         /// </summary>
         public X Data { get; set; } = new X();
     }
+
+    /// <summary>
+    /// Standard Api error response wrapper to ensure consistent error response structure.
+    /// </summary>
+    /// <typeparam name="X">Type of the error data (optional).</typeparam>
+    public class ApiErrorResponse<X> where X : class, new()
+    {
+        /// <summary>
+        /// Gets or sets the HTTP status code of the error response.
+        /// </summary>
+        public short StatusCode { get; set; } = 500;
+
+        /// <summary>
+        /// Gets or sets the error message describing what went wrong.
+        /// </summary>
+        public string ErrorMessage { get; set; } = "An unexpected error occurred.";
+
+        /// <summary>
+        /// Gets or sets the error code (useful for client-side handling).
+        /// </summary>
+        public string ErrorCode { get; set; } = "UNKNOWN_ERROR";
+
+        /// <summary>
+        /// Gets or sets any additional error details.
+        /// </summary>
+        public X ErrorDetails { get; set; } = new X();
+    }
 }

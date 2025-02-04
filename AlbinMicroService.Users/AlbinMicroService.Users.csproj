@@ -14,4 +14,9 @@
     <ProjectReference Include="..\AlbinMicroService.Core\AlbinMicroService.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Domain\DTOs\" />
+    <Folder Include="Domain\Entities\" />
+  </ItemGroup>
+
 </Project>
