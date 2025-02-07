@@ -11,7 +11,7 @@ namespace AlbinMicroService.Core.Controller
         {
             { 501, "Record Already Exists" },
             { 502, "Can't delete" },
-            { 503, "Record Reffered" },
+            { 503, "Record Referred" },
             { 422, "UnProcessable Entity" },
             { 204, "Entity Not Found" }
         };
