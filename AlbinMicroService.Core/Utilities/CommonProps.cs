@@ -1,4 +1,6 @@
-﻿namespace AlbinMicroService.Core.Utilities
+﻿using System.Text.Json.Serialization;
+
+namespace AlbinMicroService.Core.Utilities
 {
 
     public static class StaticProps

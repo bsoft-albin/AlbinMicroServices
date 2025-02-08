@@ -32,36 +32,58 @@ namespace AlbinMicroService.Core
     /// Standard Api response wrapper to ensure consistent Api response structure.
     /// </summary>
     /// <typeparam name="X">Type of the response data.</typeparam>
-    public class ApiResponse<X> where X : ApiBaseResponse, new()
+    /// <typeparam name="Y">Type of the meta data.</typeparam>
+    public class ApiResponse<X, Y> : ApiBaseResponse where X : new() where Y : new()
     {
         /// <summary>
         /// Gets or sets the metadata.
         /// </summary>
-        public ResponseSummary MetaData { get; set; } = new();
+        public Y MetaData { get; set; } = new();
         /// <summary>
         /// Gets or sets the response data.
         /// </summary>
-        public X Data { get; set; } = new X();
+        public X Data { get; set; } = new();
     }
 
+    /// <summary>
+    /// A Generic Class for Api Response Summary.
+    /// </summary>
     public class ResponseSummary
     {
+        /// <summary>
+        /// Gets or sets the number of data records returned in the response.
+        /// </summary>
         public int DataCount { get; set; }
+        /// <summary>
+        /// Gets or sets the number of properties in the response object.
+        /// </summary>
         public short PropsCount { get; set; }
     }
 
-    public class PaginatedResponse
+    /// <summary>
+    /// A Generic Class for Paginated Api Response Summary.
+    /// </summary>
+    public class PaginatedResponseSummary
     {
-        public int TotalRecords { get; set; } // Total available records (optional, for paginated responses)
-        public int PageSize { get; set; } // Number of records per page (optional, for paginated responses)
-        public int CurrentPage { get; set; } // Current page number (optional, for paginated responses)
+        /// <summary>
+        /// Gets or sets the total number of available records.
+        /// </summary>
+        public int TotalRecords { get; set; }
+        /// <summary>
+        /// Gets or sets the number of records per page.
+        /// </summary>
+        public int PageSize { get; set; }
+        /// <summary>
+        /// Gets or sets the current page number.
+        /// </summary>
+        public int CurrentPage { get; set; }
     }
 
     /// <summary>
     /// Standard Api error response wrapper to ensure consistent error response structure.
     /// </summary>
     /// <typeparam name="X">Type of the error data (optional).</typeparam>
-    public class ApiErrorResponse<X> where X : class, new()
+    public class ApiErrorResponse<X> where X : new()
     {
         /// <summary>
         /// Gets or sets the HTTP status code of the error response.
@@ -81,6 +103,6 @@ namespace AlbinMicroService.Core
         /// <summary>
         /// Gets or sets any additional error details.
         /// </summary>
-        public X ErrorDetails { get; set; } = new X();
+        public X ErrorDetails { get; set; } = new();
     }
 }
