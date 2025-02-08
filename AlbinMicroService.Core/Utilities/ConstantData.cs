@@ -1,30 +1,164 @@
 ﻿namespace AlbinMicroService.Core.Utilities
 {
-    public abstract class ConstantData
+
+    public abstract class Templates
     {
-        public abstract class Templates
-        {
-            public const string API_BASE_TEMPLATE = "api/[controller]/[action]";
-            public const string API_TEMPLATE = "api/[controller]/[action]";
-            public const string API_VERSION_TEMPLATE = "api/v{version:apiVersion}/[controller]/[action]";
-        }
-        public abstract class ApiVersions
-        {
-            public const string DEFAULT = "1.0";
-            public const string LongTermVersion = "2.0";
-            public const string Latest = "3.0";
-        }
+        public const string API_BASE_TEMPLATE = "api/[controller]/[action]";
+        public const string API_TEMPLATE = "api/[controller]/[action]";
+        public const string API_VERSION_TEMPLATE = "api/v{version:apiVersion}/[controller]/[action]";
+    }
+    public abstract class ApiVersions
+    {
+        public const string DEFAULT = "1.0";
+        public const string LTS = "2.0";
+        public const string LATEST = "3.0";
+    }
 
-        public abstract class ActionNames
+    public abstract class ActionNames
+    {
+        public abstract class Greetings
         {
-            public abstract class Greetings
-            {
-                public const string SayHello = "SayHelloAsync";
-                public const string GetReligions = "GetReligionsAsync";
-            }
-
+            public const string SayHello = "SayHelloAsync";
         }
-
 
     }
+
+    public abstract class HttpStatusCodes
+    {
+        public const short Status100Continue = 100;
+        public const short Status101SwitchingProtocols = 101;
+        public const short Status102Processing = 102;
+        public const short Status200OK = 200;
+        public const short Status201Created = 201;
+        public const short Status202Accepted = 202;
+        public const short Status203NonAuthoritative = 203;
+        public const short Status204NoContent = 204;
+        public const short Status205ResetContent = 205;
+        public const short Status206PartialContent = 206;
+        public const short Status207MultiStatus = 207;
+        public const short Status208AlreadyReported = 208;
+        public const short Status226IMUsed = 226;
+        public const short Status300MultipleChoices = 300;
+        public const short Status301MovedPermanently = 301;
+        public const short Status302Found = 302;
+        public const short Status303SeeOther = 303;
+        public const short Status304NotModified = 304;
+        public const short Status305UseProxy = 305;
+        public const short Status306SwitchProxy = 306;
+        public const short Status307TemporaryRedirect = 307;
+        public const short Status308PermanentRedirect = 308;
+        public const short Status400BadRequest = 400;
+        public const short Status401Unauthorized = 401;
+        public const short Status402PaymentRequired = 402;
+        public const short Status403Forbidden = 403;
+        public const short Status404NotFound = 404;
+        public const short Status405MethodNotAllowed = 405;
+        public const short Status406NotAcceptable = 406;
+        public const short Status407ProxyAuthenticationRequired = 407;
+        public const short Status408RequestTimeout = 408;
+        public const short Status409Conflict = 409;
+        public const short Status410Gone = 410;
+        public const short Status411LengthRequired = 411;
+        public const short Status412PreconditionFailed = 412;
+        public const short Status413RequestEntityTooLarge = 413;
+        public const short Status413PayloadTooLarge = 413;
+        public const short Status414RequestUriTooLong = 414;
+        public const short Status414UriTooLong = 414;
+        public const short Status415UnsupportedMediaType = 415;
+        public const short Status416RequestedRangeNotSatisfiable = 416;
+        public const short Status416RangeNotSatisfiable = 416;
+        public const short Status417ExpectationFailed = 417;
+        public const short Status418ImATeapot = 418;
+        public const short Status419AuthenticationTimeout = 419;
+        public const short Status421MisdirectedRequest = 421;
+        public const short Status422UnProcessableEntity = 422;
+        public const short Status423Locked = 423;
+        public const short Status424FailedDependency = 424;
+        public const short Status426UpgradeRequired = 426;
+        public const short Status428PreconditionRequired = 428;
+        public const short Status429TooManyRequests = 429;
+        public const short Status431RequestHeaderFieldsTooLarge = 431;
+        public const short Status451UnavailableForLegalReasons = 451;
+        public const short Status500InternalServerError = 500;
+        public const short Status501NotImplemented = 501;
+        public const short Status502BadGateway = 502;
+        public const short Status503ServiceUnavailable = 503;
+        public const short Status504GatewayTimeout = 504;
+        public const short Status505HttpVersionNotSupported = 505;
+        public const short Status506VariantAlsoNegotiates = 506;
+        public const short Status507InsufficientStorage = 507;
+        public const short Status508LoopDetected = 508;
+        public const short Status510NotExtended = 510;
+        public const short Status511NetworkAuthenticationRequired = 511;
+    }
+
+    public abstract class HttpStatusMessages
+    {
+        public const string Status100Continue = "Continue";
+        public const string Status101SwitchingProtocols = "Switching Protocols";
+        public const string Status102Processing = "Processing";
+        public const string Status200OK = "OK";
+        public const string Status201Created = "Created";
+        public const string Status202Accepted = "Accepted";
+        public const string Status203NonAuthoritative = "Non-Authoritative Information";
+        public const string Status204NoContent = "No Content";
+        public const string Status205ResetContent = "Reset Content";
+        public const string Status206PartialContent = "Partial Content";
+        public const string Status207MultiStatus = "Multi-Status";
+        public const string Status208AlreadyReported = "Already Reported";
+        public const string Status226IMUsed = "IM Used";
+        public const string Status300MultipleChoices = "Multiple Choices";
+        public const string Status301MovedPermanently = "Moved Permanently";
+        public const string Status302Found = "Found";
+        public const string Status303SeeOther = "See Other";
+        public const string Status304NotModified = "Not Modified";
+        public const string Status305UseProxy = "Use Proxy";
+        public const string Status306SwitchProxy = "Switch Proxy";
+        public const string Status307TemporaryRedirect = "Temporary Redirect";
+        public const string Status308PermanentRedirect = "Permanent Redirect";
+        public const string Status400BadRequest = "Bad Request";
+        public const string Status401Unauthorized = "Unauthorized";
+        public const string Status402PaymentRequired = "Payment Required";
+        public const string Status403Forbidden = "Forbidden";
+        public const string Status404NotFound = "Not Found";
+        public const string Status405MethodNotAllowed = "Method Not Allowed";
+        public const string Status406NotAcceptable = "Not Acceptable";
+        public const string Status407ProxyAuthenticationRequired = "Proxy Authentication Required";
+        public const string Status408RequestTimeout = "Request Timeout";
+        public const string Status409Conflict = "Conflict";
+        public const string Status410Gone = "Gone";
+        public const string Status411LengthRequired = "Length Required";
+        public const string Status412PreconditionFailed = "Precondition Failed";
+        public const string Status413RequestEntityTooLarge = "Request Entity Too Large";
+        public const string Status413PayloadTooLarge = "Payload Too Large";
+        public const string Status414RequestUriTooLong = "Request-URI Too Long";
+        public const string Status414UriTooLong = "URI Too Long";
+        public const string Status415UnsupportedMediaType = "Unsupported Media Type";
+        public const string Status416RequestedRangeNotSatisfiable = "Requested Range Not Satisfiable";
+        public const string Status416RangeNotSatisfiable = "Range Not Satisfiable";
+        public const string Status417ExpectationFailed = "Expectation Failed";
+        public const string Status418ImATeapot = "I'm a teapot";
+        public const string Status419AuthenticationTimeout = "Authentication Timeout";
+        public const string Status421MisdirectedRequest = "Misdirected Request";
+        public const string Status422UnProcessableEntity = "UnProcessable Entity";
+        public const string Status423Locked = "Locked";
+        public const string Status424FailedDependency = "Failed Dependency";
+        public const string Status426UpgradeRequired = "Upgrade Required";
+        public const string Status428PreconditionRequired = "Precondition Required";
+        public const string Status429TooManyRequests = "Too Many Requests";
+        public const string Status431RequestHeaderFieldsTooLarge = "Request Header Fields Too Large";
+        public const string Status451UnavailableForLegalReasons = "Unavailable For Legal Reasons";
+        public const string Status500InternalServerError = "Internal Server Error";
+        public const string Status501NotImplemented = "Not Implemented";
+        public const string Status502BadGateway = "Bad Gateway";
+        public const string Status503ServiceUnavailable = "Service Unavailable";
+        public const string Status504GatewayTimeout = "Gateway Timeout";
+        public const string Status505HttpVersionNotSupported = "HTTP Version Not Supported";
+        public const string Status506VariantAlsoNegotiates = "Variant Also Negotiates";
+        public const string Status507InsufficientStorage = "Insufficient Storage";
+        public const string Status508LoopDetected = "Loop Detected";
+        public const string Status510NotExtended = "Not Extended";
+        public const string Status511NetworkAuthenticationRequired = "Network Authentication Required";
+    }
+
 }

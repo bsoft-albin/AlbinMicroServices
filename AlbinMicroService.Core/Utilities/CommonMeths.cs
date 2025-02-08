@@ -1,6 +1,11 @@
 ﻿namespace AlbinMicroService.Core.Utilities
 {
-    public class CommonMeths
+    public static class StaticMeths
+    {
+
+    }
+    
+    public class DynamicMeths
     {
 
     }

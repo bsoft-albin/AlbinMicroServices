@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AlbinMicroService.Users.Controllers
 {
-    [Route(ConstantData.Templates.API_TEMPLATE)]
+    [Route(Templates.API_TEMPLATE)]
     [ApiController]
     public class UsersController : BaseController
     {
