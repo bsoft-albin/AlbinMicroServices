@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Domain\DTOs\" />
     <Folder Include="Domain\Entities\" />
   </ItemGroup>
 
