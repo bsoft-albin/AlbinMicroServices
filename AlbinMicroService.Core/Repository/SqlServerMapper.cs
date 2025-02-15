@@ -1,6 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using System.Data;
 using static Dapper.SqlMapper;
 
 namespace AlbinMicroService.Core.Repository
@@ -27,18 +26,11 @@ namespace AlbinMicroService.Core.Repository
         object ExecuteScalar(string script);
     }
 
-    public class SqlServerMapper(IConfiguration configuration) : ISqlServerMapper
+    public class SqlServerMapper(string connectionString) : ISqlServerMapper
     {
-        private readonly IConfiguration _configuration = configuration;
+        private readonly string _connectionString = connectionString;
 
-        public IDbConnection Connection
-        {
-            get
-            {
-                var sqlConnection = new SqlConnection(_configuration.GetConnectionString("ConnString"));
-                return sqlConnection;
-            }
-        }
+        public IDbConnection Connection => new SqlConnection(_connectionString);
 
         public async Task<T> QueryFirstOrDefaultAsync<T>(string sql, object? parameters = null, CommandType commandType = CommandType.Text)
         {

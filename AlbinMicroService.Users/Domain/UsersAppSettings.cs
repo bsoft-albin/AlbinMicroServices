@@ -28,7 +28,7 @@
     }
     public class ConnectionStringSettings
     {
-        public string ConnString { get; set; } = string.Empty;
+        public string SqlServer { get; set; } = string.Empty;
     }
 
     public class JwtSettings

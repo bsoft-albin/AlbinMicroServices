@@ -14,6 +14,17 @@
         public const string LATEST = "3.0";
     }
 
+    public abstract class DatabaseTypes
+    {
+        public const string SqlServer = nameof(SqlServer);
+        public const string MySql = nameof(MySql);
+        public const string Oracle = nameof(Oracle);
+        public const string PostgreSql = nameof(PostgreSql);
+        public const string MariaDb = nameof(MariaDb);
+        public const string MongoDb = nameof(MongoDb);
+        public const string Redis = nameof(Redis);
+    }
+
     public abstract class CommonActionNames
     {
         public abstract class Greetings

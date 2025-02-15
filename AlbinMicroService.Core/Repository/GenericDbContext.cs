@@ -1,8 +1,5 @@
 ﻿using Dapper;
 using Microsoft.EntityFrameworkCore;
-using System.Data;
-using System.Linq.Expressions;
-using System.Text;
 
 namespace AlbinMicroService.Core.Repository
 {
@@ -61,6 +58,7 @@ namespace AlbinMicroService.Core.Repository
 
         Task<IEnumerable<TDTO>> ExecuteQueryAsync<TDTO>(string sQuery, object parameters);
     }
+
     public class DBRepository<T> : IDBRepository<T> where T : class
     {
         private readonly DbContext _context;  // Use DbContext directly

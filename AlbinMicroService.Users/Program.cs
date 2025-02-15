@@ -3,13 +3,10 @@ using Microsoft.Extensions.Options;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// we are Using Chain of Responsibility Pattern
+builder.AddDefaultServices().AddDatabaseServices().AddCustomServices().AddUserServices();
 
-// Bind appsettings.json to the AppSettings class
+// Bind or Loading appsettings.json to the AppSettings class
 builder.Services.Configure<AppSettings>(builder.Configuration);
 
 WebApplication app = builder.Build();
