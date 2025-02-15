@@ -3,7 +3,7 @@
 
     public abstract class Templates
     {
-        public const string API_BASE_TEMPLATE = "api/[controller]/[action]";
+        public const string API_BASE_TEMPLATE = "api/[controller]";
         public const string API_TEMPLATE = "api/[controller]/[action]";
         public const string API_VERSION_TEMPLATE = "api/v{version:apiVersion}/[controller]/[action]";
     }
@@ -14,13 +14,24 @@
         public const string LATEST = "3.0";
     }
 
-    public abstract class ActionNames
+    public abstract class CommonActionNames
     {
         public abstract class Greetings
         {
             public const string SayHello = "SayHelloAsync";
         }
+    }
 
+    public static class CustomHttpStatusCodes
+    {
+        public const short ServerShutdown = 800;
+    }
+
+    public static class CustomHttpStatusMessages
+    {
+        public const string ServerShutdown = "Temporarily the Server Shutdown";
+        public const string UnXpectedError = "An unexpected error occurred";
+        public const string UnKnownError = "UNKNOWN_ERROR";
     }
 
     public abstract class HttpStatusCodes
