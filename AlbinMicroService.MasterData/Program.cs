@@ -1,5 +1,3 @@
-using AlbinMicroService.Core.Utilities;
-
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -14,7 +12,7 @@ WebApplication app = builder.Build();
 StaticMeths.SetGlobalWebAppMode(app.Environment.IsDevelopment(), app.Environment.IsStaging(), app.Environment.IsProduction());
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsStaging()) // only show Swagger in Development and Staging
 {
     app.UseSwagger();
     app.UseSwaggerUI();
