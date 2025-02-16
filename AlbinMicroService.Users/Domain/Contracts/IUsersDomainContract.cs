@@ -16,5 +16,13 @@ namespace AlbinMicroService.Users.Domain.Contracts
         /// <param name="userPassword"></param>
         /// <returns>The Hashed User Password as String.</returns>
         string HashUserPassword(string userPassword);
+        /// <summary>
+        /// Sends a welcome email to the user
+        /// </summary>
+        /// <param name="toEmail"></param>
+        /// <param name="receiverUsername"></param>
+        /// <returns>Whether email sended or not.</returns>
+        Task<bool> SendWelcomeEmailToUser(string toEmail, string receiverUsername);
+        Task<bool> VerifyUsernameAndEmailNotExists(string email, string username);
     }
 }

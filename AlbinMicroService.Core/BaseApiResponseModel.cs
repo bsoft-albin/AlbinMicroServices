@@ -82,23 +82,8 @@ namespace AlbinMicroService.Core
     /// Standard Api error response wrapper to ensure consistent error response structure.
     /// </summary>
     /// <typeparam name="X">Type of the error data (optional).</typeparam>
-    public class ApiErrorResponse<X> where X : new()
+    public class ApiErrorResponse<X> : ApiBaseResponse where X : new()
     {
-        /// <summary>
-        /// Gets or sets the HTTP status code of the error response.
-        /// </summary>
-        public short StatusCode { get; set; } = HttpStatusCodes.Status500InternalServerError;
-
-        /// <summary>
-        /// Gets or sets the error message describing what went wrong.
-        /// </summary>
-        public string ErrorMessage { get; set; } = CustomHttpStatusMessages.UnXpectedError;
-
-        /// <summary>
-        /// Gets or sets the error code (useful for client-side handling).
-        /// </summary>
-        public string ErrorCode { get; set; } = CustomHttpStatusMessages.UnKnownError;
-
         /// <summary>
         /// Gets or sets any additional error details.
         /// </summary>

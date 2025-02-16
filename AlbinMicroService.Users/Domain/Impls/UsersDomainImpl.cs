@@ -12,6 +12,24 @@ namespace AlbinMicroService.Users.Domain.Impls
             return _dynamicMeths.HashString(userPassword);
         }
 
+        public async Task<bool> SendWelcomeEmailToUser(string toEmail, string receiverUsername)
+        {
+            if (string.IsNullOrEmpty(toEmail) || string.IsNullOrEmpty(receiverUsername))
+            {
+                throw new ArgumentNullException("toEmail or receiverUsername cannot be null or empty.");
+            }
+
+            EmailTemplate emailTemplate = new(WebAppConfigs.Settings.Email.SmtpPort, WebAppConfigs.Settings.Email.SmtpServer, WebAppConfigs.Settings.Email.FromEmail, WebAppConfigs.Settings.Email.EmailPassword, toEmail);
+            emailTemplate.Title = "AlbinMicroServices Inc";
+            emailTemplate.Subject = "Welcome to AlbinMicroService";
+            emailTemplate.Username = receiverUsername;
+            emailTemplate.Body = $"<h1>Welcome {receiverUsername},</h1><p>Thank you for registering with us.</p>";
+
+            bool response = await _dynamicMeths.SendEmailAsync(emailTemplate);
+
+            return response;
+        }
+
         public ValidatorTemplate ValidateUserDto(UserDto userDto)
         {
             UserDtoValidator validator = new();
@@ -31,6 +49,11 @@ namespace AlbinMicroService.Users.Domain.Impls
             }
 
             return validatorTemplate;
+        }
+
+        public Task<bool> VerifyUsernameAndEmailNotExists(string email, string username)
+        {
+            throw new NotImplementedException();
         }
     }
 }

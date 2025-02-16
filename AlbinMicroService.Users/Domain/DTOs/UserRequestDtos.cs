@@ -8,6 +8,7 @@
         public required string Email { get; set; } // it enforces initialization at object creation
         public bool IsActive { get; set; }
         public bool IsVerified { get; set; }
+        public bool IsDeleted { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? DeletedAt { get; set; }

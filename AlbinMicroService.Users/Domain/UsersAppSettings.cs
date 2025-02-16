@@ -7,6 +7,7 @@
         public SwaggerSettings Swagger { get; set; } = new();
         public ConnectionStringSettings ConnectionStrings { get; set; } = new();
         public JwtSettings Jwt { get; set; } = new();
+        public MailSettings Email { get; set; } = new();
     }
 
     public class LoggingSettings
@@ -37,6 +38,13 @@
         public string Issuer { get; set; } = string.Empty;
         public string Audience { get; set; } = string.Empty;
         public int TokenExpiryMinutes { get; set; }
+    }
+    public class MailSettings
+    {
+        public string EmailPassword { get; set; } = string.Empty;
+        public string FromEmail { get; set; } = string.Empty;
+        public string SmtpServer { get; set; } = string.Empty;
+        public int SmtpPort { get; set; }
     }
 
     // Preventing using a static class modifications (use a static helper if needed)
