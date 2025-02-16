@@ -1,0 +1,3 @@
+﻿=============> Purpose.txt <=============
+
+This Directory is completely dedicated to Store the Domain Entities of the Users Microservice.

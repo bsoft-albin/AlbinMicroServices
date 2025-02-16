@@ -7,6 +7,11 @@ namespace AlbinMicroService.Users.Controllers
     [ApiController]
     public class UsersController : BaseController
     {
-        
+        [HttpGet]
+        [ActionName("get-user-greet")]
+        public IActionResult GetUserGreet()
+        {
+            return Ok("Hello User");
+        }
     }
 }

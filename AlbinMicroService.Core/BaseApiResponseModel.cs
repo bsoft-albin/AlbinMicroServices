@@ -12,7 +12,6 @@
  */
 
 using AlbinMicroService.Core.Utilities;
-using static AlbinMicroService.Core.Utilities.StaticProps;
 
 namespace AlbinMicroService.Core
 {
