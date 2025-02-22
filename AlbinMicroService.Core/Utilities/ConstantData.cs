@@ -10,8 +10,8 @@
     public abstract class ApiVersions
     {
         public const string DEFAULT = "1.0";
-        public const string LTS = "2.0";
-        public const string LATEST = "3.0";
+        public const string LONG_TERM_SUPPORT = "2.0";
+        public const string STANDARD_TERM_SUPPORT = "3.0";
     }
 
     public abstract class DatabaseTypes
