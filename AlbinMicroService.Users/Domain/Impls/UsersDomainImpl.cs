@@ -51,7 +51,7 @@ namespace AlbinMicroService.Users.Domain.Impls
             return validatorTemplate;
         }
 
-        public Task<bool> VerifyUsernameAndEmailNotExists(string email, string username)
+        public Task<bool> VerifyUsernameExists(string email, string username)
         {
             throw new NotImplementedException();
         }

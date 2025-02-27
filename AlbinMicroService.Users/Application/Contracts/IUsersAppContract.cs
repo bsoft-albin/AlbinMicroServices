@@ -5,6 +5,6 @@ namespace AlbinMicroService.Users.Application.Contracts
 {
     public interface IUsersAppContract
     {
-        Task<ApiBaseResponse> CreateUserAsync(UserDto userDto);
+        Task<ApiBaseResponse> CreateUserAppAsync(UserDto userDto);
     }
 }

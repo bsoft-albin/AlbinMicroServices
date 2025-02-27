@@ -1,8 +1,9 @@
-﻿using AlbinMicroService.Core.Controller;
+﻿using System.ComponentModel.DataAnnotations;
+using AlbinMicroService.Core.Controller;
 using AlbinMicroService.Users.Application.Contracts;
+using AlbinMicroService.Users.Domain;
 using AlbinMicroService.Users.Domain.DTOs;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace AlbinMicroService.Users.Controllers
 {
@@ -11,10 +12,10 @@ namespace AlbinMicroService.Users.Controllers
     public class UsersController(IUsersAppContract _appContract) : BaseController
     {
         [HttpPost]
-        [ActionName("register-user")]
+        [ActionName(UsersActionNames.RegisterUser)]
         public async Task<IActionResult> CreateUserAsync([FromBody, Required] UserDto userDto)
         {
-            return Ok(await _appContract.CreateUserAsync(userDto));
+            return Ok(await _appContract.CreateUserAppAsync(userDto));
         }
     }
 }

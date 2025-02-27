@@ -8,7 +8,7 @@ namespace AlbinMicroService.Users.Application.Impls
 {
     public class UsersAppImpl(IUsersDomainContract _usersDomain) : IUsersAppContract
     {
-        public async Task<ApiBaseResponse> CreateUserAsync(UserDto userDto)
+        public async Task<ApiBaseResponse> CreateUserAppAsync(UserDto userDto)
         {
             ApiBaseResponse apiBaseResponse = new();
             if (userDto != null)
@@ -54,7 +54,7 @@ namespace AlbinMicroService.Users.Application.Impls
                     {
                         StatusCode = HttpStatusCodes.Status400BadRequest,
                         StatusMessage = HttpStatusMessages.Status400BadRequest,
-                        ErrorDetails = validObj?.Errors ?? new List<string>()
+                        ErrorDetails = validObj?.Errors ?? []
                     };
                 }
             }
