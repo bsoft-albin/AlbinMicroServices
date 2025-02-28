@@ -29,6 +29,6 @@ namespace AlbinMicroService.Users.Domain.Contracts
         /// <param name="email"></param>
         /// <param name="username"></param>
         /// <returns>True or False</returns>
-        Task<bool> VerifyUsernameExists(string email, string username);
+        Task<bool> VerifyUsernameExistsOrNotAsync(string username);
     }
 }

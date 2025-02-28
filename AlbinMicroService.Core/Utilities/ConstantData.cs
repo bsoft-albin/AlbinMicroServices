@@ -41,6 +41,7 @@
     public static class CustomHttpStatusMessages
     {
         public const string ServerShutdown = "Temporarily the Server Shutdown";
+        public const string UsernameExists = "Username Already Exists";
         public const string UnXpectedError = "An unexpected error occurred";
         public const string UnKnownError = "UNKNOWN_ERROR";
     }

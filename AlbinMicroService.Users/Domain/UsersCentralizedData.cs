@@ -7,6 +7,6 @@
 
     public static class UsersSqlQueries
     {
-        public static string GetUserById => "EXEC";
+        public static string UsernameExistCount => "SELECT COUNT(Id) as UsernameCounts FROM Users WHERE Username = @username;";
     }
 }

@@ -16,36 +16,48 @@ namespace AlbinMicroService.Users.Application.Impls
                 ValidatorTemplate validObj = _usersDomain.ValidateUserDto(userDto);
                 if (validObj != null && validObj.IsValidated)
                 {
-                    userDto.Password = _usersDomain.HashUserPassword(userDto.Password);
-                    if (!userDto.Password.IsNullOrEmpty())
+                    // check whether username exists
+                    bool isUsernameExists = await _usersDomain.VerifyUsernameExistsOrNotAsync(userDto.Username);
+
+                    if (!isUsernameExists)
                     {
-                        // call Db to save user
-                        bool dbResponse = true; // here repo call to save in db
-                        bool mailResponse = await _usersDomain.SendWelcomeEmailToUser(userDto.Email, userDto.Username);
-                        if (dbResponse && mailResponse)
+                        userDto.Password = _usersDomain.HashUserPassword(userDto.Password);
+                        if (!userDto.Password.IsNullOrEmpty())
                         {
-                            apiBaseResponse.StatusCode = HttpStatusCodes.Status201Created;
-                            apiBaseResponse.StatusMessage = HttpStatusMessages.Status201Created;
+                            // call Db to save user
+                            bool dbResponse = true; // here repo call to save in db
+                            bool mailResponse = await _usersDomain.SendWelcomeEmailToUser(userDto.Email, userDto.Username);
+                            if (dbResponse && mailResponse)
+                            {
+                                apiBaseResponse.StatusCode = HttpStatusCodes.Status201Created;
+                                apiBaseResponse.StatusMessage = HttpStatusMessages.Status201Created;
+                            }
+                            else
+                            {
+                                if (!dbResponse)
+                                {
+                                    if (!mailResponse)
+                                    {
+
+                                    }
+                                }
+                                else
+                                {
+                                    apiBaseResponse.StatusCode = HttpStatusCodes.Status500InternalServerError;
+                                    apiBaseResponse.StatusMessage = HttpStatusMessages.Status500InternalServerError;
+                                }
+                            }
                         }
                         else
                         {
-                            if (!dbResponse)
-                            {
-                                if (!mailResponse)
-                                {
-
-                                }
-                            }
-                            else {
-                                apiBaseResponse.StatusCode = HttpStatusCodes.Status500InternalServerError;
-                                apiBaseResponse.StatusMessage = HttpStatusMessages.Status500InternalServerError;
-                            }
+                            apiBaseResponse.StatusCode = HttpStatusCodes.Status500InternalServerError;
+                            apiBaseResponse.StatusMessage = HttpStatusMessages.Status500InternalServerError;
                         }
                     }
                     else
                     {
-                        apiBaseResponse.StatusCode = HttpStatusCodes.Status500InternalServerError;
-                        apiBaseResponse.StatusMessage = HttpStatusMessages.Status500InternalServerError;
+                        apiBaseResponse.StatusCode = HttpStatusCodes.Status409Conflict;
+                        apiBaseResponse.StatusMessage = CustomHttpStatusMessages.UsernameExists;
                     }
                 }
                 else

@@ -13,6 +13,11 @@ namespace AlbinMicroService.Core.Utilities
             StaticProps.GlobalWebAppRunningMode.IsStaging = isStaging;
             StaticProps.GlobalWebAppRunningMode.IsProduction = isProduction;
         }
+
+        public static string GetNullOrEmptyOrWhiteSpaceErrorText(string value = "")
+        {
+            return value + " cannot be null or empty or whitespace.";
+        }
     }
 
     public interface IDynamicMeths
@@ -20,10 +25,15 @@ namespace AlbinMicroService.Core.Utilities
         /// <summary>
         /// Hashes a string using Argon2.
         /// </summary>
+        /// <param name="input"></param>
+        /// <returns>Hashed string of the input.</returns>
         public string HashString(string input);
         /// <summary>
         /// Verifies if the input matches the stored Argon2 hash.
         /// </summary>
+        /// <param name="input"></param>
+        /// <param name="storedHash"></param>
+        /// <returns>True or False if both string matches.</returns>
         public bool VerifyHash(string input, string storedHash);
         Task<bool> SendEmailAsync(EmailTemplate emailTemplate);
     }
@@ -40,7 +50,12 @@ namespace AlbinMicroService.Core.Utilities
         
         public string HashString(string input)
         {
-            var config = new Argon2Config
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                throw new ArgumentNullException(nameof(input), StaticMeths.GetNullOrEmptyOrWhiteSpaceErrorText(input));
+            }
+
+            Argon2Config config = new()
             {
                 MemoryCost = MemorySize,
                 TimeCost = Iterations,
@@ -60,6 +75,15 @@ namespace AlbinMicroService.Core.Utilities
         
         public bool VerifyHash(string input, string storedHash)
         {
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                throw new ArgumentNullException(nameof(input), StaticMeths.GetNullOrEmptyOrWhiteSpaceErrorText(nameof(input)));
+            }
+            if (string.IsNullOrWhiteSpace(storedHash))
+            {
+                throw new ArgumentNullException(nameof(storedHash), StaticMeths.GetNullOrEmptyOrWhiteSpaceErrorText(nameof(storedHash)));
+            }
+
             return Argon2.Verify(storedHash, input);
         }
 

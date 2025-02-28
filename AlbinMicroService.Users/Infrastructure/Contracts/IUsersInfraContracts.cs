@@ -2,5 +2,6 @@
 {
     public interface IUsersInfraContracts
     {
+        Task<short> CheckUsernameExistsOrNotInfraAsync(string username);
     }
 }

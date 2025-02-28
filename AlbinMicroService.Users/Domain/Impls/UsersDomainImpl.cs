@@ -1,33 +1,41 @@
 ﻿using AlbinMicroService.Users.Domain.Contracts;
 using AlbinMicroService.Users.Domain.DTOs;
 using AlbinMicroService.Users.Domain.Validator;
+using AlbinMicroService.Users.Infrastructure.Contracts;
 using FluentValidation.Results;
 
 namespace AlbinMicroService.Users.Domain.Impls
 {
-    public class UsersDomainImpl(IDynamicMeths _dynamicMeths) : IUsersDomainContract
+    public class UsersDomainImpl(IDynamicMeths _dynamicMeths, IUsersInfraContracts _usersInfra) : IUsersDomainContract
     {
         public string HashUserPassword(string userPassword)
         {
+            if (string.IsNullOrWhiteSpace(userPassword))
+            {
+                throw new ArgumentNullException(nameof(userPassword), StaticMeths.GetNullOrEmptyOrWhiteSpaceErrorText(nameof(userPassword)));
+            }
+
             return _dynamicMeths.HashString(userPassword);
         }
 
         public async Task<bool> SendWelcomeEmailToUser(string toEmail, string receiverUsername)
         {
-            if (string.IsNullOrEmpty(toEmail) || string.IsNullOrEmpty(receiverUsername))
+            if (string.IsNullOrWhiteSpace(toEmail))
             {
-                throw new ArgumentNullException("toEmail or receiverUsername cannot be null or empty.");
+                throw new ArgumentNullException(nameof(toEmail), StaticMeths.GetNullOrEmptyOrWhiteSpaceErrorText(nameof(toEmail)));
+            }
+            if (string.IsNullOrWhiteSpace(receiverUsername))
+            {
+                throw new ArgumentNullException(nameof(receiverUsername), StaticMeths.GetNullOrEmptyOrWhiteSpaceErrorText(nameof(receiverUsername)));
             }
 
             EmailTemplate emailTemplate = new(WebAppConfigs.Settings.Email.SmtpPort, WebAppConfigs.Settings.Email.SmtpServer, WebAppConfigs.Settings.Email.FromEmail, WebAppConfigs.Settings.Email.EmailPassword, toEmail);
             emailTemplate.Title = "AlbinMicroServices Inc";
-            emailTemplate.Subject = "Welcome to AlbinMicroService";
+            emailTemplate.Subject = "Welcome to AlbinMicroServices";
             emailTemplate.Username = receiverUsername;
             emailTemplate.Body = $"<h1>Welcome {receiverUsername},</h1><p>Thank you for registering with us.</p>";
 
-            bool response = await _dynamicMeths.SendEmailAsync(emailTemplate);
-
-            return response;
+            return await _dynamicMeths.SendEmailAsync(emailTemplate);
         }
 
         public ValidatorTemplate ValidateUserDto(UserDto userDto)
@@ -51,9 +59,16 @@ namespace AlbinMicroService.Users.Domain.Impls
             return validatorTemplate;
         }
 
-        public Task<bool> VerifyUsernameExists(string email, string username)
+        public async Task<bool> VerifyUsernameExistsOrNotAsync(string username)
         {
-            throw new NotImplementedException();
+            if (await _usersInfra.CheckUsernameExistsOrNotInfraAsync(username) > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
