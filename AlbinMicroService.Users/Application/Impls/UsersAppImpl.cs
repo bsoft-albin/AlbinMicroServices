@@ -11,9 +11,11 @@ namespace AlbinMicroService.Users.Application.Impls
         public async Task<ApiBaseResponse> CreateUserAppAsync(UserDto userDto)
         {
             ApiBaseResponse apiBaseResponse = new();
+
             if (userDto != null)
             {
                 ValidatorTemplate validObj = _usersDomain.ValidateUserDto(userDto);
+
                 if (validObj != null && validObj.IsValidated)
                 {
                     // check whether username exists
@@ -22,11 +24,13 @@ namespace AlbinMicroService.Users.Application.Impls
                     if (!isUsernameExists)
                     {
                         userDto.Password = _usersDomain.HashUserPassword(userDto.Password);
+
                         if (!userDto.Password.IsNullOrEmpty())
                         {
                             // call Db to save user
                             bool dbResponse = true; // here repo call to save in db
-                            bool mailResponse = await _usersDomain.SendWelcomeEmailToUser(userDto.Email, userDto.Username);
+                            bool mailResponse = await _usersDomain.SendWelcomeEmailToUserAsync(userDto.Email, userDto.Username);
+
                             if (dbResponse && mailResponse)
                             {
                                 apiBaseResponse.StatusCode = HttpStatusCodes.Status201Created;

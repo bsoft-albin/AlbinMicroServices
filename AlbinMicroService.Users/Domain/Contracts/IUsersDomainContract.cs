@@ -22,7 +22,7 @@ namespace AlbinMicroService.Users.Domain.Contracts
         /// <param name="toEmail"></param>
         /// <param name="receiverUsername"></param>
         /// <returns>Whether email sended or not.</returns>
-        Task<bool> SendWelcomeEmailToUser(string toEmail, string receiverUsername);
+        Task<bool> SendWelcomeEmailToUserAsync(string toEmail, string receiverUsername);
         /// <summary>
         /// Helps to check whether the given Username exists in the System.
         /// </summary>

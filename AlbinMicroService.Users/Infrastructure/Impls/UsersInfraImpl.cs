@@ -4,7 +4,7 @@ using AlbinMicroService.Users.Infrastructure.Contracts;
 
 namespace AlbinMicroService.Users.Infrastructure.Impls
 {
-    public class UsersInfraImpl(ISqlServerMapper _sqlServer) : IUsersInfraContracts
+    public class UsersInfraImpl(ISqlServerMapper _sqlServer) : IUsersInfraContract
     {
         public async Task<short> CheckUsernameExistsOrNotInfraAsync(string username)
         {

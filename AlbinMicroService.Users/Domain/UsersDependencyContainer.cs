@@ -1,4 +1,10 @@
 ﻿using AlbinMicroService.Core.Repository;
+using AlbinMicroService.Users.Application.Contracts;
+using AlbinMicroService.Users.Application.Impls;
+using AlbinMicroService.Users.Domain.Contracts;
+using AlbinMicroService.Users.Domain.Impls;
+using AlbinMicroService.Users.Infrastructure.Contracts;
+using AlbinMicroService.Users.Infrastructure.Impls;
 
 namespace AlbinMicroService.Users.Domain
 {
@@ -31,7 +37,9 @@ namespace AlbinMicroService.Users.Domain
 
         public static WebApplicationBuilder AddUserServices(this WebApplicationBuilder builder)
         {
-            //services.AddScoped<IUsersService, UsersService>();
+            builder.Services.AddScoped<IUsersAppContract, UsersAppImpl>();
+            builder.Services.AddScoped<IUsersDomainContract, UsersDomainImpl>();
+            builder.Services.AddScoped<IUsersInfraContract, UsersInfraImpl>();
 
             return builder;
         }

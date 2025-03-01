@@ -1,6 +1,6 @@
 ﻿namespace AlbinMicroService.Users.Infrastructure.Contracts
 {
-    public interface IUsersInfraContracts
+    public interface IUsersInfraContract
     {
         Task<short> CheckUsernameExistsOrNotInfraAsync(string username);
     }

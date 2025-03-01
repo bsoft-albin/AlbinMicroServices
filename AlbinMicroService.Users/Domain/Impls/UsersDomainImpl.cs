@@ -6,7 +6,7 @@ using FluentValidation.Results;
 
 namespace AlbinMicroService.Users.Domain.Impls
 {
-    public class UsersDomainImpl(IDynamicMeths _dynamicMeths, IUsersInfraContracts _usersInfra) : IUsersDomainContract
+    public class UsersDomainImpl(IDynamicMeths _dynamicMeths, IUsersInfraContract _usersInfra) : IUsersDomainContract
     {
         public string HashUserPassword(string userPassword)
         {
@@ -18,7 +18,7 @@ namespace AlbinMicroService.Users.Domain.Impls
             return _dynamicMeths.HashString(userPassword);
         }
 
-        public async Task<bool> SendWelcomeEmailToUser(string toEmail, string receiverUsername)
+        public async Task<bool> SendWelcomeEmailToUserAsync(string toEmail, string receiverUsername)
         {
             if (string.IsNullOrWhiteSpace(toEmail))
             {
