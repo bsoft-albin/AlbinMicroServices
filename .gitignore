@@ -362,3 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /AlbinMicroService.Users/appsettings.json
+/AlbinMicroService.MasterData/appsettings.json
+/AlbinMicroService.Administration/appsettings.json
