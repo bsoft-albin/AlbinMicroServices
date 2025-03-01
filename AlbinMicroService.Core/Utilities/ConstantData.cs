@@ -36,14 +36,20 @@
     public static class CustomHttpStatusCodes
     {
         public const short ServerShutdown = 800;
+        public const short UnXpectedError = 520;
     }
 
     public static class CustomHttpStatusMessages
     {
         public const string ServerShutdown = "Temporarily the Server Shutdown";
         public const string UsernameExists = "Username Already Exists";
-        public const string UnXpectedError = "An unexpected error occurred";
+        public const string UnXpectedError = "Something went wrong please try again later";
         public const string UnKnownError = "UNKNOWN_ERROR";
+    }
+
+    public static class AllowedHttpMethods
+    {
+        public static readonly string[] value = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"];
     }
 
     public abstract class HttpStatusCodes

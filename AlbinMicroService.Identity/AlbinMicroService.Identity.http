@@ -1,6 +1,0 @@
-@AlbinMicroService.Identity_HostAddress = http://localhost:5077
-
-GET {{AlbinMicroService.Identity_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
