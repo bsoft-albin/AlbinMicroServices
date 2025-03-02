@@ -1,4 +1,5 @@
-﻿using AlbinMicroService.Core.Controller;
+﻿using AlbinMicroService.Core;
+using AlbinMicroService.Core.Controller;
 using AlbinMicroService.Users.Application.Contracts;
 using AlbinMicroService.Users.Domain;
 using AlbinMicroService.Users.Domain.DTOs;
@@ -16,6 +17,17 @@ namespace AlbinMicroService.Users.Controllers
         public async Task<IActionResult> CreateUserAsync([FromBody, Required] UserDto userDto)
         {
             return ParseApiResponse(await _appContract.CreateUserAppAsync(userDto), HttpVerbs.Post);
+        }
+
+        [HttpGet]
+        [ActionName("data-check")]
+        public IActionResult HealthCheck()
+        {
+            //ApiResponse data = new();
+            //data.Data = new List<string> { "Hello", "Billy" };
+            //return ParseApiResponse(data, HttpVerbs.Get);
+
+            return GetResponseHeaders();
         }
     }
 }

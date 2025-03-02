@@ -40,6 +40,7 @@ namespace AlbinMicroService.Users.Domain
             builder.Services.AddScoped<IUsersAppContract, UsersAppImpl>();
             builder.Services.AddScoped<IUsersDomainContract, UsersDomainImpl>();
             builder.Services.AddScoped<IUsersInfraContract, UsersInfraImpl>();
+            builder.Services.AddScoped<IDynamicMeths, DynamicMeths>();
 
             return builder;
         }

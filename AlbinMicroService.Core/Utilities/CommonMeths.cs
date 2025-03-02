@@ -14,6 +14,17 @@ namespace AlbinMicroService.Core.Utilities
             StaticProps.GlobalWebAppRunningMode.IsProduction = isProduction;
         }
 
+        public static int GetPropertyCount(object obj)
+        {
+            if (obj == null)
+            {
+                return 0;
+            }
+
+            // Get the type of the object and count the properties
+            return obj.GetType().GetProperties().Length;
+        }
+
         public static string GetNullOrEmptyOrWhiteSpaceErrorText(string value = "")
         {
             return value + " cannot be null or empty or whitespace.";

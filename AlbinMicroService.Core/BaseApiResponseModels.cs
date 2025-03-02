@@ -32,7 +32,7 @@ namespace AlbinMicroService.Core
     /// </summary>
     /// <typeparam name="X">Type of the response data.</typeparam>
     /// <typeparam name="Y">Type of the meta data.</typeparam>
-    public class ApiResponse<X, Y> : ApiBaseResponse where X : new() where Y : new()
+    public class ApiGenericResponse<X, Y> : ApiBaseResponse where X : new() where Y : new()
     {
         /// <summary>
         /// Gets or sets the metadata.
@@ -42,6 +42,12 @@ namespace AlbinMicroService.Core
         /// Gets or sets the response data.
         /// </summary>
         public X Data { get; set; } = new();
+    }
+
+    public class ApiResponse : ApiBaseResponse
+    {
+        public object Data { get; set; } = new { };
+        public object MetaData { get; set; } = new { };
     }
 
     /// <summary>
@@ -56,7 +62,7 @@ namespace AlbinMicroService.Core
         /// <summary>
         /// Gets or sets the number of properties in the response object.
         /// </summary>
-        public short PropsCount { get; set; }
+        public int PropsCount { get; set; }
     }
 
     /// <summary>
@@ -76,6 +82,17 @@ namespace AlbinMicroService.Core
         /// Gets or sets the current page number.
         /// </summary>
         public int CurrentPage { get; set; }
+    }
+    public class PaginatedResponse : ApiBaseResponse
+    {
+        public object Data { get; set; } = new { };
+        public PaginatedResponseSummary PaginatedSummary { get; set; } = new();
+        public ResponseSummary MetaData { get; set; } = new();
+    }
+
+    public class ApiObjectResponse : ApiBaseResponse
+    {
+        public object Data { get; set; } = new { };
     }
 
     /// <summary>
