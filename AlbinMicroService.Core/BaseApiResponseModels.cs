@@ -15,6 +15,7 @@ using AlbinMicroService.Core.Utilities;
 
 namespace AlbinMicroService.Core
 {
+
     public class ApiBaseResponse
     {
         /// <summary>
