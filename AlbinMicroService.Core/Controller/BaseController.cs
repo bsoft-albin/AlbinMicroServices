@@ -1,5 +1,4 @@
 ﻿using AlbinMicroService.Core.Utilities;
-using Azure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -94,7 +93,6 @@ namespace AlbinMicroService.Core.Controller
                 {
                     if (response is ApiBaseResponse baseResponse)
                     {
-
                         return ResponseSwitcher(baseResponse);
                     }
                     else if (response is ApiErrorResponse<List<string>> errorResponse)
@@ -142,7 +140,7 @@ namespace AlbinMicroService.Core.Controller
                     errorResponse.StatusMessage,
                     errorResponse.ErrorDetails
                 });
-            }
+            } 
             else
             {
                 return StatusCode(CustomHttpStatusCodes.UnXpectedError, new { StatusMessage = CustomHttpStatusMessages.UnXpectedError, StatusCode = CustomHttpStatusCodes.UnXpectedError });
