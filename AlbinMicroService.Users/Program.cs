@@ -1,13 +1,24 @@
 using AlbinMicroService.Users.Domain;
 using Microsoft.Extensions.Options;
+using Serilog;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-// we are Using Chain of Responsibility Pattern
-builder.AddDefaultServices().AddDatabaseServices().AddCustomServices().AddUserServices();
-
 // Bind or Loading appsettings.json to the AppSettings class
 builder.Services.Configure<AppSettings>(builder.Configuration);
+
+// Define MySQL errorlog connection string
+string logDBConnectionString = builder.Configuration.GetConnectionString("LogDbConnection") ?? string.Empty;
+
+// Configure Serilog
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console() // Logs to console
+    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day) // Logs to a daily rolling text file
+    .WriteTo.MySQL(logDBConnectionString, "ErrorLogs") // Logs to MySQL database
+    .CreateLogger();
+
+// we are Using Chain of Responsibility Pattern
+builder.AddDefaultServices().AddDatabaseServices().AddCustomServices().AddUserServices();
 
 WebApplication app = builder.Build();
 
@@ -26,6 +37,9 @@ if ((app.Environment.IsDevelopment() || app.Environment.IsStaging()) && WebAppCo
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Enable request logging
+app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 

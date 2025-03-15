@@ -5,6 +5,7 @@ using AlbinMicroService.Users.Domain.Contracts;
 using AlbinMicroService.Users.Domain.Impls;
 using AlbinMicroService.Users.Infrastructure.Contracts;
 using AlbinMicroService.Users.Infrastructure.Impls;
+using Serilog;
 
 namespace AlbinMicroService.Users.Domain
 {
@@ -30,6 +31,7 @@ namespace AlbinMicroService.Users.Domain
         }
         public static WebApplicationBuilder AddCustomServices(this WebApplicationBuilder builder)
         {
+            builder.Host.UseSerilog();
             //services.AddScoped<JWttoken>, IJWttoken>();
 
             return builder;

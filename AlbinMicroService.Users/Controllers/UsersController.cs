@@ -1,10 +1,9 @@
-﻿using AlbinMicroService.Core;
+﻿using System.ComponentModel.DataAnnotations;
 using AlbinMicroService.Core.Controller;
 using AlbinMicroService.Users.Application.Contracts;
 using AlbinMicroService.Users.Domain;
 using AlbinMicroService.Users.Domain.DTOs;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace AlbinMicroService.Users.Controllers
 {

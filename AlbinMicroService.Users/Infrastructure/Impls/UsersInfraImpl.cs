@@ -8,17 +8,15 @@ namespace AlbinMicroService.Users.Infrastructure.Impls
     {
         public async Task<short> CheckUsernameExistsOrNotInfraAsync(string username)
         {
-			short count = 0;
 			try
 			{
-                count = await _sqlServer.ExecuteScalarAsync<short>(UsersSqlQueries.UsernameExistCount, new { username });
+                return await _sqlServer.ExecuteScalarAsync<short>(UsersSqlQueries.UsernameExistCount, new { username });
 			}
 			catch (Exception ex)
 			{
 				Console.WriteLine(ex.ToString());
-			}
-
-			return count;
+                throw new Exception(ex.Message);
+            }
         }
     }
 }
