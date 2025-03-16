@@ -53,6 +53,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Kubernetes", "Kubernetes", "{DAC7FD5B-AB14-4C5B-BAB8-81E232CCA179}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{4472452C-FC47-4E8B-A59D-0E13A56FF536}"
+	ProjectSection(SolutionItems) = preProject
+		Users.sql = Users.sql
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlbinMicroService.Administration", "AlbinMicroService.Administration\AlbinMicroService.Administration.csproj", "{25629C9A-0AFA-48B5-8793-3840C469F485}"
 EndProject
