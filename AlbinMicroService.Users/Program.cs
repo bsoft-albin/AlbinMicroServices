@@ -1,6 +1,5 @@
 using AlbinMicroService.Users.Domain;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using Serilog;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -11,7 +10,7 @@ builder.Services.Configure<AppSettings>(builder.Configuration);
 // Define MySQL errorlog connection string
 string logDBConnectionString = builder.Configuration.GetConnectionString("LogDbConnection") ?? string.Empty;
 
-if (!logDBConnectionString.IsNullOrEmpty()) {
+if (!string.IsNullOrEmpty(logDBConnectionString)) {
     // Configure Serilog
     Log.Logger = new LoggerConfiguration()
         .WriteTo.Console() // Logs to console
@@ -41,7 +40,7 @@ if ((app.Environment.IsDevelopment() || app.Environment.IsStaging()) && WebAppCo
     app.UseSwaggerUI();
 }
 
-if (!logDBConnectionString.IsNullOrEmpty())
+if (!string.IsNullOrEmpty(logDBConnectionString))
 {
     // Enable request logging
     app.UseSerilogRequestLogging();

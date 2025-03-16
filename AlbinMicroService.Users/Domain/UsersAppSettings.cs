@@ -29,7 +29,7 @@
     }
     public class ConnectionStringSettings
     {
-        public string SqlServer { get; init; } = string.Empty;
+        public string MySql { get; init; } = string.Empty;
         public string LogDbConnection { get; init; } = string.Empty;
     }
 

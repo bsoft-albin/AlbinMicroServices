@@ -2,7 +2,6 @@
 using AlbinMicroService.Users.Application.Contracts;
 using AlbinMicroService.Users.Domain.Contracts;
 using AlbinMicroService.Users.Domain.DTOs;
-using Microsoft.IdentityModel.Tokens;
 
 namespace AlbinMicroService.Users.Application.Impls
 {
@@ -25,7 +24,7 @@ namespace AlbinMicroService.Users.Application.Impls
                     {
                         userDto.Password = _usersDomain.HashUserPassword(userDto.Password);
 
-                        if (!userDto.Password.IsNullOrEmpty())
+                        if (!string.IsNullOrEmpty(userDto.Password))
                         {
                             // call Db to save user
                             bool dbResponse = true; // here repo call to save in db

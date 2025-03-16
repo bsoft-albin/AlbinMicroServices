@@ -1,9 +1,9 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using MySql.Data.MySqlClient;
 using static Dapper.SqlMapper;
 
 namespace AlbinMicroService.Core.Repository
 {
-    public interface ISqlServerMapper
+    public interface IMySqlMapper
     {
         IDbConnection Connection { get; }
 
@@ -25,65 +25,115 @@ namespace AlbinMicroService.Core.Repository
         object ExecuteScalar(string script);
     }
 
-    public class SqlServerMapper(string connectionString) : ISqlServerMapper
+    public class MySqlMapper(string connectionString) : IMySqlMapper
     {
         private readonly string _connectionString = connectionString;
 
-        public IDbConnection Connection => new SqlConnection(_connectionString);
+        public IDbConnection Connection => new MySqlConnection(_connectionString);
 
         public async Task<T> QueryFirstOrDefaultAsync<T>(string sql, object? parameters = null, CommandType commandType = CommandType.Text)
         {
-            using (Connection)
+            try
             {
-#pragma warning disable CS8603 // Possible null reference return.
-                return await Connection.QueryFirstOrDefaultAsync<T>(sql, parameters, commandType: commandType);
-#pragma warning restore CS8603 // Possible null reference return.
+                using (Connection)
+                {
+                    return await Connection.QueryFirstOrDefaultAsync<T>(sql, parameters, commandType: commandType);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
             }
         }
         public async Task<IEnumerable<T>> QueryAsync<T>(string sql, object? parameters = null, CommandType commandType = CommandType.Text)
         {
-            using (Connection)
+            try
             {
-                return await Connection.QueryAsync<T>(sql, parameters, commandType: commandType, commandTimeout: 600);
+                using (Connection)
+                {
+                    return await Connection.QueryAsync<T>(sql, parameters, commandType: commandType, commandTimeout: 600);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
             }
         }
         public async Task<T> QuerySingleAsync<T>(string sql, object? parameters = null, CommandType commandType = CommandType.Text)
         {
-
-            using (Connection)
+            try
             {
-                return await Connection.QuerySingleAsync<T>(sql, parameters, commandType: commandType);
+                using (Connection)
+                {
+                    return await Connection.QuerySingleAsync<T>(sql, parameters, commandType: commandType);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
             }
         }
         public async Task<T> ExecuteScalarAsync<T>(string sql, object? parameters = null, CommandType commandType = CommandType.Text)
         {
-
-            using (Connection)
+            try
             {
-#pragma warning disable CS8603 // Possible null reference return.
-                return await Connection.ExecuteScalarAsync<T>(sql, parameters, commandType: commandType);
-#pragma warning restore CS8603 // Possible null reference return.
+                using (Connection)
+                {
+                    return await Connection.ExecuteScalarAsync<T>(sql, parameters, commandType: commandType);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
             }
         }
         public async Task ExecuteAsync(string sql, object? parameters = null, CommandType commandType = CommandType.Text)
         {
-            using (Connection)
+            try
             {
-                await Connection.ExecuteAsync(sql, parameters, commandType: commandType);
+                using (Connection)
+                {
+                    await Connection.ExecuteAsync(sql, parameters, commandType: commandType);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
             }
         }
 
         public async Task<GridReader> QueryMultipleAsync(string sql, object? parameters = null, CommandType commandType = CommandType.Text)
         {
-            using (Connection)
+            try
             {
-                return await Connection.QueryMultipleAsync(sql, parameters, commandType: commandType, commandTimeout: 180);
+                using (Connection)
+                {
+                    return await Connection.QueryMultipleAsync(sql, parameters, commandType: commandType, commandTimeout: 180);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
             }
         }
 
         public async Task<IDataReader> ExecuteReaderAsync(IDbConnection connection, string sql, CommandType commandType, object? parameters = null)
         {
-            return await connection.ExecuteReaderAsync(sql, parameters, commandType: commandType, commandTimeout: 180);
+            try
+            {
+                return await connection.ExecuteReaderAsync(sql, parameters, commandType: commandType, commandTimeout: 180);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
         public void ExecuteScript(string script)
@@ -96,8 +146,9 @@ namespace AlbinMicroService.Core.Repository
                     Connection.Execute(script);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+
                 throw;
             }
         }
@@ -112,15 +163,14 @@ namespace AlbinMicroService.Core.Repository
                     Connection.Open();
                     result = Connection.ExecuteScalar(script);
                 }
+
+                return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+
                 throw;
             }
-#pragma warning disable CS8603 // Possible null reference return.
-            return result;
-#pragma warning restore CS8603 // Possible null reference return.
         }
-
     }
 }

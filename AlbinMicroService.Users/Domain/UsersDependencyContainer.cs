@@ -24,8 +24,8 @@ namespace AlbinMicroService.Users.Domain
         }
         public static WebApplicationBuilder AddDatabaseServices(this WebApplicationBuilder builder)
         {
-            string connectionString = builder.Configuration.GetConnectionString(DatabaseTypes.SqlServer) ?? string.Empty;
-            builder.Services.AddScoped<ISqlServerMapper>(sp => new SqlServerMapper(connectionString));
+            string connectionString = builder.Configuration.GetConnectionString(DatabaseTypes.MySql) ?? string.Empty;
+            builder.Services.AddScoped<IMySqlMapper>(sp => new MySqlMapper(connectionString));
 
             return builder;
         }
