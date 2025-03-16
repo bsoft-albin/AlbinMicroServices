@@ -1,15 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
-using AlbinMicroService.Core.Controller;
+﻿using AlbinMicroService.Core.Controller;
 using AlbinMicroService.Users.Application.Contracts;
 using AlbinMicroService.Users.Domain;
 using AlbinMicroService.Users.Domain.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace AlbinMicroService.Users.Controllers
 {
     [Route(Templates.API_TEMPLATE)]
     [ApiController]
-    public class UsersController(IUsersAppContract _appContract) : BaseController
+    public class UsersController(IUsersAppContract _appContract, ILogger<UsersController> logger) : BaseController
     {
         [HttpPost]
         [ActionName(UsersActionNames.RegisterUser)]
@@ -22,10 +22,7 @@ namespace AlbinMicroService.Users.Controllers
         [ActionName("data-check")]
         public IActionResult HealthCheck()
         {
-            //ApiResponse data = new();
-            //data.Data = new List<string> { "Hello", "Billy" };
-            //return ParseApiResponse(data, HttpVerbs.Get);
-
+            logger.LogInformation("Health check endpoint hit");
             return GetResponseHeaders();
         }
     }

@@ -1,6 +1,7 @@
 using AlbinMicroService.Users.Domain;
 using Microsoft.Extensions.Options;
 using Serilog;
+using Serilog.Debugging;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,8 @@ if (!string.IsNullOrEmpty(logDBConnectionString)) {
     Log.Logger = new LoggerConfiguration()
         .WriteTo.Console() // Logs to console
         .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day) // Logs to a daily rolling text file
-        .WriteTo.MySQL(logDBConnectionString, "errorlogs") // Log to MySQL
+        .WriteTo.MySQL(connectionString: logDBConnectionString, tableName : "errorlogs", Serilog.Events.LogEventLevel.Information)
+        .MinimumLevel.Verbose() // Log to MySQL
         .CreateLogger();
 }
 
