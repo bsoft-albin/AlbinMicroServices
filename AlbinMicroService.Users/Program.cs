@@ -13,13 +13,15 @@ string logDBConnectionString = builder.Configuration.GetConnectionString("LogDbC
 if (!string.IsNullOrEmpty(logDBConnectionString)) {
     // Configure Serilog
     Log.Logger = new LoggerConfiguration()
-        .WriteTo.Console() // Logs to console
+        //.WriteTo.Console() // Logs to console
         .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day) // Logs to a daily rolling text file
         .WriteTo.PostgreSQL(
             connectionString: logDBConnectionString,
             tableName: "logs",
+            respectCase : true,
             columnOptions: new DataStructures().PostgreSqlLogsTableStruct,
-            needAutoCreateTable: true // Automatically creates the table
+            needAutoCreateTable: true, // Automatically creates the table
+            useCopy: false
         )
         .MinimumLevel.Information()
         .CreateLogger();
