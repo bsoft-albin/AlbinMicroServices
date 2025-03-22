@@ -22,7 +22,7 @@ namespace AlbinMicroService.Users.Controllers
         [ActionName("data-check")]
         public IActionResult HealthCheck()
         {
-            logger.LogInformation("Health check endpoint hit");
+            logger.LogError("a new Exception thrown!!");
             return GetResponseHeaders();
         }
     }

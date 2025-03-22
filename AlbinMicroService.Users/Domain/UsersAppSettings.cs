@@ -2,23 +2,11 @@
 {
     public class AppSettings
     {
-        public LoggingSettings Logging { get; init; } = new();
         public string AllowedHosts { get; init; } = string.Empty;
         public SwaggerSettings Swagger { get; init; } = new();
         public ConnectionStringSettings ConnectionStrings { get; init; } = new();
         public JwtSettings Jwt { get; init; } = new();
         public MailSettings Email { get; init; } = new();
-    }
-
-    public class LoggingSettings
-    {
-        public LogLevelSettings LogLevel { get; init; } = new();
-    }
-
-    public class LogLevelSettings
-    {
-        public string Default { get; init; } = string.Empty;
-        public string MicrosoftAspNetCore { get; init; } = string.Empty;
     }
 
     public class SwaggerSettings

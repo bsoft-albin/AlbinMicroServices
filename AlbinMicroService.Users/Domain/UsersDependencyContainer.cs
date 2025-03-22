@@ -31,8 +31,14 @@ namespace AlbinMicroService.Users.Domain
         }
         public static WebApplicationBuilder AddCustomServices(this WebApplicationBuilder builder)
         {
-            builder.Host.UseSerilog();
-            //services.AddScoped<JWttoken>, IJWttoken>();
+            // Remove default logging providers
+            builder.Logging.ClearProviders();
+
+            // Configure Serilog
+            builder.Host.UseSerilog((context, config) =>
+            {
+                config.ReadFrom.Configuration(context.Configuration);
+            });
 
             return builder;
         }
