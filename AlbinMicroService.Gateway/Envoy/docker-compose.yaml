@@ -1,0 +1,52 @@
+﻿version: '3.8'
+
+services:
+  # Administration Service
+  AlbinMicroService.Administration:
+    image: albin-microservice-administration-image:latest  # Replace with your actual image
+    container_name: AlbinMicroService.Administration
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_URLS=http://+:5000
+    networks:
+      - albin-network
+
+  # MasterData Service
+  AlbinMicroService.MasterData:
+    image: albin-microservice-masterdata-image:latest  # Replace with your actual image
+    container_name: AlbinMicroService.MasterData
+    ports:
+      - "5001:5001"
+    environment:
+      - ASPNETCORE_URLS=http://+:5001
+    networks:
+      - albin-network
+
+  # Users Service
+  AlbinMicroService.Users:
+    image: albin-microservice-users-image:latest  # Replace with your actual image
+    container_name: AlbinMicroService.Users
+    ports:
+      - "5002:5002"
+    environment:
+      - ASPNETCORE_URLS=http://+:5002
+    networks:
+      - albin-network
+
+  # Envoy API Gateway
+  envoy:
+    #image: envoyproxy/envoy:v1.26.0
+    image: albin-microservice-gateway-image:latest
+    container_name: envoy
+    ports:
+      - "8081:8081"  # Expose the Envoy gateway on port 8080
+    volumes:
+      - ./envoy.yaml:/etc/envoy/envoy.yaml  # Mount your Envoy configuration
+    networks:
+      - albin-network
+    restart: always
+
+networks:
+  albin-network:
+    driver: bridge

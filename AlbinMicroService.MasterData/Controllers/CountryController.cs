@@ -1,5 +1,4 @@
 ﻿using AlbinMicroService.Core.Controller;
-using AlbinMicroService.Core.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AlbinMicroService.MasterData.Controllers
@@ -8,5 +7,11 @@ namespace AlbinMicroService.MasterData.Controllers
     [ApiController]
     public class CountryController : BaseController
     {
+        [HttpGet]
+        [ActionName("sample-country-endpoint")]
+        public IActionResult Get()
+        {
+            return Ok("from Master Service !!!");
+        }
     }
 }
