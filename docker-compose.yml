@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  gateway:
+    build:
+      context: .
+      dockerfile: AlbinMicroService.Gateway/Dockerfile
+    container_name: AlbinMicroService.Gateway
+    ports:
+      - "8080:80"
+    depends_on:
+      - users-service
+      - masterdata-service
+      - admin-service
+    networks:
+      - albin-network
+
+  users-service:
+    image: albin-microservice-users-image:latest
+    container_name: AlbinMicroService.Users
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - albin-network
+
+  masterdata-service:
+    image: albin-microservice-masterdata-image:latest
+    container_name: AlbinMicroService.MasterData
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - albin-network
+
+  admin-service:
+    image: albin-microservice-administration-image:latest
+    container_name: AlbinMicroService.Administration
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - albin-network
+
+networks:
+  albin-network:
+    driver: bridge
