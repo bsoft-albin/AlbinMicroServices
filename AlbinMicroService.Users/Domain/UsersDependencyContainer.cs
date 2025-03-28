@@ -13,6 +13,14 @@ namespace AlbinMicroService.Users.Domain
     {
         public static WebApplicationBuilder AddDefaultServices(this WebApplicationBuilder builder)
         {
+            int HTTP_PORT = int.Parse(builder.Configuration["Configs:HttpPort"] ?? "5001");
+            int HTTPS_PORT = int.Parse(builder.Configuration["Configs:HttpsPort"] ?? "5001");
+
+            builder.WebHost.ConfigureKestrel(options =>
+            {
+                options.ListenAnyIP(80);  // Ensure the app listens on port 80
+            });
+
             // Add services to the container.
             builder.Services.AddControllers();
 
