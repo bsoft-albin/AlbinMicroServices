@@ -16,9 +16,20 @@ namespace AlbinMicroService.Users.Domain
             int HTTP_PORT = int.Parse(builder.Configuration["Configs:HttpPort"] ?? "5001");
             int HTTPS_PORT = int.Parse(builder.Configuration["Configs:HttpsPort"] ?? "5001");
 
+            // Enable HTTPS Redirection
+            builder.Services.AddHttpsRedirection(options =>
+            {
+                options.HttpsPort = HTTP_PORT; // Redirect HTTP to HTTPS
+            });
+
+            // Configure Kestrel to listen on both HTTP and HTTPS
             builder.WebHost.ConfigureKestrel(options =>
             {
-                options.ListenAnyIP(80);  // Ensure the app listens on port 80
+                options.ListenAnyIP(HTTP_PORT); // HTTP
+                options.ListenAnyIP(HTTPS_PORT, listenOptions =>
+                {
+                    listenOptions.UseHttps(); // Enable HTTPS
+                });
             });
 
             // Add services to the container.

@@ -31,7 +31,11 @@ if ((app.Environment.IsDevelopment() || app.Environment.IsStaging()) && WebAppCo
 // Enable Serilog request logging (Optional but recommended)
 app.UseSerilogRequestLogging();
 
-app.UseHttpsRedirection();
+// Redirect HTTP to HTTPS
+if (!app.Environment.IsDevelopment()) // Only force HTTPS in Staging and Production
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseAuthorization();
 
