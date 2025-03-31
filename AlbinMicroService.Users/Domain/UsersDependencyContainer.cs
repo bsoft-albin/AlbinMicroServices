@@ -13,14 +13,17 @@ namespace AlbinMicroService.Users.Domain
     {
         public static WebApplicationBuilder AddDefaultServices(this WebApplicationBuilder builder)
         {
-            int HTTP_PORT = int.Parse(builder.Configuration["Configs:HttpPort"] ?? "5001");
-            int HTTPS_PORT = int.Parse(builder.Configuration["Configs:HttpsPort"] ?? "5001");
+            int HTTP_PORT = int.Parse(builder.Configuration["Configs:HttpPort"] ?? "8001");
+            int HTTPS_PORT = int.Parse(builder.Configuration["Configs:HttpsPort"] ?? "8002");
+            bool IsRunsInContainer = StaticMeths.ConvertType<bool>(builder.Configuration["Configs:IsRunningInContainer"] ?? "false");
 
-            // Enable HTTPS Redirection
-            builder.Services.AddHttpsRedirection(options =>
+            if (!builder.Environment.IsDevelopment()) // Apply redirection only in Staging/Prod
             {
-                options.HttpsPort = HTTP_PORT; // Redirect HTTP to HTTPS
-            });
+                builder.Services.AddHttpsRedirection(options =>
+                {
+                    options.HttpsPort = HTTPS_PORT; // Redirect HTTP to HTTPS in non-dev environments
+                });
+            }
 
             // Configure Kestrel to listen on both HTTP and HTTPS
             builder.WebHost.ConfigureKestrel(options =>

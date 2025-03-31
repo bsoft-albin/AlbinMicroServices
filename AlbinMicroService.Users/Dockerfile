@@ -23,11 +23,11 @@ RUN dotnet publish -c Release -o /app/publish
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 
+# Set ASP.NET Core environment variable
+ENV ASPNETCORE_ENVIRONMENT=Development
+
 # Copy the published output from the build stage
 COPY --from=build /app/publish .
-
-# Expose port (optional, useful for Kubernetes/docker-compose)
-EXPOSE 80
 
 # Run the application
 ENTRYPOINT ["dotnet", "AlbinMicroService.Users.dll"]

@@ -14,6 +14,11 @@ namespace AlbinMicroService.Core.Utilities
             StaticProps.GlobalWebAppRunningMode.IsProduction = isProduction;
         }
 
+        public static T ConvertType<T>(object value)
+        {
+            return (T)Convert.ChangeType(value, typeof(T));
+        }
+
         public static int GetPropertyCount(object obj)
         {
             if (obj == null)
