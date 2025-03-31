@@ -30,6 +30,7 @@ namespace AlbinMicroService.Users.Domain
             // Configure Kestrel to listen on both HTTP and HTTPS
             builder.WebHost.ConfigureKestrel(options =>
             {
+                options.AddServerHeader = false; // to remove the server: Kestrel from the api response headers. 
                 options.ListenAnyIP(HTTP_PORT); // HTTP
                 options.ListenAnyIP(HTTPS_PORT, listenOptions =>
                 {
@@ -55,10 +56,10 @@ namespace AlbinMicroService.Users.Domain
         }
         public static WebApplicationBuilder AddCustomServices(this WebApplicationBuilder builder)
         {
-            // Remove default logging providers
+            // Remove all default logging providers
             builder.Logging.ClearProviders();
 
-            // Configure Serilog
+            // Configuring Only Logger as Serilog
             builder.Host.UseSerilog((context, config) =>
             {
                 config.ReadFrom.Configuration(context.Configuration);

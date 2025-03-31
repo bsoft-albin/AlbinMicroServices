@@ -1,7 +1,6 @@
 # Use .NET SDK image for building the application
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
-EXPOSE 80
 
 # Copy only the required project files
 COPY ../AlbinMicroService.Gateway/AlbinMicroService.Gateway.csproj AlbinMicroService.Gateway/
