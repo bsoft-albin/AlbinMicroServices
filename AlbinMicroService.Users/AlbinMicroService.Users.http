@@ -1,6 +1,11 @@
-@AlbinMicroService.Users_HostAddress = http://localhost:5280
+@AlbinMicroService.Users_HostAddress_HTTP = http://localhost:8001/api
+@AlbinMicroService.Users_HostAddress_HTTPS = https://localhost:8002/api
 
-GET {{AlbinMicroService.Users_HostAddress}}/weatherforecast/
+### HTTP Requests
+GET {{AlbinMicroService.Users_HostAddress_HTTP}}/Users/data-check
 Accept: application/json
 
-###
+
+### HTTPS Requests
+GET {{AlbinMicroService.Users_HostAddress_HTTPS}}/Users/data-check
+Accept: application/json
