@@ -24,9 +24,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{0E23CD06
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{3707D438-F034-4ABE-A840-C6AFE401CE88}"
-	ProjectSection(SolutionItems) = preProject
-		Directory-Purpose.txt = Directory-Purpose.txt
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit.Tests", "Unit.Tests", "{968DCF81-B5DF-4570-9A6D-A84B1C425284}"
 EndProject
