@@ -15,9 +15,7 @@ namespace AlbinMicroService.Users.Domain
         {
             int HTTP_PORT = int.Parse(builder.Configuration["Configs:HttpPort"] ?? "8001");
             int HTTPS_PORT = int.Parse(builder.Configuration["Configs:HttpsPort"] ?? "8002");
-#pragma warning disable CS8604 // Possible null reference argument.
-            bool IsRunsInContainer = StaticMeths.ConvertType<bool>(builder.Configuration["Configs:IsRunningInContainer"]);
-#pragma warning restore CS8604 // Possible null reference argument.
+            bool IsRunsInContainer = bool.Parse(builder.Configuration["Configs:IsRunningInContainer"] ?? "false");
 
             if (!builder.Environment.IsDevelopment()) // Apply redirection only in Staging/Prod
             {

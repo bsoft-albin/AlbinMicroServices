@@ -1,4 +1,4 @@
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
@@ -7,7 +7,30 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
+int HTTP_PORT = int.Parse(builder.Configuration["Configs:HttpPort"] ?? "8005");
+int HTTPS_PORT = int.Parse(builder.Configuration["Configs:HttpsPort"] ?? "8006");
+bool IsRunsInContainer = bool.Parse(builder.Configuration["Configs:IsRunningInContainer"] ?? "false");
+
+if (!builder.Environment.IsDevelopment()) // Apply redirection only in Staging/Prod
+{
+    builder.Services.AddHttpsRedirection(options =>
+    {
+        options.HttpsPort = HTTPS_PORT; // Redirect HTTP to HTTPS in non-dev environments
+    });
+}
+
+// Configure Kestrel to listen on both HTTP and HTTPS
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.AddServerHeader = false; // Removes "Server: Kestrel" from response headers
+    options.ListenAnyIP(HTTP_PORT); // HTTP
+    options.ListenAnyIP(HTTPS_PORT, listenOptions =>
+    {
+        listenOptions.UseHttps(); // Enable HTTPS
+    });
+});
+
+WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -16,7 +39,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// Redirect HTTP to HTTPS
+if (!app.Environment.IsDevelopment()) // Only force HTTPS in Staging and Production
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseAuthorization();
 

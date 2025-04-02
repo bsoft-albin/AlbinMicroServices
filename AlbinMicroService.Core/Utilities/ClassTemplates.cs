@@ -2,7 +2,13 @@
 {
     public class ValidatorTemplate
     {
+        /// <summary>
+        /// Gets or sets the IsValidated
+        /// </summary>
         public bool IsValidated { get; set; }
+        /// <summary>
+        /// Gets or sets the List of Errors
+        /// </summary>
         public List<string> Errors { get; set; } = [];
     }
 

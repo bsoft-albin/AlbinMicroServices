@@ -1,27 +1,24 @@
-# Use .NET SDK image for building the application
+# Use official .NET SDK image for building
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
-# Copy only the required project files
-COPY ../AlbinMicroService.Gateway/AlbinMicroService.Gateway.csproj AlbinMicroService.Gateway/
+# Copy everything and build
+COPY . .
+RUN dotnet restore
+RUN dotnet publish -c Release -o out
 
-# Restore dependencies
-RUN dotnet restore "AlbinMicroService.Gateway/AlbinMicroService.Gateway.csproj"
-
-# Copy everything
-COPY ../ .
-
-# Build the application
-WORKDIR /app/AlbinMicroService.Gateway
-RUN dotnet build -c Release -o /app/build
-
-# Publish the application
-RUN dotnet publish -c Release -o /app/publish
-
-# Use runtime image for final deployment
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+# Use runtime image for running the app
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
-COPY --from=build /app/publish .
 
-# Run the application
+# Set ASP.NET Core environment variable
+ENV ASPNETCORE_ENVIRONMENT=Development
+
+COPY --from=build /app/out ./
+
+# Expose both HTTP and HTTPS
+EXPOSE 9001
+EXPOSE 9002
+
+# Run the Gateway API
 ENTRYPOINT ["dotnet", "AlbinMicroService.Gateway.dll"]
