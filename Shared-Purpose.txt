@@ -1,0 +1,17 @@
+
+// Building Blocks // Common abstractions, interfaces, utilities
+
+Common.Logging/
+Common.Security/
+Common.Resilience/
+
+
+=======================================
+
+
+/SharedKernel                // Common entities, value objects, exceptions
+
+
+=====================================
+
+/EventBus                    // Event bus for inter-service communication (e.g., MassTransit)
