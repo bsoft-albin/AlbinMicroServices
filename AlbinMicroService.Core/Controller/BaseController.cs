@@ -196,7 +196,7 @@ namespace AlbinMicroService.Core.Controller
         protected IActionResult GetResponseHeaders()
         {
             // here in this response, make possible of sending all headers values of the Response.
-            Response.Headers.Add("X-Custom-Header", "CustomHeaderValue");
+            Response.Headers.Append("X-Custom-Header", "CustomHeaderValue");
             return Ok(Response.Headers);
         }
 
@@ -204,7 +204,7 @@ namespace AlbinMicroService.Core.Controller
         {
             return Ok(new
             {
-                Methods = AllowedHttpMethods.value,
+                Methods = AllowedHttpMethods.Value,
                 Description = "Allowed methods for this endpoint"
             });
         }

@@ -49,7 +49,7 @@
 
     public static class AllowedHttpMethods
     {
-        public static readonly string[] value = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"];
+        public static readonly string[] Value = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"];
     }
 
     public abstract class HttpStatusCodes
