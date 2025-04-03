@@ -5,7 +5,10 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new() { Title = "Administration Api", Version = "v1" });
+});
 
 int HTTP_PORT = int.Parse(builder.Configuration["Configs:HttpPort"] ?? "8005");
 int HTTPS_PORT = int.Parse(builder.Configuration["Configs:HttpsPort"] ?? "8006");
@@ -36,7 +39,11 @@ WebApplication app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Administration Api v1");
+        c.RoutePrefix = "swagger"; // This is critical for YARP routing
+    });
 }
 
 // Redirect HTTP to HTTPS

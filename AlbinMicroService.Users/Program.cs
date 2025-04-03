@@ -25,7 +25,11 @@ StaticMeths.SetGlobalWebAppMode(app.Environment.IsDevelopment(), app.Environment
 if ((app.Environment.IsDevelopment() || app.Environment.IsStaging()) && WebAppConfigs.Settings.Swagger.Enabled) // only show Swagger in Development and Staging [for Production Or Live using this [WebAppConfigs.Settings.Swagger.Enabled]]
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Users Api v1");
+        c.RoutePrefix = "swagger"; // This is critical for YARP routing
+    });
 }
 
 // Enable Serilog request logging (Optional but recommended)

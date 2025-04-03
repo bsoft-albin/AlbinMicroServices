@@ -11,4 +11,10 @@
     <PackageReference Include="Yarp.ReverseProxy" Version="2.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Envoy\" />
+    <Folder Include="Yarp\" />
+    <Folder Include="Ocelot\" />
+  </ItemGroup>
+
 </Project>

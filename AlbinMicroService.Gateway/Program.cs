@@ -3,11 +3,13 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 // Adding YARP Reverse Proxy
 builder.Services.AddReverseProxy().LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
-//// Add services to the container.
-//builder.Services.AddControllers();
-//// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
+//Add logging to see how requests are routed <= checking the YaRp logs
+if (builder.Environment.IsDevelopment()) {
+    builder.Services.AddLogging(logging => {
+        logging.AddConsole();
+        logging.AddDebug();
+    });
+}
 
 int HTTP_PORT = int.Parse(builder.Configuration["Configs:HttpPort"] ?? "9001");
 int HTTPS_PORT = int.Parse(builder.Configuration["Configs:HttpsPort"] ?? "9002");
@@ -40,21 +42,11 @@ if (!app.Environment.IsDevelopment()) // Only force HTTPS in Staging and Product
     app.UseHttpsRedirection();
 }
 
+// Enable endpoint routing
 app.UseRouting();
 
 app.MapReverseProxy(); // Enable YARP proxy
 
-// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//}
-
-//app.UseHttpsRedirection();
-
-//app.UseAuthorization();
-
-//app.MapControllers();
+app.MapGet("/", () => "AlbinMicroServices Gateway Started Running Successfully....");
 
 app.Run();

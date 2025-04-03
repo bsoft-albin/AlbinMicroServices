@@ -41,6 +41,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlbinMicroService.Core", "AlbinMicroService.Core\AlbinMicroService.Core.csproj", "{29EA9D81-ABAA-4DB0-9387-9327F56FBA24}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{CDF41C7D-67D9-4E07-91C9-87187CE88FC6}"
+	ProjectSection(SolutionItems) = preProject
+		ComposerDocker.txt = ComposerDocker.txt
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Kubernetes", "Kubernetes", "{DAC7FD5B-AB14-4C5B-BAB8-81E232CCA179}"
 EndProject

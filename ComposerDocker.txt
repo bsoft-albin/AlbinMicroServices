@@ -1,19 +1,22 @@
+
+# Worked Sample Dockerfile for Users Service. (i think only for indepednent docker hosting only this works)
+
 # Use .NET SDK image for building the application
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
 # Copy only the required project files to leverage caching
-COPY AlbinMicroService.Administration/AlbinMicroService.Administration.csproj AlbinMicroService.Administration/
+COPY AlbinMicroService.Users/AlbinMicroService.Users.csproj AlbinMicroService.Users/
 COPY AlbinMicroService.Core/AlbinMicroService.Core.csproj AlbinMicroService.Core/
 
 # Restore dependencies
-RUN dotnet restore "AlbinMicroService.Administration/AlbinMicroService.Administration.csproj"
+RUN dotnet restore "AlbinMicroService.Users/AlbinMicroService.Users.csproj"
 
 # Copy the full source code
 COPY . .
 
 # Build the application
-WORKDIR /app/AlbinMicroService.Administration
+WORKDIR /app/AlbinMicroService.Users
 RUN dotnet build -c Release -o /app/build
 
 # Publish the application
@@ -30,5 +33,4 @@ ENV ASPNETCORE_ENVIRONMENT=Development
 COPY --from=build /app/publish .
 
 # Run the application
-ENTRYPOINT ["dotnet", "AlbinMicroService.Administration.dll"]
-
+ENTRYPOINT ["dotnet", "AlbinMicroService.Users.dll"]
