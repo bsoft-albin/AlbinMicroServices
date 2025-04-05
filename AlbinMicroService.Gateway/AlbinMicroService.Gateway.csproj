@@ -7,14 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Ocelot" Version="23.4.3" />
+    <PackageReference Include="Ocelot.Provider.Polly" Version="23.4.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
-    <PackageReference Include="Yarp.ReverseProxy" Version="2.3.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Envoy\" />
     <Folder Include="Yarp\" />
-    <Folder Include="Ocelot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AlbinMicroService.Kernel\AlbinMicroService.Kernel.csproj" />
   </ItemGroup>
 
 </Project>

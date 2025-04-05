@@ -1,0 +1,39 @@
+{
+    "Routes": [
+        {
+            "DownstreamPathTemplate": "/api/Users/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 8001
+                }
+            ],
+            "UpstreamPathTemplate": "/user/api/users-service/{everything}",
+            "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+            "QoSOptions": {
+                "ExceptionsAllowedBeforeBreaking": 3,
+                "DurationOfBreak": 1000,
+                "TimeoutValue": 5000
+            },
+            "LoadBalancerOptions": {
+                "Type": "RoundRobin"
+            },
+            "RateLimitOptions": {
+                "ClientWhitelist": [],
+                "EnableRateLimiting": true,
+                "Period": "1s",
+                "Limit": 100
+            }
+        }
+    ],
+    "GlobalConfiguration": {
+        "BaseUrl": "http://localhost:9001",
+        "RequestIdKey": "X-Request-Id",
+        "RateLimitOptions": {
+            "DisableRateLimitHeaders": false,
+            "QuotaExceededMessage": "Too many requests",
+            "HttpStatusCode": 429
+        }
+    }
+}
