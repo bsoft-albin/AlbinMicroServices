@@ -9,13 +9,14 @@ using Serilog;
 
 namespace AlbinMicroService.Users.Domain
 {
-    public static class UsersDependencyContainer
+    public static class UserServiceDiscoveryAndConfigs
     {
         public static WebApplicationBuilder AddDefaultServices(this WebApplicationBuilder builder)
         {
             int HTTP_PORT = int.Parse(builder.Configuration["Configs:HttpPort"] ?? "8001");
             int HTTPS_PORT = int.Parse(builder.Configuration["Configs:HttpsPort"] ?? "8002");
             bool IsRunsInContainer = bool.Parse(builder.Configuration["Configs:IsRunningInContainer"] ?? "false");
+            bool IsHavingTLS = bool.Parse(builder.Configuration["Configs:IsHavingSSL"] ?? "false");
 
             if (!builder.Environment.IsDevelopment()) // Apply redirection only in Staging/Prod
             {
@@ -30,10 +31,13 @@ namespace AlbinMicroService.Users.Domain
             {
                 options.AddServerHeader = false; // to remove the server: Kestrel from the api response headers. 
                 options.ListenAnyIP(HTTP_PORT); // HTTP
-                options.ListenAnyIP(HTTPS_PORT, listenOptions =>
-                {
-                    listenOptions.UseHttps(); // Enable HTTPS
-                });
+                if (IsHavingTLS || !builder.Environment.IsDevelopment())
+                { // only enable HTTPS if IsHavingTLS is true or the mode will be staging or production
+                    options.ListenAnyIP(HTTPS_PORT, listenOptions =>
+                    {
+                        listenOptions.UseHttps(); // Enable HTTPS
+                    });
+                }
             });
 
             // Add services to the container.

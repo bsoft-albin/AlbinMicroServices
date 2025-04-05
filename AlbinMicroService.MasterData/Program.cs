@@ -12,6 +12,7 @@ builder.Services.AddSwaggerGen(c =>
 int HTTP_PORT = int.Parse(builder.Configuration["Configs:HttpPort"] ?? "8003");
 int HTTPS_PORT = int.Parse(builder.Configuration["Configs:HttpsPort"] ?? "8004");
 bool IsRunsInContainer = bool.Parse(builder.Configuration["Configs:IsRunningInContainer"] ?? "false");
+bool IsHavingTLS = bool.Parse(builder.Configuration["Configs:IsHavingSSL"] ?? "false");
 
 if (!builder.Environment.IsDevelopment()) // Apply redirection only in Staging/Prod
 {
@@ -26,10 +27,13 @@ builder.WebHost.ConfigureKestrel(options =>
 {
     options.AddServerHeader = false; // Removes "Server: Kestrel" from response headers
     options.ListenAnyIP(HTTP_PORT); // HTTP
-    options.ListenAnyIP(HTTPS_PORT, listenOptions =>
-    {
-        listenOptions.UseHttps(); // Enable HTTPS
-    });
+    if (IsHavingTLS || !builder.Environment.IsDevelopment())
+    { // only enable HTTPS if IsHavingTLS is true or the mode will be staging or production
+        options.ListenAnyIP(HTTPS_PORT, listenOptions =>
+        {
+            listenOptions.UseHttps(); // Enable HTTPS
+        });
+    }
 });
 
 WebApplication app = builder.Build();
