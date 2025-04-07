@@ -77,6 +77,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Caching", "Caching", "{C78B794E-A42E-4770-B8BB-2858F3DF2C84}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{85528B8E-B7C1-4EB1-AB25-BD8CD5CEDB9C}"
+	ProjectSection(SolutionItems) = preProject
+		CommonLibs.cs = CommonLibs.cs
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messaging", "Messaging", "{89E20123-AD54-4004-B235-A11D9501D135}"
 EndProject

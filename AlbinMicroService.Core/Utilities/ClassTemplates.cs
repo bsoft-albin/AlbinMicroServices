@@ -12,6 +12,15 @@
         public List<string> Errors { get; set; } = [];
     }
 
+    public class WebAppBuilderConfigTemplate
+    {
+        public bool IsHavingSSL { get; set; }
+        public bool IsRunningInContainer { get; set; }
+        public int HttpsPort { get; set; }
+        public int HttpPort { get; set; }
+        public List<int> Ports { get; set; } = [];
+    }
+
     public class EmailTemplate(int smtpPort, string smtpServer, string fromEmail, string emailPassword, string toEmail)
     {
         /// <summary>

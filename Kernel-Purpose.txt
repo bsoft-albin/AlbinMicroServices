@@ -3,7 +3,7 @@ What to Include in the Kernel?
 
 Logging & Monitoring (e.g., Serilog, AppInsights)
 Exception Handling (Global middleware, structured logging)
-Dependency Injection (DI container setup), Consul (Dynamic Service Discovery), somehting like Service Registery.
+Dependency Injection (DI container setup), Consul (Dynamic Service Discovery), something like Service Registery.
 Configuration Management (appsettings.json, environment variables)
 
 Example Kernel Component (Exception Handling)
