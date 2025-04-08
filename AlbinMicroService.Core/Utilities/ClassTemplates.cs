@@ -15,6 +15,7 @@
     public class WebAppBuilderConfigTemplate
     {
         public bool IsHavingSSL { get; set; }
+        public bool IsSwaggerEnabled { get; set; }
         public bool IsRunningInContainer { get; set; }
         public int HttpsPort { get; set; }
         public string ApiVersion { get; set; } = null!;

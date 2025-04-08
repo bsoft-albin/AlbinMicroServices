@@ -16,6 +16,7 @@ namespace AlbinMicroService.Kernel.DependencySetups
                 IsRunningInContainer = bool.Parse(configuration["Configs:IsRunningInContainer"]),
                 ApiVersion = configuration["Configs:ApiVersion"] ?? "v1",
                 ApiTitle = configuration["Configs:ApiTitle"] ?? "AlbinMicroServices Api's",
+                IsSwaggerEnabled = bool.Parse(configuration["Swagger:Enabled"]),
             };
 #pragma warning restore CS8604 // Possible null reference argument.
 

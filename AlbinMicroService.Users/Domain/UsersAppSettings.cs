@@ -28,6 +28,7 @@
         public string Audience { get; init; } = string.Empty;
         public int TokenExpiryMinutes { get; init; }
     }
+
     public class MailSettings
     {
         public string EmailPassword { get; init; } = string.Empty;

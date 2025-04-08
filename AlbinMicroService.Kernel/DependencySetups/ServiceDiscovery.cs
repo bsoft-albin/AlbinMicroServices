@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -59,13 +60,13 @@ namespace AlbinMicroService.Kernel.DependencySetups
             //Setting the Web App Mode.
             StaticMeths.SetGlobalWebAppMode(env.IsDevelopment(), env.IsStaging(), env.IsProduction());
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage(); // Only in Development
-            }
+            IConfiguration configuration = host.Services.GetRequiredService<IConfiguration>();
+
+            bool isSwaggerEnabled = bool.Parse(configuration["Swagger:Enabled"] ?? "false"); // Check if Swagger is enabled in the configuration
 
             // Configure the HTTP request pipeline.
-            if (env.IsDevelopment() || env.IsStaging()) // only show Swagger in Development and Staging
+
+            if ((env.IsDevelopment() || env.IsStaging()) && isSwaggerEnabled) // only show Swagger in Development and Staging [for Production Or Live using this ["Swagger:Enabled"]]
             {
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
@@ -80,6 +81,12 @@ namespace AlbinMicroService.Kernel.DependencySetups
             {
                 app.UseHttpsRedirection();
             }
+            else
+            {
+                app.UseDeveloperExceptionPage(); // Only in Development
+            }
+
+            app.UseSerilogRequestLogging(); // Enable Serilog request logging (Optional but recommended)
 
             app.UseAuthorization();
 
