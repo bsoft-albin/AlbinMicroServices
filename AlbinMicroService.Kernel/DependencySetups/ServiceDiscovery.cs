@@ -1,22 +1,103 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using AlbinMicroService.Core.Utilities;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace AlbinMicroService.Kernel.DependencySetups
 {
     public static class ServiceDiscovery
     {
-        public static IServiceCollection AddKernelServices(this IServiceCollection Services)
+        public static void AddKernelServices(this IHostApplicationBuilder builder, IWebHostBuilder webHost, WebAppBuilderConfigTemplate configTemplate)
         {
+            IServiceCollection Services = builder.Services;
+
+            builder.Logging.ClearProviders(); // Remove all default logging providers
+
+            if (!builder.Environment.IsDevelopment()) // Apply redirection only in Staging/Prod
+            {
+                builder.Services.AddHttpsRedirection(options =>
+                {
+                    options.HttpsPort = configTemplate.HttpsPort; // Redirect HTTP to HTTPS in non-dev environments
+                });
+            }
+
+            // Configure Kestrel to listen on both HTTP and HTTPS
+            webHost.ConfigureKestrel(options =>
+            {
+                options.AddServerHeader = false; // to remove the server: Kestrel from the api response headers. 
+                options.ListenAnyIP(configTemplate.HttpPort); // HTTP
+                if (configTemplate.IsHavingSSL || !builder.Environment.IsDevelopment())
+                { // only enable HTTPS if IsHavingTLS is true or the mode will be staging or production
+                    options.ListenAnyIP(configTemplate.HttpsPort, listenOptions =>
+                    {
+                        listenOptions.UseHttps(); // Enable HTTPS
+                    });
+                }
+            });
+
             // Add Controllers to the container.
             Services.AddControllers();
 
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             Services.AddEndpointsApiExplorer();
             Services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new() { Title = "Users Api", Version = "v1" });
+                c.SwaggerDoc(configTemplate.ApiVersion, new()
+                {
+                    Title = configTemplate.ApiTitle,
+                    Version = configTemplate.ApiVersion
+                });
             });
 
-            return Services;
+        }
+
+        public static void UseKernelMiddlewares(this IApplicationBuilder app, IHost host, IEndpointRouteBuilder route, IWebHostEnvironment env)
+        {
+            //Setting the Web App Mode.
+            StaticMeths.SetGlobalWebAppMode(env.IsDevelopment(), env.IsStaging(), env.IsProduction());
+
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage(); // Only in Development
+            }
+
+            // Configure the HTTP request pipeline.
+            if (env.IsDevelopment() || env.IsStaging()) // only show Swagger in Development and Staging
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{env.ApplicationName[18..]} Api v1");
+                    c.RoutePrefix = "swagger";
+                });
+            }
+
+            // Redirect HTTP to HTTPS
+            if (!env.IsDevelopment()) // Only force HTTPS in Staging and Production
+            {
+                app.UseHttpsRedirection();
+            }
+
+            app.UseAuthorization();
+
+            route.MapControllers();
+
+            host.Run();
+        }
+
+        public static void AddSeriloggings(this IHostApplicationBuilder builder, IHostBuilder host)
+        {
+            // Remove all default logging providers
+            builder.Logging.ClearProviders();
+
+            // Configuring Only Logger as Serilog
+            host.UseSerilog((context, config) =>
+            {
+                config.ReadFrom.Configuration(context.Configuration);
+            });
         }
     }
 }

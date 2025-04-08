@@ -1,4 +1,4 @@
-﻿namespace AlbinMicroService.Kernel.Loggings
+﻿namespace AlbinMicroService.Core.Loggings
 {
     public class RequestIdHandler : DelegatingHandler
     {

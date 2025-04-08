@@ -13,7 +13,9 @@ namespace AlbinMicroService.Kernel.DependencySetups
                 HttpPort = int.Parse(configuration["Configs:HttpPort"]),
                 HttpsPort = int.Parse(configuration["Configs:HttpsPort"]),
                 IsHavingSSL = bool.Parse(configuration["Configs:IsHavingSSL"]),
-                IsRunningInContainer = bool.Parse(configuration["Configs:IsRunningInContainer"])
+                IsRunningInContainer = bool.Parse(configuration["Configs:IsRunningInContainer"]),
+                ApiVersion = configuration["Configs:ApiVersion"] ?? "v1",
+                ApiTitle = configuration["Configs:ApiTitle"] ?? "AlbinMicroServices Api's",
             };
 #pragma warning restore CS8604 // Possible null reference argument.
 

@@ -1,5 +1,5 @@
 ﻿using System.Text.Json;
-using AlbinMicroService.Kernel.Loggings;
+using AlbinMicroService.Core.Loggings;
 using Ocelot.DependencyInjection;
 using Ocelot.Provider.Polly;
 
@@ -22,13 +22,13 @@ namespace AlbinMicroService.Gateway.Ocelot
 
             foreach (string file in new[] { usersConfig, mastersConfig, adminConfig })
             {
-                var json = File.ReadAllText(file);
-                var config = JsonSerializer.Deserialize<JsonElement>(json);
+                string json = File.ReadAllText(file);
+                JsonElement config = JsonSerializer.Deserialize<JsonElement>(json);
 
-                var routes = config.GetProperty("Routes").EnumerateArray();
+                JsonElement.ArrayEnumerator routes = config.GetProperty("Routes").EnumerateArray();
 
                 // Convert each JsonElement to dynamic and add to the list
-                foreach (var route in routes)
+                foreach (JsonElement route in routes)
                 {
                     allRoutes.Add(route);
                 }

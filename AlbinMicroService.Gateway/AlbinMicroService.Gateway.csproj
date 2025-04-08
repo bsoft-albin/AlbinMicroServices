@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AlbinMicroService.Kernel\AlbinMicroService.Kernel.csproj" />
+    <ProjectReference Include="..\AlbinMicroService.Core\AlbinMicroService.Core.csproj" />
   </ItemGroup>
 
 </Project>
