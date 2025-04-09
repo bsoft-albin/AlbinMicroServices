@@ -16,6 +16,4 @@ public static class ExceptionMiddleware
     }
 }
 
-
-
  Kernel (Foundation Layer) ==> Provides basic utilities like logging, DI, and exception handling.

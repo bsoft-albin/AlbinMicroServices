@@ -1,3 +1,5 @@
+﻿
+
 
 Building Blocks are higher-level components that provide reusable features to microservices. 
 They sit on top of the Kernel and help implement common patterns.
