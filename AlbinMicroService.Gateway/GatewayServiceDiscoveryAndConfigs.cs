@@ -1,15 +1,19 @@
-﻿using AlbinMicroService.Gateway.Ocelot;
+﻿using AlbinMicroService.Core.Utilities;
+using AlbinMicroService.Gateway.Ocelot;
 
 namespace AlbinMicroService.Gateway
 {
     public static class GatewayServiceDiscoveryAndConfigs
     {
-        public static void AddDefaultServices(this WebApplicationBuilder builder)
+        public static WebAppBuilderConfigTemplate AddDefaultServices(this WebApplicationBuilder builder)
         {
-            int HTTP_PORT = int.Parse(builder.Configuration["Configs:HttpPort"] ?? "9001");
-            int HTTPS_PORT = int.Parse(builder.Configuration["Configs:HttpsPort"] ?? "9002");
-            bool IsRunsInContainer = bool.Parse(builder.Configuration["Configs:IsRunningInContainer"] ?? "false");
-            bool IsHavingTLS = bool.Parse(builder.Configuration["Configs:IsHavingSSL"] ?? "false");
+            WebAppBuilderConfigTemplate configTemplate = new()
+            {
+                IsHavingSSL = bool.Parse(builder.Configuration["Configs:IsHavingSSL"] ?? "false"),
+                IsRunningInContainer = bool.Parse(builder.Configuration["Configs:IsRunningInContainer"] ?? "false"),
+                HttpsPort = int.Parse(builder.Configuration["Configs:HttpsPort"] ?? "9002"),
+                HttpPort = int.Parse(builder.Configuration["Configs:HttpPort"] ?? "9001")
+            };
 
             // adding Ocelot configuration to the builder
             builder.AddOcelotConfigurations();
@@ -18,7 +22,7 @@ namespace AlbinMicroService.Gateway
             {
                 builder.Services.AddHttpsRedirection(options =>
                 {
-                    options.HttpsPort = HTTPS_PORT; // Redirect HTTP to HTTPS in non-dev environments
+                    options.HttpsPort = configTemplate.HttpsPort; // Redirect HTTP to HTTPS in non-dev environments
                 });
             }
 
@@ -26,15 +30,17 @@ namespace AlbinMicroService.Gateway
             builder.WebHost.ConfigureKestrel(options =>
             {
                 options.AddServerHeader = false; // Removes "Server: Kestrel" from response headers
-                options.ListenAnyIP(HTTP_PORT); // HTTP
-                if (IsHavingTLS || !builder.Environment.IsDevelopment())
+                options.ListenAnyIP(configTemplate.HttpPort); // HTTP
+                if (configTemplate.IsHavingSSL || !builder.Environment.IsDevelopment())
                 { // only enable HTTPS if IsHavingTLS is true or the mode will be staging or production
-                    options.ListenAnyIP(HTTPS_PORT, listenOptions =>
+                    options.ListenAnyIP(configTemplate.HttpsPort, listenOptions =>
                     {
                         listenOptions.UseHttps(); // Enable HTTPS
                     });
                 }
             });
+
+            return configTemplate;
         }
     }
 }

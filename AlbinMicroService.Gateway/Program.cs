@@ -1,14 +1,15 @@
+using AlbinMicroService.Core.Utilities;
 using AlbinMicroService.Gateway;
 using Ocelot.Middleware;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-builder.AddDefaultServices();
+WebAppBuilderConfigTemplate configs = builder.AddDefaultServices();
 
 WebApplication app = builder.Build();
 
 // Redirect HTTP to HTTPS
-if (!app.Environment.IsDevelopment()) // Only force HTTPS in Staging and Production
+if (!app.Environment.IsDevelopment() && configs.IsHavingSSL) // Only force HTTPS in Staging and Production
 {
     app.UseHttpsRedirection();
 }
@@ -19,8 +20,6 @@ else
 
 // Enable endpoint routing
 app.UseRouting();
-
-app.MapGet("/", () => "AlbinMicroServices Gateway Started Running Successfully....");
 
 await app.UseOcelot();
 

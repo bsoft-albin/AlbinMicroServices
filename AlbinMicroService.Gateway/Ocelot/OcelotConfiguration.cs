@@ -7,7 +7,7 @@ namespace AlbinMicroService.Gateway.Ocelot
 {
     public static class OcelotConfiguration
     {
-        public static WebApplicationBuilder AddOcelotConfigurations(this WebApplicationBuilder builder)
+        public static void AddOcelotConfigurations(this WebApplicationBuilder builder)
         {
             // 1. Create new config object to combine all route configs
             string environment = builder.Environment.EnvironmentName;
@@ -55,8 +55,6 @@ namespace AlbinMicroService.Gateway.Ocelot
             // 5. Load Ocelot config from merged file
             builder.Configuration.AddJsonFile(mergedPath, optional: false, reloadOnChange: true);
             builder.Services.AddOcelot().AddPolly().AddDelegatingHandler<RequestIdHandler>(true); // optional: tracking handler;
-
-            return builder;
         }
     }
 }

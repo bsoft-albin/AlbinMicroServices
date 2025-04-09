@@ -25,6 +25,19 @@
                 "Period": "1s",
                 "Limit": 100
             }
+        },
+        {
+            "DownstreamPathTemplate": "/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 8005
+                }
+            ],
+            "UpstreamPathTemplate": "/{everything}",
+            "UpstreamHttpMethod": [ "GET" ],
+            "RouteIsCaseSensitive": false
         }
     ],
     "GlobalConfiguration": {
