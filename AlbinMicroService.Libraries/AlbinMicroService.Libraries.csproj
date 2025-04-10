@@ -10,8 +10,11 @@
     <Folder Include="BuildingBlocks\Authentication\" />
     <Folder Include="BuildingBlocks\Caching\" />
     <Folder Include="BuildingBlocks\Messaging\" />
-    <Folder Include="Common\" />
     <Folder Include="DesignPatterns\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AlbinMicroService.Core\AlbinMicroService.Core.csproj" />
   </ItemGroup>
 
 </Project>

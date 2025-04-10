@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AlbinMicroService.Core\AlbinMicroService.Core.csproj" />
     <ProjectReference Include="..\AlbinMicroService.Libraries\AlbinMicroService.Libraries.csproj" />
   </ItemGroup>
 
