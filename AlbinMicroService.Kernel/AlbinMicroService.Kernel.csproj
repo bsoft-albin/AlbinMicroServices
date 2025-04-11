@@ -16,4 +16,10 @@
     <ProjectReference Include="..\AlbinMicroService.Libraries\AlbinMicroService.Libraries.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Middlewares\" />
+    <Folder Include="DynamicServiceDiscovery\" />
+    <Folder Include="AppInsights\" />
+  </ItemGroup>
+
 </Project>

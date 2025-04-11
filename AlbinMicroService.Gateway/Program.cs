@@ -22,10 +22,7 @@ if (app.Environment.IsDevelopment())
 if ((app.Environment.IsDevelopment() || app.Environment.IsStaging()) && configs.IsSwaggerEnabled)
 {
     app.UseSwagger();
-    app.UseSwaggerForOcelotUI(opt =>
-    {
-        opt.PathToSwaggerGenerator = "/swagger/docs"; // required for SwaggerForOcelot
-    });
+    app.UseSwaggerForOcelotUI();
 }
 
 // Enable endpoint routing

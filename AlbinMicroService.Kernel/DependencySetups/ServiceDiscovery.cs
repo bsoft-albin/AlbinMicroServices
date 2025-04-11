@@ -40,6 +40,9 @@ namespace AlbinMicroService.Kernel.DependencySetups
                 }
             });
 
+            //adding common DI services to Container.
+            Services.AddSingletonServices().AddScopedServices().AddTransientServices();
+
             // Add Controllers to the container.
             Services.AddControllers();
 

@@ -1,5 +1,6 @@
 ﻿using AlbinMicroService.Core.Utilities;
 using AlbinMicroService.Gateway.Ocelot;
+using AlbinMicroService.Kernel.DependencySetups;
 
 namespace AlbinMicroService.Gateway
 {
@@ -7,19 +8,12 @@ namespace AlbinMicroService.Gateway
     {
         public static WebAppBuilderConfigTemplate AddDefaultServices(this WebApplicationBuilder builder)
         {
-            WebAppBuilderConfigTemplate configTemplate = new()
-            {
-                IsHavingSSL = bool.Parse(builder.Configuration["Configs:IsHavingSSL"] ?? "false"),
-                IsRunningInContainer = bool.Parse(builder.Configuration["Configs:IsRunningInContainer"] ?? "false"),
-                HttpsPort = int.Parse(builder.Configuration["Configs:HttpsPort"] ?? "9002"),
-                HttpPort = int.Parse(builder.Configuration["Configs:HttpPort"] ?? "9001"),
-                IsSwaggerEnabled = bool.Parse(builder.Configuration["Swagger:Enabled"] ?? "false"),
-            };
-
-            builder.Services.AddSwaggerForOcelot(builder.Configuration);
+            WebAppBuilderConfigTemplate configTemplate = ConfigurationSetup.BindSettings(builder.Configuration);
 
             // adding Ocelot configuration to the builder
             builder.AddOcelotConfigurations();
+
+            builder.Services.AddSwaggerForOcelot(builder.Configuration);
 
             if (!builder.Environment.IsDevelopment()) // Apply redirection only in Staging/Prod
             {

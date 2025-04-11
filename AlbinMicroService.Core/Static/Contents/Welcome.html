@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Albin MicroServices</title>
+
+    <!-- Favicon: Gateway Icon -->
+    <link rel="icon" type="image/svg+xml" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f6aa.svg" />
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #e0eafc, #cfdef3);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(to right, #182848, #4b6cb7);
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        main {
+            flex: 1;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        ul.services {
+            list-style-type: none;
+            padding: 0;
+        }
+
+            ul.services li {
+                margin: 1rem 0;
+            }
+
+                ul.services li a {
+                    text-decoration: none;
+                    color: #0077cc;
+                    font-size: 1.2rem;
+                    transition: color 0.3s;
+                }
+
+                    ul.services li a:hover {
+                        color: #005999;
+                    }
+
+        footer {
+            background-color: #1c1c1c;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        .glow {
+            font-size: 1.5rem;
+            color: #4b6cb7;
+            animation: glow 2s ease-in-out infinite alternate;
+            margin-top: 2rem;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #4b6cb7, 0 0 10px #4b6cb7;
+            }
+
+            to {
+                text-shadow: 0 0 20px #4b6cb7, 0 0 30px #4b6cb7;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>Albin MicroServices</header>
+
+    <main>
+        <ul class="services">
+            <li><a href="#">Users Services</a></li>
+            <li><a href="#">Administration Services</a></li>
+            <li><a href="#">MasterData Services</a></li>
+        </ul>
+
+        <div class="glow">🚀 Serving Innovation, One Microservice at a Time!</div>
+    </main>
+
+    <footer>
+        © <span id="year"></span> Albin MicroServices. All rights reserved.
+    </footer>
+
+    <script>
+        // Set current year dynamically
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

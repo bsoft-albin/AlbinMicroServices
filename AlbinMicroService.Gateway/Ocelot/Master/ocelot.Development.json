@@ -26,19 +26,6 @@
                 "Period": "1s",
                 "Limit": 100
             }
-        },
-        {
-            "DownstreamPathTemplate": "/swagger/v1/swagger.json",
-            "DownstreamScheme": "http",
-            "DownstreamHostAndPorts": [
-                {
-                    "Host": "localhost",
-                    "Port": 8003
-                }
-            ],
-            "UpstreamPathTemplate": "/master/swagger/v1/swagger.json",
-            "UpstreamHttpMethod": [ "GET" ],
-            "SwaggerKey": "MasterService"
         }
     ],
     "GlobalConfiguration": {
