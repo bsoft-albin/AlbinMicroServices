@@ -11,6 +11,7 @@
             ],
             "UpstreamPathTemplate": "/admin/api/admin-service/{everything}",
             "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+            "SwaggerKey": "AdminService",
             "QoSOptions": {
                 "ExceptionsAllowedBeforeBreaking": 3,
                 "DurationOfBreak": 1000,
@@ -37,7 +38,21 @@
             ],
             "UpstreamPathTemplate": "/{everything}",
             "UpstreamHttpMethod": [ "GET" ],
+            "SwaggerKey": "AdminService",
             "RouteIsCaseSensitive": false
+        },
+        {
+            "DownstreamPathTemplate": "/swagger/v1/swagger.json",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 8005
+                }
+            ],
+            "UpstreamPathTemplate": "/admin/swagger/v1/swagger.json",
+            "UpstreamHttpMethod": [ "GET" ],
+            "SwaggerKey": "AdminService"
         }
     ],
     "GlobalConfiguration": {

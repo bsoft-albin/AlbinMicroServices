@@ -16,6 +16,8 @@ namespace AlbinMicroService.Gateway.Ocelot
             string mastersConfig = $"Ocelot/Master/ocelot.{environment}.json";
             string adminConfig = $"Ocelot/Admin/ocelot.{environment}.json";
 
+            string swaggerOcelotConfig = $"Ocelot/ocelot.Swagger.json";
+
             // 2. Read and merge the route arrays
             List<dynamic> allRoutes = [];
             dynamic globalConfig = null!;
@@ -53,7 +55,7 @@ namespace AlbinMicroService.Gateway.Ocelot
             File.WriteAllText(mergedPath, finalJson);
 
             // 5. Load Ocelot config from merged file
-            builder.Configuration.AddJsonFile(mergedPath, optional: false, reloadOnChange: true);
+            builder.Configuration.AddJsonFile(mergedPath, optional: false, reloadOnChange: true).AddJsonFile(swaggerOcelotConfig, optional: false, reloadOnChange: true);
             builder.Services.AddOcelot().AddPolly().AddDelegatingHandler<RequestIdHandler>(true); // optional: tracking handler;
         }
     }

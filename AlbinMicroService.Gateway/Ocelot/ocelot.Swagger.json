@@ -1,0 +1,34 @@
+{
+    "SwaggerEndPoints": [
+        {
+            "Key": "UserService",
+            "Config": [
+                {
+                    "Name": "User Service",
+                    "Version": "v1",
+                    "Url": "/user/swagger/v1/swagger.json"
+                }
+            ]
+        },
+        {
+            "Key": "AdminService",
+            "Config": [
+                {
+                    "Name": "Administration Service",
+                    "Version": "v1",
+                    "Url": "/admin/swagger/v1/swagger.json"
+                }
+            ]
+        },
+        {
+            "Key": "MasterService",
+            "Config": [
+                {
+                    "Name": "MasterData Service",
+                    "Version": "v1",
+                    "Url": "/master/swagger/v1/swagger.json"
+                }
+            ]
+        }
+    ]
+}

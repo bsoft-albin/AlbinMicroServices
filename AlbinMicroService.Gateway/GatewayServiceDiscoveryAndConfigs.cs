@@ -12,8 +12,11 @@ namespace AlbinMicroService.Gateway
                 IsHavingSSL = bool.Parse(builder.Configuration["Configs:IsHavingSSL"] ?? "false"),
                 IsRunningInContainer = bool.Parse(builder.Configuration["Configs:IsRunningInContainer"] ?? "false"),
                 HttpsPort = int.Parse(builder.Configuration["Configs:HttpsPort"] ?? "9002"),
-                HttpPort = int.Parse(builder.Configuration["Configs:HttpPort"] ?? "9001")
+                HttpPort = int.Parse(builder.Configuration["Configs:HttpPort"] ?? "9001"),
+                IsSwaggerEnabled = bool.Parse(builder.Configuration["Swagger:Enabled"] ?? "false"),
             };
+
+            builder.Services.AddSwaggerForOcelot(builder.Configuration);
 
             // adding Ocelot configuration to the builder
             builder.AddOcelotConfigurations();

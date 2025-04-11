@@ -13,9 +13,19 @@ if (!app.Environment.IsDevelopment() && configs.IsHavingSSL) // Only force HTTPS
 {
     app.UseHttpsRedirection();
 }
-else
+
+if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
+}
+
+if ((app.Environment.IsDevelopment() || app.Environment.IsStaging()) && configs.IsSwaggerEnabled)
+{
+    app.UseSwagger();
+    app.UseSwaggerForOcelotUI(opt =>
+    {
+        opt.PathToSwaggerGenerator = "/swagger/docs"; // required for SwaggerForOcelot
+    });
 }
 
 // Enable endpoint routing
