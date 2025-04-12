@@ -1,50 +1,52 @@
-version: '3.8'
-
 services:
   gateway:
+    container_name: gateway-container
     build:
-      context: ./AlbinMicroService.Gateway # Path to your API Gateway project
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: AlbinMicroService.Gateway/Dockerfile
+    image: gateway-image
     ports:
-      - "9001:9001" # HTTP
-      - "9002:9002" # HTTPS
+      - "9001:9001"
     depends_on:
-      - users
-      - master
-      - admin
+      - user-service
+      - master-service
+      - admin-service
     networks:
-      - microservices-network
+      - backend
 
-  users:
+  user-service:
+    container_name: user-container
     build:
-      context: ./AlbinMicroService.Users
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: AlbinMicroService.Users/Dockerfile
+    image: user-image
     ports:
-      - "8001:8001" # HTTP (Replace with the actual HTTP port from Program.cs)
-      - "8002:8002" # HTTPS (Replace with the actual HTTPS port from Program.cs)
+      - "8001:8001"
     networks:
-      - microservices-network
+      - backend
 
-  master:
+  master-service:
+    container_name: master-container
     build:
-      context: ./AlbinMicroService.MasterData
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: AlbinMicroService.MasterData/Dockerfile
+    image: master-image
     ports:
-      - "8003:8003" # HTTP
-      - "8004:8004" # HTTPS
+      - "8003:8003"
     networks:
-      - microservices-network
-      
-  admin:
+      - backend
+
+  admin-service:
+    container_name: admin-container
     build:
-      context: ./AlbinMicroService.Administration
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: AlbinMicroService.Administration/Dockerfile
+    image: admin-image
     ports:
-      - "8005:8005" # HTTP
-      - "8006:8006" # HTTPS
+      - "8005:8005"
     networks:
-      - microservices-network
+      - backend
 
 networks:
-  microservices-network:
+  backend:
     driver: bridge

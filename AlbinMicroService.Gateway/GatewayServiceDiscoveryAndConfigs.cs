@@ -10,6 +10,12 @@ namespace AlbinMicroService.Gateway
         {
             WebAppBuilderConfigTemplate configTemplate = ConfigurationSetup.BindSettings(builder.Configuration);
 
+            //you still need to call AddControllers() (or AddMvcCore()), even if you don’t have any controllers, because Swagger and SwaggerForOcelot depend
+            //on the IApiDescriptionProvider and related services, which are only registered when MVC services are added.
+            builder.Services.AddControllers(); //required for Swagger's internal deps
+            builder.Services.AddEndpointsApiExplorer(); //enables [ApiExplorer] features
+            builder.Services.AddSwaggerGen();
+
             // adding Ocelot configuration to the builder
             builder.AddOcelotConfigurations();
 

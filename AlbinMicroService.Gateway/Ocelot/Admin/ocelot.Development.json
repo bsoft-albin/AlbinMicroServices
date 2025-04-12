@@ -38,8 +38,7 @@
             ],
             "UpstreamPathTemplate": "/{everything}",
             "UpstreamHttpMethod": [ "GET" ],
-            "SwaggerKey": "AdminService",
-            "RouteIsCaseSensitive": false
+            "SwaggerKey": "AdminService"
         }
     ],
     "GlobalConfiguration": {
