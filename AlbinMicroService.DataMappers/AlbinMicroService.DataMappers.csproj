@@ -21,4 +21,8 @@
     <PackageReference Include="MySql.EntityFrameworkCore" Version="9.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AlbinMicroService.Core\AlbinMicroService.Core.csproj" />
+  </ItemGroup>
+
 </Project>

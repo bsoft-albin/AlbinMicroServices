@@ -1,6 +1,6 @@
 ﻿namespace AlbinMicroService.DataMappers
 {
-    public class Class1
+    public class ClassReference
     {
 
     }
