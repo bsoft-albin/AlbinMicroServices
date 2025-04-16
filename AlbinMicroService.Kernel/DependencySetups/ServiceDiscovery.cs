@@ -1,4 +1,5 @@
 ﻿using AlbinMicroService.Core.Utilities;
+using AlbinMicroService.Kernel.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
@@ -80,7 +81,7 @@ namespace AlbinMicroService.Kernel.DependencySetups
             }
 
             // Redirect HTTP to HTTPS
-            if (!env.IsDevelopment()) // Only force HTTPS in Staging and Production
+            if (!env.IsDevelopment()) // Only force HTTPS in Staging, Production, etc..
             {
                 app.UseHttpsRedirection();
             }
@@ -88,6 +89,9 @@ namespace AlbinMicroService.Kernel.DependencySetups
             {
                 app.UseDeveloperExceptionPage(); // Only in Development
             }
+
+            // custom Middlewares registration
+            app.UseMiddleware<RequireGatewayHeaderMiddleware>(); // Custom middleware to check for gateway header
 
             app.UseSerilogRequestLogging(); // Enable Serilog request logging (Optional but recommended)
 

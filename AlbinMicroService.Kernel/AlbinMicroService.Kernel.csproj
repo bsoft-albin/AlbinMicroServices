@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Middlewares\" />
     <Folder Include="DynamicServiceDiscovery\" />
     <Folder Include="AppInsights\" />
   </ItemGroup>

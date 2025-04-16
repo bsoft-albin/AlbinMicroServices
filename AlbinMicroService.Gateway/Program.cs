@@ -8,15 +8,17 @@ WebAppBuilderConfigTemplate configs = builder.AddDefaultServices();
 
 WebApplication app = builder.Build();
 
-// Redirect HTTP to HTTPS
-if (!app.Environment.IsDevelopment() && configs.IsHavingSSL) // Only force HTTPS in Staging and Production
-{
-    app.UseHttpsRedirection();
-}
-
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
+}
+else
+{
+    // Redirect HTTP to HTTPS
+    if (configs.IsHavingSSL)
+    {
+        app.UseHttpsRedirection();// Only force HTTPS in Staging, Production, etc..
+    }
 }
 
 if ((app.Environment.IsDevelopment() || app.Environment.IsStaging()) && configs.IsSwaggerEnabled)
