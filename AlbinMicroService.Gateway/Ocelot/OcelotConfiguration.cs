@@ -1,5 +1,4 @@
 ﻿using System.Text.Json;
-using AlbinMicroService.Core.Loggings;
 using AlbinMicroService.Kernel.Delegates;
 using Ocelot.DependencyInjection;
 using Ocelot.Provider.Polly;

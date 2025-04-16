@@ -17,8 +17,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="AppInsights\Loggings\Structured\" />
+    <Folder Include="AppInsights\Monitoring\" />
+    <Folder Include="AppInsights\Metrics\" />
+    <Folder Include="AppInsights\Alerting\" />
+    <Folder Include="AppInsights\Tracing\" />
     <Folder Include="DynamicServiceDiscovery\" />
-    <Folder Include="AppInsights\" />
   </ItemGroup>
 
 </Project>

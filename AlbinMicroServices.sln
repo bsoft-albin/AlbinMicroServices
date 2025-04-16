@@ -18,11 +18,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{E505424C-8F8
 		ReadMe.txt = ReadMe.txt
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{0E23CD06-7D4A-4DEF-8DC0-519B84DDC1CA}"
-	ProjectSection(SolutionItems) = preProject
-		Tools-Purpose.txt = Tools-Purpose.txt
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{3707D438-F034-4ABE-A840-C6AFE401CE88}"
 	ProjectSection(SolutionItems) = preProject
 		Shared-Purpose.txt = Shared-Purpose.txt
