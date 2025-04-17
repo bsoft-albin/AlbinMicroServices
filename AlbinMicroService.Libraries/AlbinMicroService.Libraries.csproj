@@ -10,7 +10,7 @@
     <Folder Include="BuildingBlocks\Authentication\" />
     <Folder Include="BuildingBlocks\Caching\" />
     <Folder Include="BuildingBlocks\Messaging\" />
-    <Folder Include="DesignPatterns\" />
+    <Folder Include="DesignPatterns\CQRS\" />
   </ItemGroup>
 
   <ItemGroup>
