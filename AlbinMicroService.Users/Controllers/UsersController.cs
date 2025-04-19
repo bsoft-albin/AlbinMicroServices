@@ -2,6 +2,7 @@
 using AlbinMicroService.Users.Application.Contracts;
 using AlbinMicroService.Users.Domain;
 using AlbinMicroService.Users.Domain.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -19,6 +20,7 @@ namespace AlbinMicroService.Users.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [ActionName("data-check")]
         public IActionResult HealthCheck()
         {

@@ -7,10 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="BuildingBlocks\Authentication\" />
     <Folder Include="BuildingBlocks\Caching\" />
     <Folder Include="BuildingBlocks\Messaging\" />
+    <Folder Include="Common\Exceptions\" />
+    <Folder Include="Common\ValueObjects\" />
     <Folder Include="DesignPatterns\CQRS\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.2" />
   </ItemGroup>
 
   <ItemGroup>

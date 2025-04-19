@@ -1,10 +1,11 @@
 namespace AlbinMicroService.Identity
 {
+    // Legacy Way of calling the program
     public class Program
     {
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
+            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddIdentityServer()
                 .AddInMemoryClients(Config.Clients)
@@ -12,11 +13,14 @@ namespace AlbinMicroService.Identity
                 .AddInMemoryApiResources(Config.ApiResources)
                 .AddInMemoryIdentityResources(Config.IdentityResources)
                 .AddTestUsers(Config.Users)
-                .AddDeveloperSigningCredential(); // for dev only
+                .AddDeveloperSigningCredential(); // for dev mode only
 
-            var app = builder.Build();
+            WebApplication app = builder.Build();
 
+            //using OAuth2 with Jwt
             app.UseIdentityServer();
+
+            app.MapGet("/", () => "Identity Server is running!");
             app.Run();
         }
     }

@@ -1,5 +1,6 @@
 ﻿using AlbinMicroService.Core.Utilities;
 using AlbinMicroService.Kernel.Middlewares;
+using AlbinMicroService.Libraries.BuildingBlocks.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
@@ -57,6 +58,8 @@ namespace AlbinMicroService.Kernel.DependencySetups
                 });
             });
 
+            // Add Authentication and Authorization services
+            Services.AddAuthSetup();
         }
 
         public static void UseKernelMiddlewares(this IApplicationBuilder app, IHost host, IEndpointRouteBuilder route, IWebHostEnvironment env)
@@ -95,6 +98,8 @@ namespace AlbinMicroService.Kernel.DependencySetups
 
             app.UseSerilogRequestLogging(); // Enable Serilog request logging (Optional but recommended)
 
+            //Auth Middlewares
+            app.UseAuthentication();
             app.UseAuthorization();
 
             route.MapControllers();

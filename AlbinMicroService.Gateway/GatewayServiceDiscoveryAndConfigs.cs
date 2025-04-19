@@ -1,6 +1,8 @@
 ﻿using AlbinMicroService.Core.Utilities;
 using AlbinMicroService.Gateway.Ocelot;
+using AlbinMicroService.Kernel.Delegates;
 using AlbinMicroService.Kernel.DependencySetups;
+using AlbinMicroService.Libraries.BuildingBlocks.Authentication;
 
 namespace AlbinMicroService.Gateway
 {
@@ -16,8 +18,16 @@ namespace AlbinMicroService.Gateway
             builder.Services.AddEndpointsApiExplorer(); //enables [ApiExplorer] features
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddMemoryCache();
+            builder.Services.AddSingleton<ITokenStoreService, TokenStoreService>();
+            builder.Services.AddTransient<TokenHandler>();
+
             // adding Ocelot configuration to the builder
             builder.AddOcelotConfigurations();
+
+            //adding our Token Client
+            builder.Services.AddSingleton<ITokenClient, TokenClient>();
 
             builder.Services.AddSwaggerForOcelot(builder.Configuration);
 
