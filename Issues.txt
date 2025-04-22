@@ -1,0 +1,13 @@
+1. OAuth With Jwt Authentication and Authorization
+ ==> The Refersh Token Logic Not working automatically when the user's Token Expired
+ ==> Also The Users token not storing in the In-Memory, instead we are sending it through Headers of Api Request.
+ ==> for first time Request calling , i am Getting 503 service unavailable error. then following it works fine.
+ ==> Check Throughly for all Services After the above Issues Fixed.
+
+ 2. Gateway Via Middleware 
+ ==> the Underlying Services are not to call directly from UI, the request must come from Gateway it works but , i override for Specific routes, that not 
+ working.
+
+ 3. Gateway Routing Working perfectly in Local browsers, but hosted in Docker, its not working, simillalry need to check with Nginx.
+
+ 4. Versioning need to do Properly.

@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateway", "ApiGateway", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{E505424C-8F8A-40FC-B64C-6340316547A9}"
 	ProjectSection(SolutionItems) = preProject
+		Issues.txt = Issues.txt
 		ReadMe.txt = ReadMe.txt
 	EndProjectSection
 EndProject
@@ -72,6 +73,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer", "IdentityS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlbinMicroService.Identity", "AlbinMicroService.Identity\AlbinMicroService.Identity.csproj", "{9E2181C8-FF1C-426C-AE46-CC22F106AE33}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PerformanceOrLoad.Tests", "PerformanceOrLoad.Tests", "{3BC0667D-3034-4C03-8F56-D3138730A526}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contract.Tests", "Contract.Tests", "{2A05357B-930D-410D-A056-C6FE3996125D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Security.Tests", "Security.Tests", "{0C2A5B8C-CCED-434B-8653-041D259658F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlbinMicroService.UnitTests", "AlbinMicroService.UnitTests\AlbinMicroService.UnitTests.csproj", "{3F29D18F-02DA-48D3-A1EB-C10AA23E6880}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -114,6 +123,10 @@ Global
 		{9E2181C8-FF1C-426C-AE46-CC22F106AE33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E2181C8-FF1C-426C-AE46-CC22F106AE33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E2181C8-FF1C-426C-AE46-CC22F106AE33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F29D18F-02DA-48D3-A1EB-C10AA23E6880}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F29D18F-02DA-48D3-A1EB-C10AA23E6880}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F29D18F-02DA-48D3-A1EB-C10AA23E6880}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F29D18F-02DA-48D3-A1EB-C10AA23E6880}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -143,6 +156,10 @@ Global
 		{429FEABE-4144-452F-87EA-5F2AD4418C65} = {B610A4B8-2A40-44A5-B930-A821A7C5BAE2}
 		{DCA22372-3A9D-4AA2-B555-CC143C001E25} = {E505424C-8F8A-40FC-B64C-6340316547A9}
 		{9E2181C8-FF1C-426C-AE46-CC22F106AE33} = {DCA22372-3A9D-4AA2-B555-CC143C001E25}
+		{3BC0667D-3034-4C03-8F56-D3138730A526} = {C6082680-8015-406D-A98F-51325C08EEA5}
+		{2A05357B-930D-410D-A056-C6FE3996125D} = {C6082680-8015-406D-A98F-51325C08EEA5}
+		{0C2A5B8C-CCED-434B-8653-041D259658F6} = {C6082680-8015-406D-A98F-51325C08EEA5}
+		{3F29D18F-02DA-48D3-A1EB-C10AA23E6880} = {968DCF81-B5DF-4570-9A6D-A84B1C425284}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A5031DD2-E834-4043-BB7A-6D5A8001F83C}
