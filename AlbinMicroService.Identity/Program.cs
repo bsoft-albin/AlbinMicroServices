@@ -7,6 +7,7 @@ namespace AlbinMicroService.Identity
         {
             WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+            // Add OAuth services to the container.
             builder.Services.AddIdentityServer()
                 .AddInMemoryClients(Config.Clients)
                 .AddInMemoryApiScopes(Config.ApiScopes)
