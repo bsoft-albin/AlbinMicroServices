@@ -1,7 +1,4 @@
-﻿using System.Data;
-using System.Data.Common;
-
-namespace AlbinMicroService.DataMappers.RawADO
+﻿namespace AlbinMicroService.DataMappers.RawADO
 {
     public class AdoHelper : IAdoHelper
     {

@@ -62,18 +62,14 @@ namespace AlbinMicroService.Kernel.DependencySetups
             Services.AddAuthSetup();
         }
 
-        public static void UseKernelMiddlewares(this IApplicationBuilder app, IHost host, IEndpointRouteBuilder route, IWebHostEnvironment env)
+        public static void UseKernelMiddlewares(this IApplicationBuilder app, IHost host, IEndpointRouteBuilder route, IWebHostEnvironment env, WebAppBuilderConfigTemplate configs)
         {
             //Setting the Web App Mode.
             StaticMeths.SetGlobalWebAppMode(env.IsDevelopment(), env.IsStaging(), env.IsProduction());
 
-            IConfiguration configuration = host.Services.GetRequiredService<IConfiguration>();
-
-            bool isSwaggerEnabled = bool.Parse(configuration["Swagger:Enabled"] ?? "false"); // Check if Swagger is enabled in the configuration
-
             // Configure the HTTP request pipeline.
 
-            if ((env.IsDevelopment() || env.IsStaging()) && isSwaggerEnabled) // only show Swagger in Development and Staging [for Production Or Live using this ["Swagger:Enabled"]]
+            if ((env.IsDevelopment() || env.IsStaging()) && configs.IsSwaggerEnabled) // only show Swagger in Development and Staging [for Production Or Live using this ["Swagger:Enabled"]]
             {
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
@@ -94,7 +90,10 @@ namespace AlbinMicroService.Kernel.DependencySetups
             }
 
             // custom Middlewares registration
-            app.UseMiddleware<RequireGatewayHeaderMiddleware>(); // Custom middleware to check for gateway header
+            if (configs.OnlyViaGateway)
+            {
+                app.UseMiddleware<RequireGatewayHeaderMiddleware>(); // Custom middleware to check for gateway header
+            }
 
             app.UseSerilogRequestLogging(); // Enable Serilog request logging (Optional but recommended)
 

@@ -11,14 +11,14 @@ namespace AlbinMicroService.Users.Domain
 {
     public static class UserServiceDiscoveryAndConfigs
     {
-        public static WebApplicationBuilder AddDefaultServices(this WebApplicationBuilder builder)
+        public static WebAppBuilderConfigTemplate AddDefaultServices(this WebApplicationBuilder builder)
         {
             WebAppBuilderConfigTemplate configs = ConfigurationSetup.BindSettings(builder.Configuration);
 
             // Add Kernel Services to the container.
             builder.AddKernelServices(builder.WebHost, configs);
 
-            return builder;
+            return configs;
         }
 
         public static WebApplicationBuilder AddDatabaseServices(this WebApplicationBuilder builder)

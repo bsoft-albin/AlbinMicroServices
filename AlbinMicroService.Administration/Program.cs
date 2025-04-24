@@ -11,4 +11,4 @@ builder.AddSeriloggings(builder.Host); // Adding Serilog to the container.
 
 WebApplication app = builder.Build();
 
-app.UseKernelMiddlewares(app, app, app.Environment);
+app.UseKernelMiddlewares(app, app, app.Environment, configs);

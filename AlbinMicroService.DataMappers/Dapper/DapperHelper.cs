@@ -1,12 +1,8 @@
-﻿using Dapper;
-using MySql.Data.MySqlClient;
-using System.Data;
-
-namespace AlbinMicroService.DataMappers.Dapper
+﻿namespace AlbinMicroService.DataMappers.Dapper
 {
     public class DapperHelper(string _connectionString) : IDapperHelper
     {
-        private IDbConnection CreateConnection()
+        private MySqlConnection CreateConnection()
         {
             if (string.IsNullOrWhiteSpace(_connectionString))
             {
@@ -59,7 +55,7 @@ namespace AlbinMicroService.DataMappers.Dapper
             return await connection.QueryFirstOrDefaultAsync<T>(sql, parameters);
         }
 
-        public async Task<(IEnumerable<T1>, IEnumerable<T2>)> QueryMultipleAsync<T1, T2>(string sql, object? parameters = null)
+        public async Task<(IEnumerable<T1>, IEnumerable<T2>)> QueryMultipleAsync2DataSets<T1, T2>(string sql, object? parameters = null)
         {
             using var connection = CreateConnection();
             using var multi = await connection.QueryMultipleAsync(sql, parameters);
@@ -68,7 +64,7 @@ namespace AlbinMicroService.DataMappers.Dapper
             return (result1, result2);
         }
 
-        public async Task QueryMultipleAsync(string sql, object? parameters, Func<SqlMapper.GridReader, Task> readFunc)
+        public async Task QueryMultipleAsyncReaderFunction(string sql, object? parameters, Func<SqlMapper.GridReader, Task> readFunc)
         {
             using var connection = CreateConnection();
             using var multi = await connection.QueryMultipleAsync(sql, parameters);

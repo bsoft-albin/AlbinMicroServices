@@ -17,6 +17,8 @@
         public bool IsHavingSSL { get; set; }
         public bool IsSwaggerEnabled { get; set; }
         public bool IsRunningInContainer { get; set; }
+        public bool OnlyViaGateway { get; set; }
+        public bool IsThisGateway { get; set; }
         public int HttpsPort { get; set; }
         public string ApiVersion { get; set; } = null!;
         public string ApiTitle { get; set; } = null!;

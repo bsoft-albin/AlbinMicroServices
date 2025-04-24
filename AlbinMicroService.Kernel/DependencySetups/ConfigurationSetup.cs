@@ -8,6 +8,7 @@ namespace AlbinMicroService.Kernel.DependencySetups
         public static WebAppBuilderConfigTemplate BindSettings(IConfiguration configuration)
         {
 #pragma warning disable CS8604 // Possible null reference argument.
+
             WebAppBuilderConfigTemplate webAppBuilderConfigTemplate = new()
             {
                 HttpPort = int.Parse(configuration["Configs:HttpPort"]),
@@ -17,7 +18,14 @@ namespace AlbinMicroService.Kernel.DependencySetups
                 ApiVersion = configuration["Configs:ApiVersion"] ?? "v1",
                 ApiTitle = configuration["Configs:ApiTitle"] ?? "AlbinMicroServices Api's",
                 IsSwaggerEnabled = bool.Parse(configuration["Swagger:Enabled"]),
+                IsThisGateway = bool.Parse(configuration["Configs:IsThisGateway"])
             };
+
+            if (!webAppBuilderConfigTemplate.IsThisGateway)
+            {
+                webAppBuilderConfigTemplate.OnlyViaGateway = bool.Parse(configuration["Configs:OnlyViaGateway"]);
+            }
+
 #pragma warning restore CS8604 // Possible null reference argument.
 
             return webAppBuilderConfigTemplate;

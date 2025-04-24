@@ -7,8 +7,10 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 // Bind or Loading appsettings.json to the AppSettings class
 builder.Services.Configure<AppSettings>(builder.Configuration);
 
+WebAppBuilderConfigTemplate configs = builder.AddDefaultServices();
+
 // we are Using Chain of Responsibility Pattern
-builder.AddDefaultServices().AddDatabaseServices().AddCustomServices().AddUserServices();
+builder.AddDatabaseServices().AddCustomServices().AddUserServices();
 
 WebApplication app = builder.Build();
 
@@ -18,4 +20,4 @@ AppSettings appSettings = app.Services.GetRequiredService<IOptions<AppSettings>>
 // Initialize Config with app settings
 WebAppConfigs.Initialize(appSettings);
 
-app.UseKernelMiddlewares(app, app, app.Environment);
+app.UseKernelMiddlewares(app, app, app.Environment, configs);
