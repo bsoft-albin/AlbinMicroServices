@@ -8,6 +8,10 @@
  ==> the Underlying Services are not to call directly from UI, the request must come from Gateway it works but , i override for Specific routes, that not 
  working.
 
+ ==> also another one problem happening, in SampleAdmin conteoller one Ednpoint Duplicated twice i dont know why.
+
+ ==> /is-running --> while calling this from Gateway itself, i am geting "wrong Message, request must come through Gateway", this should not come here, because i am already calling this from Gateway only.
+
  3. Gateway Routing Working perfectly in Local browsers, but hosted in Docker, its not working, simillalry need to check with Nginx.
 
- 4. Versioning need to do Properly.
+ 4. Versioning need to do Properly (IP).

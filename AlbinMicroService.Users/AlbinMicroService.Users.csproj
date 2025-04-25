@@ -11,4 +11,9 @@
     <ProjectReference Include="..\AlbinMicroService.Kernel\AlbinMicroService.Kernel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\V2\" />
+    <Folder Include="Controllers\V1\" />
+  </ItemGroup>
+
 </Project>

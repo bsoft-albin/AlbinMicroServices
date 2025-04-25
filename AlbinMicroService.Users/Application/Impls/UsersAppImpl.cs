@@ -1,7 +1,7 @@
 ﻿using AlbinMicroService.Core;
 using AlbinMicroService.Users.Application.Contracts;
 using AlbinMicroService.Users.Domain.Contracts;
-using AlbinMicroService.Users.Domain.DTOs;
+using AlbinMicroService.Users.Domain.Models.Dtos;
 
 namespace AlbinMicroService.Users.Application.Impls
 {

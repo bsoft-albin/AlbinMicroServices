@@ -1,4 +1,4 @@
-﻿namespace AlbinMicroService.Users.Domain.DTOs
+﻿namespace AlbinMicroService.Users.Domain.Models.Dtos
 {
     public class UserDto
     {

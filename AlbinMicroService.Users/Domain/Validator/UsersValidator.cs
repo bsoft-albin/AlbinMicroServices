@@ -1,4 +1,4 @@
-﻿using AlbinMicroService.Users.Domain.DTOs;
+﻿using AlbinMicroService.Users.Domain.Models.Dtos;
 using FluentValidation;
 
 namespace AlbinMicroService.Users.Domain.Validator

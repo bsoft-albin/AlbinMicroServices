@@ -1,13 +1,14 @@
 ﻿using AlbinMicroService.Core.Utilities;
 using AlbinMicroService.Kernel.Middlewares;
 using AlbinMicroService.Libraries.BuildingBlocks.Authentication;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using Serilog;
 
 namespace AlbinMicroService.Kernel.DependencySetups
@@ -115,6 +116,31 @@ namespace AlbinMicroService.Kernel.DependencySetups
             host.UseSerilog((context, config) =>
             {
                 config.ReadFrom.Configuration(context.Configuration);
+            });
+        }
+
+        // not completed the below one...
+        public static void AddVersioning(this IServiceCollection Services)
+        {
+            Services.AddApiVersioning(options =>
+             {
+                 options.DefaultApiVersion = new ApiVersion(1, 0);
+                 options.AssumeDefaultVersionWhenUnspecified = true;
+                 options.ReportApiVersions = true;
+                 options.ApiVersionReader = ApiVersionReader.Combine(
+                     new UrlSegmentApiVersionReader(),
+                     new HeaderApiVersionReader("X-Api-Version")
+                 );
+             }).AddApiExplorer(options =>
+             {
+                 options.GroupNameFormat = "'v'VVV";
+                 options.SubstituteApiVersionInUrl = true;
+             });
+
+            Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API - V1", Version = "v1.0" });
+                c.SwaggerDoc("v2", new OpenApiInfo { Title = "My API - V2", Version = "v2.0" });
             });
         }
     }

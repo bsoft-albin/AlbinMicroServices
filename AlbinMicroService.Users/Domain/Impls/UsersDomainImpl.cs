@@ -1,5 +1,5 @@
 ﻿using AlbinMicroService.Users.Domain.Contracts;
-using AlbinMicroService.Users.Domain.DTOs;
+using AlbinMicroService.Users.Domain.Models.Dtos;
 using AlbinMicroService.Users.Domain.Validator;
 using AlbinMicroService.Users.Infrastructure.Contracts;
 using FluentValidation.Results;
@@ -29,11 +29,13 @@ namespace AlbinMicroService.Users.Domain.Impls
                 throw new ArgumentNullException(nameof(receiverUsername), StaticMeths.GetNullOrEmptyOrWhiteSpaceErrorText(nameof(receiverUsername)));
             }
 
-            EmailTemplate emailTemplate = new(WebAppConfigs.Settings.Email.SmtpPort, WebAppConfigs.Settings.Email.SmtpServer, WebAppConfigs.Settings.Email.FromEmail, WebAppConfigs.Settings.Email.EmailPassword, toEmail);
-            emailTemplate.Title = "AlbinMicroServices Inc";
-            emailTemplate.Subject = "Welcome to AlbinMicroServices";
-            emailTemplate.Username = receiverUsername;
-            emailTemplate.Body = $"<h1>Welcome {receiverUsername},</h1><p>Thank you for registering with us.</p>";
+            EmailTemplate emailTemplate = new(WebAppConfigs.Settings.Email.SmtpPort, WebAppConfigs.Settings.Email.SmtpServer, WebAppConfigs.Settings.Email.FromEmail, WebAppConfigs.Settings.Email.EmailPassword, toEmail)
+            {
+                Title = "AlbinMicroServices Inc",
+                Subject = "Welcome to AlbinMicroServices",
+                Username = receiverUsername,
+                Body = $"<h1>Welcome {receiverUsername},</h1><p>Thank you for registering with us.</p>"
+            };
 
             return await _dynamicMeths.SendEmailAsync(emailTemplate);
         }
