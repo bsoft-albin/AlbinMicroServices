@@ -24,6 +24,7 @@ namespace AlbinMicroService.Kernel.DependencySetups
             if (!webAppBuilderConfigTemplate.IsThisGateway)
             {
                 webAppBuilderConfigTemplate.OnlyViaGateway = bool.Parse(configuration["Configs:OnlyViaGateway"]);
+                webAppBuilderConfigTemplate.AuthorizeService = bool.Parse(configuration["Configs:AuthorizeService"]);
             }
 
 #pragma warning restore CS8604 // Possible null reference argument.

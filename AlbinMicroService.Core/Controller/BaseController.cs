@@ -7,14 +7,14 @@ namespace AlbinMicroService.Core.Controller
     public class BaseController : ControllerBase
     {
         /// <summary>
-        /// Overall Generic Api Response Formatter.
+        /// A Generic Api Response Formatter.
         /// </summary>
         /// <typeparam name="T">Object Type</typeparam>
         /// <param name="response"></param>
         /// <param name="methodType"></param>
         /// <param name="isOtherDataStructure">If True means, as this response object is not List, IEnumerable and Our Custom Class Types. </param>
         /// <param name="isPaginated"></param>
-        /// <returns></returns>
+        /// <returns>Formatted Ok Object Result.</returns>
         protected IActionResult ParseApiResponse<T>(T response, HttpVerbs methodType, bool isOtherDataStructure = false, bool isPaginated = false)
         {
             if (response == null)
@@ -196,7 +196,7 @@ namespace AlbinMicroService.Core.Controller
         protected IActionResult GetResponseHeaders()
         {
             // here in this response, make possible of sending all headers values of the Response.
-            Response.Headers.Append("X-Custom-Header", "CustomHeaderValue");
+            Response.Headers.Append("X-Custom-Header", "AlbinMicroService-Header");
             return Ok(Response.Headers);
         }
 

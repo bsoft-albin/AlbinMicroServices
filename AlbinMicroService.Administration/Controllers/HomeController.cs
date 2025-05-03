@@ -1,10 +1,12 @@
 ﻿using AlbinMicroService.Core.Controller;
+using AlbinMicroService.Core.Utilities;
 using AlbinMicroService.Kernel.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AlbinMicroService.Administration.Controllers
 {
     [ApiController]
+    [Route(Templates.API_TEMPLATE)]
     public class HomeController(IKernelMeths _kernelMeths) : BaseController
     {
         [HttpGet]
@@ -16,21 +18,21 @@ namespace AlbinMicroService.Administration.Controllers
         }
 
         [HttpGet]
-        [Route("latest-version")]
+        [ActionName("latest-version")]
         public IActionResult GetVersion()
         {
             return Ok("Version 1.0.0");
         }
         
         [HttpGet]
-        [Route("is-running")]
+        [ActionName("is-running")]
         public IActionResult RunsOrNot()
         {
-            return Ok("AlbinMicroServices Gateway Gets Started Running Successfully....");
+            return Ok("AlbinMicroServices Administration Gets Started Running Successfully....");
         }
 
         [HttpGet]
-        [Route("/health")]
+        [ActionName("health")]
         public IActionResult GetHealth()
         {
             return Ok("Healthy");

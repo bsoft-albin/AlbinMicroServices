@@ -3,7 +3,6 @@ using AlbinMicroService.Core.Controller;
 using AlbinMicroService.Users.Application.Contracts;
 using AlbinMicroService.Users.Domain;
 using AlbinMicroService.Users.Domain.Models.Dtos;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AlbinMicroService.Users.Controllers
@@ -20,11 +19,10 @@ namespace AlbinMicroService.Users.Controllers
         }
 
         [HttpGet]
-        [Authorize]
-        [ActionName("data-check")]
-        public IActionResult HealthCheck()
+        [ActionName("get-custom-header")]
+        public IActionResult AppendCustomHeader()
         {
-            logger.LogError("a new Exception thrown!!");
+            logger.LogInformation("Response Headers Sended");
             return GetResponseHeaders();
         }
     }

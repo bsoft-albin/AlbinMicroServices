@@ -28,7 +28,7 @@
             }
         },
         {
-            "DownstreamPathTemplate": "/{everything}",
+            "DownstreamPathTemplate": "/api/Home/{everything}",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
@@ -36,7 +36,20 @@
                     "Port": 8005
                 }
             ],
-            "UpstreamPathTemplate": "/{everything}",
+            "UpstreamPathTemplate": "/admin/api/home-service/{everything}",
+            "UpstreamHttpMethod": [ "GET" ],
+            "SwaggerKey": "AdminService"
+        },
+        {
+            "DownstreamPathTemplate": "/",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 8005
+                }
+            ],
+            "UpstreamPathTemplate": "/",
             "UpstreamHttpMethod": [ "GET" ],
             "SwaggerKey": "AdminService"
         }

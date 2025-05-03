@@ -4,14 +4,10 @@
  ==> for first time Request calling , i am Getting 503 service unavailable error. then following it works fine.
  ==> Check Throughly for all Services After the above Issues Fixed.
 
- 2. Gateway Via Middleware 
- ==> the Underlying Services are not to call directly from UI, the request must come from Gateway it works but , i override for Specific routes, that not 
- working.
+ 2. Gateway Routing Working perfectly in Local browsers, but hosted in Docker, its not working, simillalry need to check with Nginx.
 
- ==> also another one problem happening, in SampleAdmin conteoller one Ednpoint Duplicated twice i dont know why.
+ 3. Versioning need to do Properly (IP).
 
- ==> /is-running --> while calling this from Gateway itself, i am geting "wrong Message, request must come through Gateway", this should not come here, because i am already calling this from Gateway only.
+ 4. One Scenario , i don't know which time, but that time, call come though gateway => says 503 Service unavaible, this comes for First request, but for Subsequent requests it works, I htink issue with (Ocelot or My Custom Delete or Custom Middleware).
 
- 3. Gateway Routing Working perfectly in Local browsers, but hosted in Docker, its not working, simillalry need to check with Nginx.
-
- 4. Versioning need to do Properly (IP).
+ 5. Uri (Case - insensitive Making Needed)
