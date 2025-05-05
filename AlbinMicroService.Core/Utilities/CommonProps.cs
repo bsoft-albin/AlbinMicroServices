@@ -1,6 +1,7 @@
-﻿namespace AlbinMicroService.Core.Utilities
-{
+﻿using System.Xml.Serialization;
 
+namespace AlbinMicroService.Core.Utilities
+{
     public static class StaticProps
     {
         public static class GlobalWebAppRunningMode
@@ -10,13 +11,11 @@
             public static bool IsProduction { get; set; }
         }
 
-        public static class GlobalWebAppSettings
+        public static GlobalWebAppSettings GlobalSettings { get; private set; } = new();
+
+        public static void SetGlobalWebAppSettings(GlobalWebAppSettings globalWebAppSettings)
         {
-            public static string DefaultUserRole { get; set; } = null!;
-            public static bool EnableAuditLogs { get; set; }
-            public static string SupportEmail { get; set; } = null!;
-            public static int MaxConcurrentUsers { get; set; }
-            public static bool EnableMaintenanceMode { get; set; }
+            GlobalSettings = globalWebAppSettings;
         }
     }
 
@@ -39,4 +38,13 @@
         #endregion
     }
 
+    [XmlRoot("GlobalSettings")]
+    public class GlobalWebAppSettings
+    {
+        public string DefaultUserRole { get; init; } = null!;
+        public bool EnableAuditLogs { get; init; }
+        public string SupportEmail { get; init; } = null!;
+        public int MaxConcurrentUsers { get; init; }
+        public bool EnableMaintenanceMode { get; init; }
+    }
 }

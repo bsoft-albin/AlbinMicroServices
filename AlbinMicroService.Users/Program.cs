@@ -20,4 +20,6 @@ AppSettings appSettings = app.Services.GetRequiredService<IOptions<AppSettings>>
 // Initialize Config with app settings
 WebAppConfigs.Initialize(appSettings);
 
+StaticMeths.LoadXmlGlobalConfigs();
+
 app.UseKernelMiddlewares(app, app, app.Environment, configs);

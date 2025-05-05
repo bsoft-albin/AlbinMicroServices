@@ -7,7 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="GlobalSettings.xml" />
     <None Remove="Static\Contents\Welcome.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="GlobalSettings.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

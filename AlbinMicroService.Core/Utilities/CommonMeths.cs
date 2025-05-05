@@ -1,4 +1,5 @@
-﻿using Isopoh.Cryptography.Argon2;
+﻿using System.Xml.Serialization;
+using Isopoh.Cryptography.Argon2;
 using Isopoh.Cryptography.SecureArray;
 using MailKit.Net.Smtp;
 using MimeKit;
@@ -34,6 +35,21 @@ namespace AlbinMicroService.Core.Utilities
         {
             return value + " cannot be null or empty or whitespace.";
         }
+
+        public static GlobalWebAppSettings LoadXmlGlobalConfigs()
+        {
+            string CurrentDirectory = AppContext.BaseDirectory; // Gets the output directory at runtime
+            string fullPath = Path.Combine(CurrentDirectory, "GlobalSettings.xml");
+
+            if (!File.Exists(fullPath))
+            {
+                throw new FileNotFoundException("Global Settings XML file not found", fullPath);
+            }
+
+            XmlSerializer serializer = new(typeof(GlobalWebAppSettings));
+            using FileStream stream = new(fullPath, FileMode.Open);
+            return (GlobalWebAppSettings)serializer.Deserialize(stream);
+        }
     }
 
     public interface IDynamicMeths
@@ -63,7 +79,7 @@ namespace AlbinMicroService.Core.Utilities
         #endregion
 
         #region Meths
-        
+
         public string HashString(string input)
         {
             if (string.IsNullOrWhiteSpace(input))
@@ -88,7 +104,7 @@ namespace AlbinMicroService.Core.Utilities
                 }
             }
         }
-        
+
         public bool VerifyHash(string input, string storedHash)
         {
             if (string.IsNullOrWhiteSpace(input))
