@@ -19,7 +19,7 @@
         public bool IsRunningInContainer { get; set; }
         public bool OnlyViaGateway { get; set; }
         public bool IsThisGateway { get; set; }
-        public bool AuthorizeService { get; set; }
+        public bool IsServiceAuthorizationNeeded { get; set; }
         public int HttpsPort { get; set; }
         public string ApiVersion { get; set; } = null!;
         public string ApiTitle { get; set; } = null!;

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AlbinMicroService.Administration.Controllers
 {
     [ApiController]
-    [Route(Templates.API_TEMPLATE)]
+    [Route(ApiRoutes.API_TEMPLATE)]
     public class HomeController(IKernelMeths _kernelMeths) : BaseController
     {
         [HttpGet]

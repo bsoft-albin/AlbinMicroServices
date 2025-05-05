@@ -60,7 +60,7 @@ namespace AlbinMicroService.Kernel.DependencySetups
             });
 
             // Add Authentication and Authorization services
-            if (configTemplate.AuthorizeService) {
+            if (configTemplate.IsServiceAuthorizationNeeded) {
                 Services.AddAuthSetup();
             }
         }
@@ -101,7 +101,7 @@ namespace AlbinMicroService.Kernel.DependencySetups
             app.UseSerilogRequestLogging(); // Enable Serilog request logging (Optional but recommended)
 
             //Auth Middlewares
-            if (configs.AuthorizeService) {
+            if (configs.IsServiceAuthorizationNeeded) {
                 app.UseAuthentication();
                 app.UseAuthorization();
             }

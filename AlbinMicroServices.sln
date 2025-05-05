@@ -22,6 +22,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{3707D438-F034-4ABE-A840-C6AFE401CE88}"
 	ProjectSection(SolutionItems) = preProject
 		Shared-Purpose.txt = Shared-Purpose.txt
+		SharedSettings.xml = SharedSettings.xml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit.Tests", "Unit.Tests", "{968DCF81-B5DF-4570-9A6D-A84B1C425284}"
@@ -31,6 +32,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlbinMicroService.Users", "AlbinMicroService.Users\AlbinMicroService.Users.csproj", "{FF81B677-74D0-40DE-9C1A-06B1319F6E2C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{C4BF9694-8FFB-4812-97F2-2043C55AE7D8}"
+	ProjectSection(SolutionItems) = preProject
+		Core-Purpose.txt = Core-Purpose.txt
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlbinMicroService.MasterData", "AlbinMicroService.MasterData\AlbinMicroService.MasterData.csproj", "{CCC94D0A-A354-499E-AFA9-6875F232D0FD}"
 EndProject
@@ -58,10 +62,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Kernel", "Kernel", "{497A45
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{51F72C77-839E-4BC6-BEDA-1FA10DB054EC}"
+	ProjectSection(SolutionItems) = preProject
+		Libraries-Purpose.txt = Libraries-Purpose.txt
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlbinMicroService.Kernel", "AlbinMicroService.Kernel\AlbinMicroService.Kernel.csproj", "{7D86F901-9323-4E57-9173-F5F74F1F59BE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ADO.NET", "ADO.NET", "{445ABC8E-236A-4916-840E-31013B53C908}"
+	ProjectSection(SolutionItems) = preProject
+		ADO.NET-Purpose.txt = ADO.NET-Purpose.txt
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlbinMicroService.DataMappers", "AlbinMicroService.DataMappers\AlbinMicroService.DataMappers.csproj", "{CC5185E0-9DEF-4A97-B561-FA6ED6EE8DD4}"
 EndProject

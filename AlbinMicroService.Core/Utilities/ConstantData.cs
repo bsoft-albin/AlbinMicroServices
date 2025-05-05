@@ -1,12 +1,13 @@
 ﻿namespace AlbinMicroService.Core.Utilities
 {
 
-    public abstract class Templates
+    public abstract class ApiRoutes
     {
         public const string API_BASE_TEMPLATE = "api/[controller]";
         public const string API_TEMPLATE = "api/[controller]/[action]";
         public const string API_VERSION_TEMPLATE = "api/v{version:apiVersion}/[controller]/[action]";
     }
+
     public abstract class ApiVersions
     {
         public const string DEFAULT = "1.0";

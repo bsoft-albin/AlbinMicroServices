@@ -12,7 +12,7 @@
 
 4. Docker Side,
 ==> If Possible change the Docker Network name.
-==> also change the Overall conatiner name from [my-micros] to some other name.
+==> also change the Overall container name from [my-micros] to some other name.
 ==> also order the PORT number's of each Services.
 
 

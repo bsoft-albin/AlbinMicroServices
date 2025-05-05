@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AlbinMicroService.Users.Controllers
 {
-    [Route(Templates.API_TEMPLATE)]
+    [Route(ApiRoutes.API_TEMPLATE)]
     [ApiController]
     public class UsersController(IUsersAppContract _appContract, ILogger<UsersController> logger) : BaseController
     {

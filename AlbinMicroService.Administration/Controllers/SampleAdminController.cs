@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AlbinMicroService.Administration.Controllers
 {
-    [Route(Templates.API_TEMPLATE)]
+    [Route(ApiRoutes.API_TEMPLATE)]
     [ApiController]
     public class SampleAdminController : BaseController
     {

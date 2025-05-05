@@ -15,6 +15,7 @@
         public bool RequireAuthentication { get; init; }
         public string[] AllowedRoles { get; init; } = [];
     }
+
     public class ConnectionStringSettings
     {
         public string MySql { get; init; } = string.Empty;
@@ -47,5 +48,4 @@
             Settings = settings;
         }
     }
-
 }
