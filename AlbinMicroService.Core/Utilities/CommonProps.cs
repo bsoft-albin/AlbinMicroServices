@@ -9,6 +9,15 @@
             public static bool IsStaging { get; set; }
             public static bool IsProduction { get; set; }
         }
+
+        public static class GlobalWebAppSettings
+        {
+            public static string DefaultUserRole { get; set; } = null!;
+            public static bool EnableAuditLogs { get; set; }
+            public static string SupportEmail { get; set; } = null!;
+            public static int MaxConcurrentUsers { get; set; }
+            public static bool EnableMaintenanceMode { get; set; }
+        }
     }
 
     public class DynamicProps
