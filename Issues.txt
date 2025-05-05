@@ -1,13 +1,26 @@
+
+====== Current Issue Need to Solve =========
 1. OAuth With Jwt Authentication and Authorization
  ==> The Refersh Token Logic Not working automatically when the user's Token Expired
  ==> Also The Users token not storing in the In-Memory, instead we are sending it through Headers of Api Request.
  ==> for first time Request calling , i am Getting 503 service unavailable error. then following it works fine.
  ==> Check Throughly for all Services After the above Issues Fixed.
 
- 2. Gateway Routing Working perfectly in Local browsers, but hosted in Docker, its not working, simillalry need to check with Nginx.
+2. Gateway Routing need to check with Nginx.
+  
+3. Versioning need to do Properly (IP).
 
- 3. Versioning need to do Properly (IP).
+4. Docker Side,
+==> If Possible change the Docker Network name.
+==> also change the Overall conatiner name from [my-micros] to some other name.
+==> also order the PORT number's of each Services.
 
- 4. One Scenario , i don't know which time, but that time, call come though gateway => says 503 Service unavaible, this comes for First request, but for Subsequent requests it works, I htink issue with (Ocelot or My Custom Delete or Custom Middleware).
 
- 5. Uri (Case - insensitive Making Needed)
+===== UnExpected Issue happening Some Time ==========
+1. One Scenario , i don't know which time, but that time, call come though gateway => says 503 Service unavaible, this comes 
+ for First request, but for Subsequent requests it works, I think issue with (Ocelot or My Custom Delete or Custom Middleware).
+
+
+==== Working By default Wihtout any External Code ===========
+
+1. Uri (Case - insensitive Making Needed) ==> (Resolved . by Default , it works for Routes from Gateway, as Well as Direct Downstream Services)

@@ -9,14 +9,29 @@ namespace AlbinMicroService.Gateway.Ocelot
     {
         public static void AddOcelotConfigurations(this WebApplicationBuilder builder)
         {
+            bool IsRunsInContainer = bool.Parse(builder.Configuration["Configs:IsRunningInContainer"] ?? "false");
+
             // 1. Create new config object to combine all route configs
             string environment = builder.Environment.EnvironmentName;
 
-            string usersConfig = $"Ocelot/User/ocelot.{environment}.json";
-            string mastersConfig = $"Ocelot/Master/ocelot.{environment}.json";
-            string adminConfig = $"Ocelot/Admin/ocelot.{environment}.json";
+            string usersConfig;
+            string mastersConfig;
+            string adminConfig;
 
-            string swaggerOcelotConfig = $"Ocelot/ocelot.Swagger.json";
+            if (IsRunsInContainer)
+            {
+                usersConfig = $"Ocelot/User/Docker/ocelot.{environment}.json";
+                mastersConfig = $"Ocelot/Master/Docker/ocelot.{environment}.json";
+                adminConfig = $"Ocelot/Admin/Docker/ocelot.{environment}.json";
+            }
+            else
+            {
+                usersConfig = $"Ocelot/User/ocelot.{environment}.json";
+                mastersConfig = $"Ocelot/Master/ocelot.{environment}.json";
+                adminConfig = $"Ocelot/Admin/ocelot.{environment}.json";
+            }
+
+            string swaggerOcelotConfig = IsRunsInContainer ? "Ocelot/ocelot.Docker.Swagger.json" : "Ocelot/ocelot.Swagger.json";
 
             // 2. Read and merge the route arrays
             List<dynamic> allRoutes = [];

@@ -1,0 +1,66 @@
+{
+    "Routes": [
+        {
+            "DownstreamPathTemplate": "/api/SampleAdmin/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "admin-container",
+                    "Port": 8005
+                }
+            ],
+            "UpstreamPathTemplate": "/admin/api/admin-service/{everything}",
+            "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+            "SwaggerKey": "AdminService",
+            "QoSOptions": {
+                "ExceptionsAllowedBeforeBreaking": 3,
+                "DurationOfBreak": 1000,
+                "TimeoutValue": 5000
+            },
+            "LoadBalancerOptions": {
+                "Type": "RoundRobin"
+            },
+            "RateLimitOptions": {
+                "ClientWhitelist": [],
+                "EnableRateLimiting": true,
+                "Period": "1s",
+                "Limit": 100
+            }
+        },
+        {
+            "DownstreamPathTemplate": "/api/Home/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "admin-container",
+                    "Port": 8005
+                }
+            ],
+            "UpstreamPathTemplate": "/admin/api/home-service/{everything}",
+            "UpstreamHttpMethod": [ "GET" ],
+            "SwaggerKey": "AdminService"
+        },
+        {
+            "DownstreamPathTemplate": "/",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "admin-container",
+                    "Port": 8005
+                }
+            ],
+            "UpstreamPathTemplate": "/",
+            "UpstreamHttpMethod": [ "GET" ],
+            "SwaggerKey": "AdminService"
+        }
+    ],
+    "GlobalConfiguration": {
+        "BaseUrl": "http://localhost:9001",
+        "RequestIdKey": "X-Request-Id",
+        "RateLimitOptions": {
+            "DisableRateLimitHeaders": false,
+            "QuotaExceededMessage": "Too many requests",
+            "HttpStatusCode": 429
+        }
+    }
+}
