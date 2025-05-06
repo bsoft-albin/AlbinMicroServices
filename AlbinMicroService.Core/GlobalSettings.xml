@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Settings>
+<GlobalSettings>
 	<DefaultUserRole>Viewer</DefaultUserRole>
 	<EnableAuditLogs>true</EnableAuditLogs>
 	<SupportEmail>support@gmail.com</SupportEmail>
 	<MaxConcurrentUsers>100</MaxConcurrentUsers>
 	<EnableMaintenanceMode>false</EnableMaintenanceMode>
-</Settings>
+</GlobalSettings>

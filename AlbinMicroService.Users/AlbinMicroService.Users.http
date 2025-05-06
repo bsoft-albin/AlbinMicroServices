@@ -5,7 +5,8 @@
 GET {{AlbinMicroService.Users_HostAddress_HTTP}}/Users/data-check
 Accept: application/json
 
-
 ### HTTPS Requests
 GET {{AlbinMicroService.Users_HostAddress_HTTPS}}/Users/data-check
 Accept: application/json
+
+

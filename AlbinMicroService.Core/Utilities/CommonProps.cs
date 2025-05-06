@@ -13,9 +13,19 @@ namespace AlbinMicroService.Core.Utilities
 
         public static GlobalWebAppSettings GlobalSettings { get; private set; } = new();
 
-        public static void SetGlobalWebAppSettings(GlobalWebAppSettings globalWebAppSettings)
+        public static void SetGlobalWebAppSettings()
         {
-            GlobalSettings = globalWebAppSettings;
+            string CurrentDirectory = AppContext.BaseDirectory; // Gets the output directory at runtime
+            string fullPath = Path.Combine(CurrentDirectory, "GlobalSettings.xml");
+
+            if (!File.Exists(fullPath))
+            {
+                throw new FileNotFoundException("Global Settings XML file not found", fullPath);
+            }
+
+            XmlSerializer serializer = new(typeof(GlobalWebAppSettings));
+            using FileStream stream = new(fullPath, FileMode.Open);
+            GlobalSettings = (GlobalWebAppSettings)serializer.Deserialize(stream);
         }
     }
 
