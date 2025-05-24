@@ -1,4 +1,5 @@
 using AlbinMicroService.Kernel.DependencySetups;
+using AlbinMicroService.Libraries.BuildingBlocks.Versioning;
 using AlbinMicroService.Users.Domain;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,8 @@ AppSettings appSettings = builder.Configuration.Get<AppSettings>() ?? new();
 
 // Initialize Config with app settings
 WebAppConfigs.Initialize(appSettings);
+
+//builder.Services.ConfigureApiVersioning();
 
 WebAppBuilderConfigTemplate configs = builder.AddDefaultServices();
 

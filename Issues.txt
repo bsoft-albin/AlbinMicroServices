@@ -10,10 +10,12 @@
   
 3. Versioning need to do Properly (IP).
 
-4. Docker Side,
+4. Docker Side
 ==> If Possible change the Docker Network name.
 ==> also change the Overall container name from [my-micros] to some other name.
 ==> also order the PORT number's of each Services.
+
+5. Structured Logging Need to in this.
 
 
 ===== UnExpected Issue happening Some Time ==========
@@ -22,5 +24,4 @@
 
 
 ==== Working By default Wihtout any External Code ===========
-
 1. Uri (Case - insensitive Making Needed) ==> (Resolved . by Default , it works for Routes from Gateway, as Well as Direct Downstream Services)

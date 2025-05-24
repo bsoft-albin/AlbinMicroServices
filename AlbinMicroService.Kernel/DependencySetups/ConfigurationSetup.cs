@@ -15,14 +15,14 @@ namespace AlbinMicroService.Kernel.DependencySetups
                 HttpsPort = int.Parse(configuration["Configs:HttpsPort"]),
                 IsHavingSSL = bool.Parse(configuration["Configs:IsHavingSSL"]),
                 IsRunningInContainer = bool.Parse(configuration["Configs:IsRunningInContainer"]),
-                IsThisGateway = bool.Parse(configuration["Configs:IsThisGateway"])
+                IsThisGateway = bool.Parse(configuration["Configs:IsThisGateway"]),
+                IsSwaggerEnabled = bool.Parse(configuration["Swagger:Enabled"])
             };
 
             if (!webAppBuilderConfigTemplate.IsThisGateway) // these configs, are not available in the Gateway Appsettings
             {
                 webAppBuilderConfigTemplate.ApiVersion = configuration["Configs:ApiVersion"] ?? "v1";
                 webAppBuilderConfigTemplate.ApiTitle = configuration["Configs:ApiTitle"] ?? "AlbinMicroServices Api's";
-                webAppBuilderConfigTemplate.IsSwaggerEnabled = bool.Parse(configuration["Swagger:Enabled"]);
                 webAppBuilderConfigTemplate.OnlyViaGateway = bool.Parse(configuration["Configs:OnlyViaGateway"]);
                 webAppBuilderConfigTemplate.IsServiceAuthorizationNeeded = bool.Parse(configuration["Configs:IsServiceAuthorizationNeeded"]);
             }

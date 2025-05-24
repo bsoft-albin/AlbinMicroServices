@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AlbinMicroService.Users.Controllers
 {
+    //[Route(ApiRoutes.API_VERSION_TEMPLATE)]
     [Route(ApiRoutes.API_TEMPLATE)]
     [ApiController]
     public class UsersController(IUsersAppContract _appContract, ILogger<UsersController> logger) : BaseController
@@ -25,5 +26,15 @@ namespace AlbinMicroService.Users.Controllers
             logger.LogInformation("Response Headers Sended");
             return GetResponseHeaders();
         }
+
+        //[HttpGet]
+        //[ActionName("get-v1")]
+        //[MapToApiVersion("1.0")]
+        //public IActionResult GetV1() => Ok("Users V1");
+
+        //[HttpGet]
+        //[ActionName("get-v2")]
+        //[MapToApiVersion("2.0")]
+        //public IActionResult GetV2() => Ok("Users V2");
     }
 }
