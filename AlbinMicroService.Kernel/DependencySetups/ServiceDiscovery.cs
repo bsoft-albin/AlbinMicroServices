@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Serilog;
 
 namespace AlbinMicroService.Kernel.DependencySetups
@@ -47,17 +46,42 @@ namespace AlbinMicroService.Kernel.DependencySetups
             Services.AddControllers();
 
             Services.AddEndpointsApiExplorer();
-            Services.AddSwaggerGen(c =>
+            Services.AddSwaggerGen(options =>
             {
-                c.SwaggerDoc(configTemplate.ApiVersion, new()
+                options.SwaggerDoc(configTemplate.ApiVersion, new()
                 {
                     Title = configTemplate.ApiTitle,
                     Version = configTemplate.ApiVersion
                 });
+
+                //var provider = builder.Services.BuildServiceProvider()
+                //         .GetRequiredService<IApiVersionDescriptionProvider>();
+
+                //foreach (var description in provider.ApiVersionDescriptions)
+                //{
+                //    options.SwaggerDoc(description.GroupName, new OpenApiInfo
+                //    {
+                //        Title = $"UserService Api {description.ApiVersion}",
+                //        Version = description.ApiVersion.ToString()
+                //    });
+                //}
+
+                //options.DocInclusionPredicate((docName, apiDesc) =>
+                //{
+                //    var actionApiVersionModel = apiDesc.ActionDescriptor
+                //        .GetApiVersionModel(ApiVersionMapping.Explicit | ApiVersionMapping.Implicit);
+
+                //    if (actionApiVersionModel == null)
+                //        return false;
+
+                //    return actionApiVersionModel.DeclaredApiVersions
+                //        .Any(v => $"v{v.ToString()}" == docName);
+                //});
             });
 
             // Add Authentication and Authorization services
-            if (configTemplate.IsServiceAuthorizationNeeded) {
+            if (configTemplate.IsServiceAuthorizationNeeded)
+            {
                 Services.AddAuthSetup();
             }
         }
@@ -72,6 +96,19 @@ namespace AlbinMicroService.Kernel.DependencySetups
             if ((env.IsDevelopment() || env.IsStaging()) && configs.IsSwaggerEnabled) // only show Swagger in Development and Staging [for Production Or Live using this ["Swagger:Enabled"]]
             {
                 app.UseSwagger();
+                //app.UseSwaggerUI(c =>
+                //{
+                //    var provider = app.ApplicationServices.GetRequiredService<IApiVersionDescriptionProvider>();
+
+                //    foreach (var description in provider.ApiVersionDescriptions)
+                //    {
+                //        string version = description.GroupName; // e.g., "v1"
+                //        string appName = env.ApplicationName[18..]; // Assuming this is correct for your app name trimming
+                //        c.SwaggerEndpoint($"/swagger/{version}/swagger.json", $"{appName} Api {version.ToUpperInvariant()}");
+                //    }
+
+                //    c.RoutePrefix = "swagger"; // URL will be /swagger/index.html
+                //});
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{env.ApplicationName[18..]} Api v1");
@@ -98,7 +135,8 @@ namespace AlbinMicroService.Kernel.DependencySetups
             app.UseSerilogRequestLogging(); // Enable Serilog request logging (Optional but recommended)
 
             //Auth Middlewares
-            if (configs.IsServiceAuthorizationNeeded) {
+            if (configs.IsServiceAuthorizationNeeded)
+            {
                 app.UseAuthentication();
                 app.UseAuthorization();
             }
