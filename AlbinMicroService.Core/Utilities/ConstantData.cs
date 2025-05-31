@@ -15,6 +15,23 @@
         public const string STANDARD_TERM_SUPPORT = "3.0";
     }
 
+    public abstract class ApiAuthorization {
+        public abstract class Policies {
+            public const string AdminOnly = nameof(AdminOnly);
+        }
+
+        public abstract class Scopes
+        {
+            public const string MASTER_READ = "master.read";
+            public const string MASTER_WRITE = "master.write";
+            public const string USER_READ = "user.read";
+            public const string USER_WRITE = "user.write";
+            public const string ADMIN_READ = "admin.read";
+            public const string ADMIN_WRITE = "admin.write";
+            public const string OFFLINE_ACCESS = "offline_access";
+        }
+    }
+
     public abstract class DatabaseTypes
     {
         public const string SqlServer = nameof(SqlServer);

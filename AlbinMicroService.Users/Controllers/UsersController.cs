@@ -33,7 +33,7 @@ namespace AlbinMicroService.Users.Controllers
             return GetResponseHeaders();
         }
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = ApiAuthorization.Policies.AdminOnly)]
         [HttpGet]
         [ActionName("get-v1")]
         //[MapToApiVersion("1.0")]
