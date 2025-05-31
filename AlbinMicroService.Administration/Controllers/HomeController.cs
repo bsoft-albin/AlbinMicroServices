@@ -1,12 +1,14 @@
 ﻿using AlbinMicroService.Core.Controller;
 using AlbinMicroService.Core.Utilities;
 using AlbinMicroService.Kernel.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AlbinMicroService.Administration.Controllers
 {
     [ApiController]
     [Route(ApiRoutes.API_TEMPLATE)]
+    [AllowAnonymous]
     public class HomeController(IKernelMeths _kernelMeths) : BaseController
     {
         [HttpGet]

@@ -7,21 +7,26 @@ namespace AlbinMicroService.Identity
         {
             WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-            // Add OAuth services to the container.
-            builder.Services.AddIdentityServer()
+            // Add OAuth 2.0 services to the container.
+            IIdentityServerBuilder identityServer = builder.Services.AddIdentityServer()
                 .AddInMemoryClients(Config.Clients)
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryApiResources(Config.ApiResources)
                 .AddInMemoryIdentityResources(Config.IdentityResources)
-                .AddTestUsers(Config.Users)
-                .AddDeveloperSigningCredential(); // for dev mode only
+                .AddTestUsers(Config.Users);
+
+            if (builder.Environment.IsDevelopment())
+            {
+                identityServer.AddDeveloperSigningCredential(); // for dev mode only
+            }
 
             WebApplication app = builder.Build();
 
-            //using OAuth2 with Jwt
+            //using OAuth 2.0 Authentication with Jwt Authorization Token
             app.UseIdentityServer();
 
             app.MapGet("/", () => "Identity Server is running!");
+
             app.Run();
         }
     }

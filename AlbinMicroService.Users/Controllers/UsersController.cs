@@ -3,6 +3,7 @@ using AlbinMicroService.Core.Controller;
 using AlbinMicroService.Users.Application.Contracts;
 using AlbinMicroService.Users.Domain;
 using AlbinMicroService.Users.Domain.Models.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AlbinMicroService.Users.Controllers
@@ -22,6 +23,7 @@ namespace AlbinMicroService.Users.Controllers
             return ParseApiResponse(await _appContract.CreateUserAppAsync(userDto), HttpVerbs.Post);
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpGet]
         //[MapToApiVersion("1.0")]
         [ActionName("get-custom-header")]
@@ -31,11 +33,13 @@ namespace AlbinMicroService.Users.Controllers
             return GetResponseHeaders();
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpGet]
         [ActionName("get-v1")]
         //[MapToApiVersion("1.0")]
         public IActionResult GetV1() => Ok("Users V1");
 
+        [Authorize(Policy = "UserReadScope")]
         [HttpGet]
         [ActionName("get-v2")]
         //[MapToApiVersion("1.0")]
