@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json;
 using AlbinMicroService.Core.Controller;
 using AlbinMicroService.Users.Application.Contracts;
 using AlbinMicroService.Users.Domain;
@@ -13,6 +14,7 @@ namespace AlbinMicroService.Users.Controllers
     //[ApiVersion("2.0")]
     [Route(ApiRoutes.API_TEMPLATE)]
     [ApiController]
+    [AllowAnonymous]
     public class UsersController(IUsersAppContract _appContract, ILogger<UsersController> logger) : BaseController
     {
         [HttpPost]
@@ -23,43 +25,46 @@ namespace AlbinMicroService.Users.Controllers
             return ParseApiResponse(await _appContract.CreateUserAppAsync(userDto), HttpVerbs.Post);
         }
 
-        //[HttpPost]
-        //[ActionName("login")]
-        //public async Task<IActionResult> Login([FromBody, Required] LoginRequestDto model) // LoginRequest Built-in Model for Login, we can use Ours !...
-        //{
-        //    // Optional: validate from your own DB if you want additional logic
-        //    if (string.IsNullOrWhiteSpace(model.Username) || string.IsNullOrWhiteSpace(model.Password))
-        //    {
-        //        return BadRequest("Invalid credentials");
-        //    }
+        [HttpPost]
+        [ActionName("login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequestDto model)
+        {
+            if (string.IsNullOrWhiteSpace(model.Username) || string.IsNullOrWhiteSpace(model.Password))
+            {
+                return BadRequest("Invalid credentials");
+            }
 
-        //    HttpClient client = new();
-        //    var disco = await client.GetDiscoveryDocumentAsync("http://localhost:9998");
-        //    if (disco.IsError)
-        //        return StatusCode(500, disco.Error);
+            using HttpClient client = new();
 
-        //    var tokenResponse = await client.RequestPasswordTokenAsync(new PasswordTokenRequest
-        //    {
-        //        Address = disco.TokenEndpoint,
-        //        ClientId = "mobile-desktop-spa-and-webapp-client",
-        //        //ClientSecret = "optional", // only if client secret required
-        //        UserName = model.Username,
-        //        Password = model.Password,
-        //        Scope = "openid profile api1.read"
-        //    });
+            Dictionary<string, string> tokenRequest = new()
+            {
+                { "grant_type", "password" },
+                { "client_id", "mobile-desktop-spa-and-webapp-client" },
+                //{ "client_secret", "secret" }, // Uncomment if needed
+                { "username", model.Username },
+                { "password", model.Password }
+            };
 
-        //    if (tokenResponse.IsError)
-        //        return Unauthorized(tokenResponse.Error);
+            //string clientId = user.Role switch
+            //{
+            //    "SuperAdmin" => "superadmin-client",
+            //    "Admin" => "admin-client",
+            //    _ => "public-client"
+            //};
 
-        //    return Ok(new
-        //    {
-        //        access_token = tokenResponse.AccessToken,
-        //        expires_in = tokenResponse.ExpiresIn,
-        //        refresh_token = tokenResponse.RefreshToken,
-        //        token_type = tokenResponse.TokenType,
-        //        scope = tokenResponse.Scope
-        //    });
-        //}
+            HttpResponseMessage response = await client.PostAsync("http://localhost:9998/connect/token", new FormUrlEncodedContent(tokenRequest));
+
+            if (!response.IsSuccessStatusCode)
+            { 
+                return Unauthorized(await response.Content.ReadAsStringAsync());
+            }
+
+            string content = await response.Content.ReadAsStringAsync();
+
+            JsonElement data = JsonSerializer.Deserialize<JsonElement>(content);
+
+            return ParseApiResponse(data, HttpVerbs.Post); // or deserialize into a DTO
+        }
 
         [Authorize(Policy = "AdminOnly")]
         [HttpGet]

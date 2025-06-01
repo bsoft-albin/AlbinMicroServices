@@ -80,13 +80,9 @@ namespace AlbinMicroService.Core.Utilities
                 Password = Encoding.UTF8.GetBytes(input)
             };
 
-            using (Argon2 argon2 = new(config))
-            {
-                using (SecureArray<byte> hashBytes = argon2.Hash())
-                {
-                    return Convert.ToBase64String(hashBytes.Buffer);
-                }
-            }
+            using Argon2 argon2 = new(config);
+            using SecureArray<byte> hashBytes = argon2.Hash();
+            return Convert.ToBase64String(hashBytes.Buffer);
         }
 
         public bool VerifyHash(string input, string storedHash)

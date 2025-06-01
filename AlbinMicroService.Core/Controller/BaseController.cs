@@ -106,7 +106,7 @@ namespace AlbinMicroService.Core.Controller
                     }
                     else
                     {
-                        return StatusCode(CustomHttpStatusCodes.UnXpectedError, new { StatusMessage = CustomHttpStatusMessages.UnXpectedError, StatusCode = CustomHttpStatusCodes.UnXpectedError });
+                        return StatusCode(HttpStatusCodes.Status200OK, response);
                     }
                 }
                 else if (methodType == HttpVerbs.Options)
@@ -129,8 +129,7 @@ namespace AlbinMicroService.Core.Controller
         {
             if (response != null && response is ApiBaseResponse baseResponse)
             {
-
-                return ResponseSwitcher(response);
+                return ResponseSwitcher(baseResponse);
             }
             else if (response is ApiErrorResponse<List<string>> errorResponse)
             {
@@ -143,7 +142,7 @@ namespace AlbinMicroService.Core.Controller
             } 
             else
             {
-                return StatusCode(CustomHttpStatusCodes.UnXpectedError, new { StatusMessage = CustomHttpStatusMessages.UnXpectedError, StatusCode = CustomHttpStatusCodes.UnXpectedError });
+                return StatusCode(HttpStatusCodes.Status200OK, response);
             }
         }
 

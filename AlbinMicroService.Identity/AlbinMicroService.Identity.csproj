@@ -8,11 +8,14 @@
 
   <ItemGroup>
     <PackageReference Include="Duende.IdentityServer" Version="7.2.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="keys\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AlbinMicroService.DataMappers\AlbinMicroService.DataMappers.csproj" />
   </ItemGroup>
 
 </Project>
