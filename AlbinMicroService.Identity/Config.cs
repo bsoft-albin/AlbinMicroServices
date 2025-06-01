@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Net;
+using System.Security.Claims;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Test;
 
@@ -25,13 +26,41 @@ namespace AlbinMicroService.Identity
 
         public static IEnumerable<Client> Clients =>
         [
+            //this is Especially for M2M Communication => Machine to Machine / Servive to Service
+            // but ==> This does not [authenticate users]. It only authenticates apps.
+            // For backend services (Client Credentials (M2M)) Method
             new Client {
-                ClientId = "albin-microservice-client",
-                AllowedGrantTypes = GrantTypes.ClientCredentials,
-                ClientSecrets = { new Secret("secret".Sha256()) },
-                AllowedScopes = { "master.read", "user.read" }, // ✅ Add this if want need to add more
+                ClientId = "backend-service-client",
+                AllowedGrantTypes = GrantTypes.ClientCredentials, // client_credentials (while calling Token Endpoint)
+                ClientSecrets = { new Secret("secret".Sha512()) },
+                AllowedScopes = { "master.read", "user.read" },
+                AccessTokenLifetime = 60
+            },
+
+            // [Currently we are using this]... later we can Upgrade it to below one (Authorization Code + PKCE)
+            //Resource Owner Password Flow (ROPC) (not recommended for new apps, but useful for [Trusted apps and Legacy Apps])
+            new Client {
+                ClientId = "mobile-desktop-spa-and-webapp-client",
+                AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                RequireClientSecret = false, // for mobile / SPA / WebApp / Desktop etc...
+                AllowedScopes = { "openid", "profile", "api1.read" },
+                AllowOfflineAccess = true,
                 AccessTokenLifetime = 60
             }
+
+            // Later if you move to Authorization Code + PKCE, the frontend itself will get the token (via browser redirection). The backend (UserService) won't need to issue Token, manually anymore.
+
+            // For SPA or WebApp or Mobile (Authorization Code + PKCE)
+            //new Client {
+            //    ClientId = "spa-client",
+            //    AllowedGrantTypes = GrantTypes.Code,
+            //    RequirePkce = true,
+            //    RedirectUris = { "http://localhost:3000/callback" },
+            //    AllowedScopes = { "openid", "profile", "master.read", "user.read" },
+            //    AllowOfflineAccess = true,
+            //    RequireClientSecret = false, // for private clients put ==> RequireClientSecret = true
+            //    AccessTokenLifetime = 60
+            //}
         ];
 
         public static List<TestUser> Users =>

@@ -23,6 +23,44 @@ namespace AlbinMicroService.Users.Controllers
             return ParseApiResponse(await _appContract.CreateUserAppAsync(userDto), HttpVerbs.Post);
         }
 
+        //[HttpPost]
+        //[ActionName("login")]
+        //public async Task<IActionResult> Login([FromBody, Required] LoginRequestDto model) // LoginRequest Built-in Model for Login, we can use Ours !...
+        //{
+        //    // Optional: validate from your own DB if you want additional logic
+        //    if (string.IsNullOrWhiteSpace(model.Username) || string.IsNullOrWhiteSpace(model.Password))
+        //    {
+        //        return BadRequest("Invalid credentials");
+        //    }
+
+        //    HttpClient client = new();
+        //    var disco = await client.GetDiscoveryDocumentAsync("http://localhost:9998");
+        //    if (disco.IsError)
+        //        return StatusCode(500, disco.Error);
+
+        //    var tokenResponse = await client.RequestPasswordTokenAsync(new PasswordTokenRequest
+        //    {
+        //        Address = disco.TokenEndpoint,
+        //        ClientId = "mobile-desktop-spa-and-webapp-client",
+        //        //ClientSecret = "optional", // only if client secret required
+        //        UserName = model.Username,
+        //        Password = model.Password,
+        //        Scope = "openid profile api1.read"
+        //    });
+
+        //    if (tokenResponse.IsError)
+        //        return Unauthorized(tokenResponse.Error);
+
+        //    return Ok(new
+        //    {
+        //        access_token = tokenResponse.AccessToken,
+        //        expires_in = tokenResponse.ExpiresIn,
+        //        refresh_token = tokenResponse.RefreshToken,
+        //        token_type = tokenResponse.TokenType,
+        //        scope = tokenResponse.Scope
+        //    });
+        //}
+
         [Authorize(Policy = "AdminOnly")]
         [HttpGet]
         //[MapToApiVersion("1.0")]
