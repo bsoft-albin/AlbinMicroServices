@@ -38,6 +38,11 @@ namespace AlbinMicroService.Users.Controllers
 
             string userRole = ""; // here need to make a db call to fecth userrole only with username....
 
+            if (string.IsNullOrWhiteSpace(userRole))
+            {
+                return Unauthorized("User not found");
+            }
+
             string clientId = userRole switch
             {
                 SystemRoles.SUPER_ADMIN => SystemClientIds.SUPER_ADMIN,
