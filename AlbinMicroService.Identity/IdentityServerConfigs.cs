@@ -1,6 +1,5 @@
-﻿using System.Security.Claims;
+﻿using AlbinMicroService.Core.Utilities;
 using Duende.IdentityServer.Models;
-using Duende.IdentityServer.Test;
 
 namespace AlbinMicroService.Identity
 {
@@ -56,7 +55,7 @@ namespace AlbinMicroService.Identity
                 ClientId = "admin-client",
                 AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                 RequireClientSecret = true, // more secure for admin
-                ClientSecrets = { new Secret("admin-secret".Sha512()) },
+                ClientSecrets = { new Secret(SystemClientSecrets.ADMIN.Sha512()) },
                 AllowedScopes = { "openid", "profile", "admin.read", "admin.write" },
                 AllowOfflineAccess = true,
                 AccessTokenLifetime = 60
@@ -66,7 +65,7 @@ namespace AlbinMicroService.Identity
                 ClientId = "superadmin-client",
                 AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                 RequireClientSecret = true, // more secure for admin
-                ClientSecrets = { new Secret("superadmin-secret".Sha512()) },
+                ClientSecrets = { new Secret(SystemClientSecrets.SUPER_ADMIN.Sha512()) },
                 AllowedScopes = {
                     "openid", "profile",
                     "user.read", "master.read", "user.write","master.write",

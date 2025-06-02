@@ -36,26 +36,38 @@ namespace AlbinMicroService.Users.Controllers
 
             using HttpClient client = new();
 
+            string userRole = ""; // here need to make a db call to fecth userrole only with username....
+
+            string clientId = userRole switch
+            {
+                SystemRoles.SUPER_ADMIN => SystemClientIds.SUPER_ADMIN,
+                SystemRoles.STAFF => SystemClientIds.STAFF,
+                SystemRoles.MANAGER => SystemClientIds.MANAGER,
+                SystemRoles.ADMIN => SystemClientIds.ADMIN,
+                _ => SystemClientIds.USER
+            };
+
             Dictionary<string, string> tokenRequest = new()
             {
                 { "grant_type", "password" },
-                { "client_id", "mobile-desktop-spa-and-webapp-client" },
-                //{ "client_secret", "secret" }, // Uncomment if needed
+                { "client_id", clientId },
                 { "username", model.Username },
                 { "password", model.Password }
             };
 
-            //string clientId = user.Role switch
-            //{
-            //    "SuperAdmin" => "superadmin-client",
-            //    "Admin" => "admin-client",
-            //    _ => "public-client"
-            //};
+            if (userRole == SystemRoles.SUPER_ADMIN)
+            {
+                tokenRequest.Add("client_secret", SystemClientSecrets.SUPER_ADMIN);
+            }
+            if (userRole == SystemRoles.ADMIN)
+            {
+                tokenRequest.Add("client_secret", SystemClientSecrets.ADMIN);
+            }
 
             HttpResponseMessage response = await client.PostAsync("http://localhost:9998/connect/token", new FormUrlEncodedContent(tokenRequest));
 
             if (!response.IsSuccessStatusCode)
-            { 
+            {
                 return Unauthorized(await response.Content.ReadAsStringAsync());
             }
 

@@ -15,8 +15,10 @@
         public const string STANDARD_TERM_SUPPORT = "3.0";
     }
 
-    public abstract class ApiAuthorization {
-        public abstract class Policies {
+    public abstract class ApiAuthorization
+    {
+        public abstract class Policies
+        {
             public const string AdminOnly = nameof(AdminOnly);
         }
 
@@ -30,6 +32,30 @@
             public const string ADMIN_WRITE = "admin.write";
             public const string OFFLINE_ACCESS = "offline_access";
         }
+    }
+
+    public abstract class SystemRoles
+    {
+        public const string USER = "User";
+        public const string ADMIN = "Admin";
+        public const string MANAGER = "Manager";
+        public const string STAFF = "Staff";
+        public const string SUPER_ADMIN = "SuperAdmin";
+    }
+
+    public abstract class SystemClientIds
+    {
+        public const string USER = "public-client";
+        public const string ADMIN = "admin-client";
+        public const string MANAGER = "manager-client";
+        public const string STAFF = "staff-client";
+        public const string SUPER_ADMIN = "superadmin-client";
+    }
+
+    public abstract class SystemClientSecrets
+    {
+        public const string ADMIN = "admin-secret";
+        public const string SUPER_ADMIN = "superadmin-secret";
     }
 
     public abstract class DatabaseTypes

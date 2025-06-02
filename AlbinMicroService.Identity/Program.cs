@@ -1,7 +1,6 @@
 using AlbinMicroService.Core.Utilities;
 using AlbinMicroService.DataMappers.Dapper;
 using Duende.IdentityServer.Validation;
-using MongoDB.Driver.Core.Configuration;
 
 namespace AlbinMicroService.Identity
 {
@@ -14,6 +13,7 @@ namespace AlbinMicroService.Identity
 
             // Add OAuth 2.0 services to the container.
             IIdentityServerBuilder identityServer = builder.Services.AddIdentityServer()
+                .AddResourceOwnerValidator<CustomResourceOwnerPasswordValidator>()
                 .AddInMemoryClients(IdentityServerConfigs.Clients)
                 .AddInMemoryApiScopes(IdentityServerConfigs.ApiScopes)
                 .AddInMemoryApiResources(IdentityServerConfigs.ApiResources)

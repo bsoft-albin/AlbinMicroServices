@@ -8,6 +8,7 @@ namespace AlbinMicroService.Identity
     {
         public async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
         {
+            // Db Fetching...
             var user = await userService.ValidateCredentialsAsync(context.UserName, context.Password);
 
             if (user != null)
