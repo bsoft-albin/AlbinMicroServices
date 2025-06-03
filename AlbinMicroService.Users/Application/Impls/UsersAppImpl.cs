@@ -28,27 +28,17 @@ namespace AlbinMicroService.Users.Application.Impls
                         {
                             // call Db to save user
                             bool dbResponse = true; // here repo call to save in db
-                            bool mailResponse = await _usersDomain.SendWelcomeEmailToUserAsync(userDto.Email, userDto.Username);
+                            await _usersDomain.SendWelcomeEmailToUserAsync(userDto.Email, userDto.Username);
 
-                            if (dbResponse && mailResponse)
+                            if (dbResponse)
                             {
                                 apiBaseResponse.StatusCode = HttpStatusCodes.Status201Created;
                                 apiBaseResponse.StatusMessage = HttpStatusMessages.Status201Created;
                             }
                             else
                             {
-                                if (!dbResponse)
-                                {
-                                    if (!mailResponse)
-                                    {
-
-                                    }
-                                }
-                                else
-                                {
-                                    apiBaseResponse.StatusCode = HttpStatusCodes.Status500InternalServerError;
-                                    apiBaseResponse.StatusMessage = HttpStatusMessages.Status500InternalServerError;
-                                }
+                                apiBaseResponse.StatusCode = HttpStatusCodes.Status500InternalServerError;
+                                apiBaseResponse.StatusMessage = HttpStatusMessages.Status500InternalServerError;
                             }
                         }
                         else

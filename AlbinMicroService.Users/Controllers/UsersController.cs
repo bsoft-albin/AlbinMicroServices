@@ -80,7 +80,7 @@ namespace AlbinMicroService.Users.Controllers
 
             JsonElement data = JsonSerializer.Deserialize<JsonElement>(content);
 
-            return ParseApiResponse(data, HttpVerbs.Post); // or deserialize into a DTO
+            return ParseApiResponse(data, HttpVerbs.Post);
         }
 
         [Authorize(Policy = "AdminOnly")]
