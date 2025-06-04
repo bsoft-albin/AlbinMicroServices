@@ -15,6 +15,15 @@ namespace AlbinMicroService.Users.Domain
         {
             WebAppBuilderConfigTemplate configs = ConfigurationSetup.BindSettings(builder.Configuration);
 
+            //adding one Named Http Client to the DI. (if you want ,move this to specific service..
+            builder.Services.AddHttpClient("IdentityServerHttpClient", client =>
+            {
+                client.BaseAddress = new Uri("http://localhost:9998/");
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+                client.DefaultRequestHeaders.Add("User-Agent", "Albin-MicroServices"); // Optional but recommended
+                client.Timeout = TimeSpan.FromSeconds(30);
+            });
+
             // Add Kernel Services to the container.
             builder.AddKernelServices(builder.WebHost, configs);
 

@@ -15,14 +15,14 @@ namespace AlbinMicroService.Users.Controllers
     [Route(ApiRoutes.API_TEMPLATE)]
     [ApiController]
     [AllowAnonymous]
-    public class UsersController(IUsersAppContract _appContract, ILogger<UsersController> logger) : BaseController
+    public class UsersController(IUsersAppContract appContract, ILogger<UsersController> logger, IHttpClientFactory clientFactory) : BaseController
     {
         [HttpPost]
         //[MapToApiVersion("1.0")]
         [ActionName(UsersActionNames.RegisterUser)]
         public async Task<IActionResult> CreateUserAsync([FromBody, Required] UserDto userDto)
         {
-            return ParseApiResponse(await _appContract.CreateUserAppAsync(userDto), HttpVerbs.Post);
+            return ParseApiResponse(await appContract.CreateUserAppAsync(userDto), HttpVerbs.Post);
         }
 
         [HttpPost]
@@ -34,7 +34,7 @@ namespace AlbinMicroService.Users.Controllers
                 return BadRequest("Invalid credentials");
             }
 
-            using HttpClient client = new();
+            using HttpClient client = clientFactory.CreateClient("IdentityServerHttpClient"); // creating a Named Http Client.
 
             string userRole = ""; // here need to make a db call to fecth userrole only with username....
 
@@ -69,7 +69,7 @@ namespace AlbinMicroService.Users.Controllers
                 tokenRequest.Add("client_secret", SystemClientSecrets.ADMIN);
             }
 
-            HttpResponseMessage response = await client.PostAsync("http://localhost:9998/connect/token", new FormUrlEncodedContent(tokenRequest));
+            HttpResponseMessage response = await client.PostAsync("connect/token", new FormUrlEncodedContent(tokenRequest));
 
             if (!response.IsSuccessStatusCode)
             {
