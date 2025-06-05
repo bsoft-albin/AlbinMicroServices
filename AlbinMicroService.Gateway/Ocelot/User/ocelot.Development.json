@@ -26,6 +26,19 @@
                 "Period": "1s",
                 "Limit": 100
             }
+        },
+        {
+            "DownstreamPathTemplate": "/api/Authentication/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 8001
+                }
+            ],
+            "UpstreamPathTemplate": "/user/api/auth-service/{everything}",
+            "UpstreamHttpMethod": [ "GET", "POST" ],
+            "SwaggerKey": "UserService"
         }
     ],
     "GlobalConfiguration": {

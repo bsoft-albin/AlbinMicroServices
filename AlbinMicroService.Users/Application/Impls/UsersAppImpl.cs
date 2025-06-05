@@ -1,11 +1,12 @@
 ﻿using AlbinMicroService.Core;
 using AlbinMicroService.Users.Application.Contracts;
 using AlbinMicroService.Users.Domain.Contracts;
-using AlbinMicroService.Users.Domain.Models.Dtos;
+using AlbinMicroService.Users.Infrastructure.Contracts;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AlbinMicroService.Users.Application.Impls
 {
-    public class UsersAppImpl(IUsersDomainContract _usersDomain) : IUsersAppContract
+    public class UsersAppImpl(IUsersDomainContract usersDomain, IUsersInfraContract usersInfraContract) : IUsersAppContract
     {
         public async Task<ApiBaseResponse> CreateUserAppAsync(UserDto userDto)
         {
@@ -13,22 +14,22 @@ namespace AlbinMicroService.Users.Application.Impls
 
             if (userDto != null)
             {
-                ValidatorTemplate validObj = _usersDomain.ValidateUserDto(userDto);
+                ValidatorTemplate validObj = usersDomain.ValidateUserDto(userDto);
 
                 if (validObj != null && validObj.IsValidated)
                 {
                     // check whether username exists
-                    bool isUsernameExists = await _usersDomain.VerifyUsernameExistsOrNotAsync(userDto.Username);
+                    bool isUsernameExists = await usersDomain.VerifyUsernameExistsOrNotAsync(userDto.Username);
 
                     if (!isUsernameExists)
                     {
-                        userDto.Password = _usersDomain.HashUserPassword(userDto.Password);
+                        userDto.Password = usersDomain.HashUserPassword(userDto.Password);
 
                         if (!string.IsNullOrEmpty(userDto.Password))
                         {
                             // call Db to save user
                             bool dbResponse = true; // here repo call to save in db
-                            await _usersDomain.SendWelcomeEmailToUserAsync(userDto.Email, userDto.Username);
+                            await usersDomain.SendWelcomeEmailToUserAsync(userDto.Email, userDto.Username);
 
                             if (dbResponse)
                             {
@@ -70,6 +71,13 @@ namespace AlbinMicroService.Users.Application.Impls
             }
 
             return apiBaseResponse;
+        }
+
+        public async Task<string?> GetUserRoleAppAsync(string username)
+        {
+            string? Role = await usersInfraContract.GetUserRoleInfraAsync(username);
+
+            return Role.IsNullOrEmpty() ? null : Role;
         }
     }
 }
