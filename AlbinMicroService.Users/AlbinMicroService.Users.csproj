@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Domain\SqlQueries\Users.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Domain\SqlQueries\Users.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\AlbinMicroService.DataMappers\AlbinMicroService.DataMappers.csproj" />
     <ProjectReference Include="..\AlbinMicroService.Kernel\AlbinMicroService.Kernel.csproj" />
   </ItemGroup>
