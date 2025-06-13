@@ -12,7 +12,7 @@ namespace AlbinMicroService.Users.Infrastructure.Impls
             short count = 0;
             try
             {
-                string Qry = SqlQueryManager.GetQuery("Users","GetActiveUsers");
+                string Qry = SqlQueryManager.GetQuery("Domain.SqlQueries.Users","GetActiveUsers");
                 count = await dapper.ExecuteScalarAsync<short>(UsersSqlQueries.UsernameExistCount, new { username });
             }
             catch (Exception ex)
