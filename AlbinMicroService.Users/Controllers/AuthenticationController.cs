@@ -2,6 +2,7 @@
 using AlbinMicroService.Users.Application.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static AlbinMicroService.Core.Utilities.ApiAuthorization;
 
 namespace AlbinMicroService.Users.Controllers
 {
@@ -39,19 +40,19 @@ namespace AlbinMicroService.Users.Controllers
 
             Dictionary<string, string> tokenRequest = new()
             {
-                { "grant_type", "password" },
-                { "client_id", clientId },
-                { "username", model.Username },
-                { "password", model.Password }
+                { TokenRequestKeys.grant_type, GrantTypes.password },
+                { TokenRequestKeys.client_id, clientId },
+                { TokenRequestKeys.username, model.Username },
+                { TokenRequestKeys.password, model.Password }
             };
 
             if (userRole == SystemRoles.SUPER_ADMIN)
             {
-                tokenRequest.Add("client_secret", SystemClientSecrets.SUPER_ADMIN);
+                tokenRequest.Add(TokenRequestKeys.client_secret, SystemClientSecrets.SUPER_ADMIN);
             }
             if (userRole == SystemRoles.ADMIN)
             {
-                tokenRequest.Add("client_secret", SystemClientSecrets.ADMIN);
+                tokenRequest.Add(TokenRequestKeys.client_secret, SystemClientSecrets.ADMIN);
             }
 
             HttpResponseMessage response = await client.PostAsync("connect/token", new FormUrlEncodedContent(tokenRequest));

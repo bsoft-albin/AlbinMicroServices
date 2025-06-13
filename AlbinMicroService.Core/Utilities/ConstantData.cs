@@ -32,6 +32,21 @@
             public const string ADMIN_WRITE = "admin.write";
             public const string OFFLINE_ACCESS = "offline_access";
         }
+
+        public abstract class TokenRequestKeys
+        {
+            public const string grant_type = nameof(grant_type);
+            public const string client_id = nameof(client_id);
+            public const string password = nameof(password);
+            public const string username = nameof(username);
+            public const string client_secret = nameof(client_secret);
+        }
+
+        public abstract class GrantTypes
+        {
+            public const string password = nameof(password);
+            public const string code = nameof(code);
+        }
     }
 
     public abstract class SystemRoles
