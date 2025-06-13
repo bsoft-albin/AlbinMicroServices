@@ -4,8 +4,6 @@ using System.Text;
 
 namespace AlbinMicroService.Libraries.Common.QueryManager
 {
-    // SqlQueryCache.Initialize(sqlPath); =================> use this in the Program.cs to load diecrtroy sql's
-
     public static class SqlQueryCache
     {
         private static readonly Lazy<FrozenDictionary<string, string>> _queries = new(() => LoadQueries(), LazyThreadSafetyMode.ExecutionAndPublication);
@@ -33,7 +31,7 @@ namespace AlbinMicroService.Libraries.Common.QueryManager
 
         private static FrozenDictionary<string, string> LoadQueries()
         {
-            var basePath = _basePath ?? Path.Combine(AppContext.BaseDirectory, "Sql");
+            var basePath = _basePath ?? Path.Combine(AppContext.BaseDirectory, "Domain", "SqlQueries");
 
             if (!Directory.Exists(basePath))
                 return FrozenDictionary<string, string>.Empty;
@@ -57,7 +55,13 @@ namespace AlbinMicroService.Libraries.Common.QueryManager
 
         private static void ProcessFile(string filePath, Dictionary<string, string> result)
         {
-            using var reader = new StreamReader(filePath, Encoding.UTF8, bufferSize: 8192);
+            // Use full constructor for performance and encoding detection
+            using var reader = new StreamReader(
+                path: filePath,
+                encoding: Encoding.UTF8,
+                detectEncodingFromByteOrderMarks: true,
+                bufferSize: 8192
+            );
 
             string? currentKey = null;
             var sb = new StringBuilder(1024);
@@ -69,14 +73,14 @@ namespace AlbinMicroService.Libraries.Common.QueryManager
 
                 if (trimmedLine.StartsWith("-- name:".AsSpan(), StringComparison.OrdinalIgnoreCase))
                 {
-                    // Save previous query if exists
+                    // Save the previous query
                     if (currentKey != null && sb.Length > 0)
                     {
                         result[currentKey] = sb.ToString().Trim();
                         sb.Clear();
                     }
 
-                    // Extract new key
+                    // Extract the new key
                     var colonIndex = line.IndexOf(':', StringComparison.Ordinal);
                     if (colonIndex != -1 && colonIndex + 1 < line.Length)
                     {
@@ -89,7 +93,7 @@ namespace AlbinMicroService.Libraries.Common.QueryManager
                 }
             }
 
-            // Don't forget the last query
+            // Capture the last SQL query
             if (currentKey != null && sb.Length > 0)
             {
                 result[currentKey] = sb.ToString().Trim();

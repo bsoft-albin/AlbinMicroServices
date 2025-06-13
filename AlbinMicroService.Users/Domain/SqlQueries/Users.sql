@@ -1,6 +1,4 @@
--- IMPORTANT: Set Build Action = "Embedded Resource" for ALL .sql files
-
--- @GetUserById
+-- name: GetUserById
 SELECT 
     u.Id,
     u.FirstName,
@@ -15,7 +13,7 @@ LEFT JOIN Roles r ON u.RoleId = r.Id
 WHERE u.Id = @UserId 
   AND u.IsActive = 1;
 
--- @GetActiveUsers
+-- name: GetActiveUsers
 SELECT 
     u.Id,
     u.FirstName,

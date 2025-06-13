@@ -1,5 +1,6 @@
 using AlbinMicroService.Kernel.DependencySetups;
 using AlbinMicroService.Libraries.BuildingBlocks.Versioning;
+using AlbinMicroService.Libraries.Common.QueryManager;
 using AlbinMicroService.Users.Domain;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,9 @@ WebAppBuilderConfigTemplate configs = builder.AddDefaultServices();
 builder.AddDatabaseServices().AddCustomServices().AddUserServices();
 
 WebApplication app = builder.Build();
+
+string SqlQueriesPath = Path.Combine(app.Environment.ContentRootPath, "Domain", "SqlQueries");
+SqlQueryCache.Initialize(SqlQueriesPath);
 
 StaticProps.SetGlobalWebAppSettings();
 
