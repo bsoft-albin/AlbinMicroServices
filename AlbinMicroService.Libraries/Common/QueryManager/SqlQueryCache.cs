@@ -31,32 +31,35 @@ namespace AlbinMicroService.Libraries.Common.QueryManager
 
         private static FrozenDictionary<string, string> LoadQueries()
         {
-            var basePath = _basePath ?? Path.Combine(AppContext.BaseDirectory, "Domain", "SqlQueries");
+            string basePath = _basePath ?? Path.Combine(AppContext.BaseDirectory, "Domain", "SqlQueries");
 
             if (!Directory.Exists(basePath))
+            {
                 return FrozenDictionary<string, string>.Empty;
+            }
 
-            var result = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            Dictionary<string, string> result = new(StringComparer.OrdinalIgnoreCase);
 
             // Gets ALL .sql files from the folder (not subdirectories)
-            var files = Directory.GetFiles(basePath, "*.sql", SearchOption.TopDirectoryOnly);
+            string[] files = Directory.GetFiles(basePath, "*.sql", SearchOption.TopDirectoryOnly);
 
             Console.WriteLine($"Loading {files.Length} SQL files from: {basePath}");
 
-            foreach (var file in files)
+            foreach (string file in files)
             {
                 Console.WriteLine($"Processing: {Path.GetFileName(file)}");
                 ProcessFile(file, result);
             }
 
             Console.WriteLine($"Loaded {result.Count} SQL queries into cache");
+
             return result.ToFrozenDictionary(StringComparer.OrdinalIgnoreCase);
         }
 
         private static void ProcessFile(string filePath, Dictionary<string, string> result)
         {
             // Use full constructor for performance and encoding detection
-            using var reader = new StreamReader(
+            using StreamReader reader = new(
                 path: filePath,
                 encoding: Encoding.UTF8,
                 detectEncodingFromByteOrderMarks: true,
@@ -64,12 +67,13 @@ namespace AlbinMicroService.Libraries.Common.QueryManager
             );
 
             string? currentKey = null;
-            var sb = new StringBuilder(1024);
+            StringBuilder sb = new(1024);
 
             string? line;
+
             while ((line = reader.ReadLine()) != null)
             {
-                var trimmedLine = line.AsSpan().TrimStart();
+                ReadOnlySpan<char> trimmedLine = line.AsSpan().TrimStart();
 
                 if (trimmedLine.StartsWith("-- name:".AsSpan(), StringComparison.OrdinalIgnoreCase))
                 {
@@ -81,7 +85,7 @@ namespace AlbinMicroService.Libraries.Common.QueryManager
                     }
 
                     // Extract the new key
-                    var colonIndex = line.IndexOf(':', StringComparison.Ordinal);
+                    int colonIndex = line.IndexOf(':', StringComparison.Ordinal);
                     if (colonIndex != -1 && colonIndex + 1 < line.Length)
                     {
                         currentKey = line.Substring(colonIndex + 1).Trim();

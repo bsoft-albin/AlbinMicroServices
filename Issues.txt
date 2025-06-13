@@ -7,7 +7,7 @@
  ==> Check Throughly for all Services After the above Issues Fixed.
 
  Authentication now working with Basic Configs
- --> check Roles and Scopes , more powwerfully
+ --> check Roles and Scopes , more powerfully
 
  additonlly need to do ==> SSO, MFA and Third Party Auths
  PLUS ==> Refresh Tokens Need to Check Properly working or not
@@ -31,7 +31,7 @@
 
 ===== UnExpected Issue happening Some Time ==========
 1. One Scenario , i don't know which time, but that time, call come though gateway => says 503 Service unavaible, this comes 
- for First request, but for Subsequent requests it works, I think issue with (Ocelot or My Custom Delete or Custom Middleware).
+ for First request, but for Subsequent requests it works, I think issue with (Ocelot or My Custom Delegate or Custom Middleware).
 
 ==== Working By default Wihtout any [External Code] ===========
 1. Uri (Case - insensitive Making Needed) ==> (Resolved . by Default , it works for Routes from Gateway, as Well as Direct Downstream Services)
