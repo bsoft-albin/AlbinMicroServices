@@ -1,6 +1,7 @@
-﻿CREATE TABLE users (
+﻿-- USERS TABLE
+CREATE TABLE users (
     Id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    Username VARCHAR(255) NOT NULL,
+    Username VARCHAR(255) NOT NULL UNIQUE,
     Password VARCHAR(255) NOT NULL,
     Email VARCHAR(255) NOT NULL UNIQUE,
     IsActive BOOLEAN NOT NULL DEFAULT TRUE,
@@ -8,9 +9,17 @@
     IsDeleted BOOLEAN NOT NULL DEFAULT FALSE,
     CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    DeletedAt DATETIME NULL
+    DeletedAt DATETIME NULL,
+    CreatedBy BIGINT NULL,
+    UpdatedBy BIGINT NULL,
+    DeletedBy BIGINT NULL,
+
+    INDEX idx_users_username (Username),
+    INDEX idx_users_email (Email),
+    INDEX idx_users_isdeleted (IsDeleted)
 );
------
+
+-- USER PROFILES
 CREATE TABLE user_profiles (
     Id BIGINT PRIMARY KEY AUTO_INCREMENT,
     UserId BIGINT NOT NULL,
@@ -18,9 +27,20 @@ CREATE TABLE user_profiles (
     LastName VARCHAR(255) NOT NULL DEFAULT '',
     PhoneNumber VARCHAR(20) NULL,
     ProfilePicture TEXT NULL,
-    FOREIGN KEY (UserId) REFERENCES users(Id) ON DELETE CASCADE
+    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    DeletedAt DATETIME NULL,
+    CreatedBy BIGINT NULL,
+    UpdatedBy BIGINT NULL,
+    DeletedBy BIGINT NULL,
+    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE,
+
+    FOREIGN KEY (UserId) REFERENCES users(Id),
+    INDEX idx_profiles_userid (UserId),
+    INDEX idx_profiles_isdeleted (IsDeleted)
 );
-------------
+
+-- USER ADDRESSES
 CREATE TABLE user_addresses (
     Id BIGINT PRIMARY KEY AUTO_INCREMENT,
     UserId BIGINT NOT NULL,
@@ -30,26 +50,60 @@ CREATE TABLE user_addresses (
     State VARCHAR(100) NOT NULL DEFAULT '',
     ZipCode VARCHAR(20) NOT NULL DEFAULT '',
     Country VARCHAR(100) NOT NULL DEFAULT '',
-    FOREIGN KEY (UserId) REFERENCES users(Id) ON DELETE CASCADE
+    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    DeletedAt DATETIME NULL,
+    CreatedBy BIGINT NULL,
+    UpdatedBy BIGINT NULL,
+    DeletedBy BIGINT NULL,
+    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE,
+
+    FOREIGN KEY (UserId) REFERENCES users(Id),
+    INDEX idx_addresses_userid (UserId),
+    INDEX idx_addresses_isdeleted (IsDeleted)
 );
-----
+
+-- USER ACTIVITY LOGS
 CREATE TABLE user_activity_logs (
     Id BIGINT PRIMARY KEY AUTO_INCREMENT,
     UserId BIGINT NOT NULL,
     ActivityType VARCHAR(255) NOT NULL DEFAULT '',
     ActivityDescription TEXT NOT NULL,
     ActivityDate DATETIME NULL,
-    FOREIGN KEY (UserId) REFERENCES users(Id) ON DELETE CASCADE
+    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    DeletedAt DATETIME NULL,
+    CreatedBy BIGINT NULL,
+    UpdatedBy BIGINT NULL,
+    DeletedBy BIGINT NULL,
+    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE,
+
+    FOREIGN KEY (UserId) REFERENCES users(Id),
+    INDEX idx_logs_userid (UserId),
+    INDEX idx_logs_activitydate (ActivityDate),
+    INDEX idx_logs_isdeleted (IsDeleted)
 );
----
+
+-- USER ROLES
 CREATE TABLE user_roles (
     Id BIGINT PRIMARY KEY AUTO_INCREMENT,
     UserId BIGINT NOT NULL,
     Role VARCHAR(100) NOT NULL DEFAULT '',
     Permissions TEXT NULL,
-    FOREIGN KEY (UserId) REFERENCES users(Id) ON DELETE CASCADE
+    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    DeletedAt DATETIME NULL,
+    CreatedBy BIGINT NULL,
+    UpdatedBy BIGINT NULL,
+    DeletedBy BIGINT NULL,
+    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE,
+
+    FOREIGN KEY (UserId) REFERENCES users(Id),
+    INDEX idx_roles_userid (UserId),
+    INDEX idx_roles_isdeleted (IsDeleted)
 );
----------
+
+-- USER SECURITY
 CREATE TABLE user_security (
     Id BIGINT PRIMARY KEY AUTO_INCREMENT,
     UserId BIGINT NOT NULL,
@@ -58,13 +112,36 @@ CREATE TABLE user_security (
     PasswordResetExpiresAt DATETIME NULL,
     FailedLoginAttempts INT NOT NULL DEFAULT 0,
     LastLoginAt DATETIME NULL,
-    FOREIGN KEY (UserId) REFERENCES users(Id) ON DELETE CASCADE
+    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    DeletedAt DATETIME NULL,
+    CreatedBy BIGINT NULL,
+    UpdatedBy BIGINT NULL,
+    DeletedBy BIGINT NULL,
+    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE,
+
+    FOREIGN KEY (UserId) REFERENCES users(Id),
+    INDEX idx_security_userid (UserId),
+    INDEX idx_security_verification_token (VerificationToken),
+    INDEX idx_security_isdeleted (IsDeleted)
 );
----
+
+-- USER SOCIAL AUTH
 CREATE TABLE user_social_auth (
     Id BIGINT PRIMARY KEY AUTO_INCREMENT,
     UserId BIGINT NOT NULL,
     Provider VARCHAR(255) NOT NULL DEFAULT '',
     ProviderId VARCHAR(255) NOT NULL DEFAULT '',
-    FOREIGN KEY (UserId) REFERENCES users(Id) ON DELETE CASCADE
+    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    DeletedAt DATETIME NULL,
+    CreatedBy BIGINT NULL,
+    UpdatedBy BIGINT NULL,
+    DeletedBy BIGINT NULL,
+    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE,
+
+    FOREIGN KEY (UserId) REFERENCES users(Id),
+    INDEX idx_social_userid (UserId),
+    INDEX idx_social_provider (Provider),
+    INDEX idx_social_isdeleted (IsDeleted)
 );
