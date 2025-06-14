@@ -24,7 +24,7 @@ namespace AlbinMicroService.Libraries.Common.QueryManager
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static string? GetQuery(string key) => Queries.GetValueOrDefault(key);
+        public static string GetQuery(string key) => Queries.GetValueOrDefault(key) ?? string.Empty;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryGetQuery(string key, out string? query) => Queries.TryGetValue(key, out query);

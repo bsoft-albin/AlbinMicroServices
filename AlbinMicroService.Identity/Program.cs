@@ -27,7 +27,7 @@ namespace AlbinMicroService.Identity
 
             // Service Registrations
             builder.Services.AddSingleton<IDynamicMeths, DynamicMeths>();
-            builder.Services.AddScoped<IDapperHelper>(sp => new DapperHelper("Server=localhost;Port=3306;Database=users;Uid=albin;Pwd=billy;"));
+            builder.Services.AddScoped<IDapperHelper>(sp => new DapperHelper("Server=localhost;Port=3306;Database=users;Uid=root;Pwd=albin;"));
             builder.Services.AddScoped<IResourceOwnerPasswordValidator, CustomResourceOwnerPasswordValidator>();
             builder.Services.AddScoped<IUserService, UserService>();
 

@@ -1,9 +1,8 @@
-﻿using AlbinMicroService.Users.Domain.Models.Dtos;
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace AlbinMicroService.Users.Domain.Validator
 {
-    public class UserDtoValidator : AbstractValidator<UserDto>
+    public class UserDtoValidator : AbstractValidator<UserRegisterDto>
     {
         public UserDtoValidator()
         {
@@ -12,22 +11,16 @@ namespace AlbinMicroService.Users.Domain.Validator
                 .MinimumLength(3).WithMessage("Username must be at least 3 characters.")
                 .MaximumLength(50).WithMessage("Username cannot exceed 50 characters.");
 
+            RuleFor(user => user.Password)
+                .NotEmpty().WithMessage("Password is required.")
+                .MinimumLength(8).WithMessage("Password must be at least 8 characters.")
+                .MaximumLength(100).WithMessage("Password cannot exceed 100 characters.");
+
             RuleFor(user => user.Email)
                 .NotEmpty().WithMessage("Email is required.")
                 .EmailAddress().WithMessage("Invalid email format.");
 
-            RuleFor(user => user.IsActive)
-                .NotNull().WithMessage("IsActive field is required.");
-
-            RuleFor(user => user.CreatedAt)
-                .LessThanOrEqualTo(DateTime.UtcNow).WithMessage("CreatedAt cannot be in the future.");
-
-            RuleFor(user => user.UpdatedAt)
-                .GreaterThanOrEqualTo(user => user.CreatedAt).WithMessage("UpdatedAt cannot be earlier than CreatedAt.");
-
-            RuleFor(user => user.DeletedAt)
-                .GreaterThan(user => user.CreatedAt).When(user => user.DeletedAt.HasValue)
-                .WithMessage("DeletedAt must be after CreatedAt.");
+            RuleFor(user => user.Role).NotEmpty().WithMessage("Role is required.");
         }
     }
 }

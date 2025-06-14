@@ -50,8 +50,9 @@ namespace AlbinMicroService.Core.Utilities
         /// <param name="input"></param>
         /// <param name="storedHash"></param>
         /// <returns>True or False if both string matches.</returns>
-        public bool VerifyHash(string input, string storedHash);
+        bool VerifyHash(string input, string storedHash);
         Task<bool> SendEmailAsync(EmailTemplate emailTemplate);
+        string HashStringFullEncoded(string input);
     }
 
     public class DynamicMeths : IDynamicMeths
@@ -83,6 +84,16 @@ namespace AlbinMicroService.Core.Utilities
             using Argon2 argon2 = new(config);
             using SecureArray<byte> hashBytes = argon2.Hash();
             return Convert.ToBase64String(hashBytes.Buffer);
+        }
+
+        public string HashStringFullEncoded(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                throw new ArgumentNullException(nameof(input), StaticMeths.GetNullOrEmptyOrWhiteSpaceErrorText(nameof(input)));
+            }
+
+            return Argon2.Hash(input); // This returns a full encoded string including salt, version, parameters, etc.
         }
 
         public bool VerifyHash(string input, string storedHash)

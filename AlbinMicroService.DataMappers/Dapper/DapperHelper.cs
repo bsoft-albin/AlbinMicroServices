@@ -18,11 +18,16 @@
             return await connection.ExecuteAsync(sql, parameters);
         }
 
+        public MySqlConnection GetCreatedConnection()
+        {
+            return CreateConnection();
+        }
+
         public async Task<T> ExecuteScalarAsync<T>(string sql, object? parameters = null)
         {
             using var connection = CreateConnection();
-            var result = await connection.ExecuteScalarAsync<T>(sql, parameters) ?? throw new Exception("No Scalar Value Returned");
-            return result;
+            var result = await connection.ExecuteScalarAsync<T>(sql, parameters);
+            return result ?? throw new NullReferenceException("No Value Returned from the Database.");
         }
 
         public async Task<IEnumerable<T>> QueryAsync<T>(string sql, object? parameters = null)

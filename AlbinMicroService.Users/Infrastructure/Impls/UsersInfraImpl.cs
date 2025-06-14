@@ -2,6 +2,8 @@
 using AlbinMicroService.Libraries.Common.QueryManager;
 using AlbinMicroService.Users.Domain;
 using AlbinMicroService.Users.Infrastructure.Contracts;
+using Dapper;
+using MySql.Data.MySqlClient;
 
 namespace AlbinMicroService.Users.Infrastructure.Impls
 {
@@ -12,7 +14,6 @@ namespace AlbinMicroService.Users.Infrastructure.Impls
             short count = 0;
             try
             {
-                //string? Qry = SqlQueryCache.GetQuery("GetActiveUsers");
                 count = await dapper.ExecuteScalarAsync<short>(UsersSqlQueries.UsernameExistCount, new { username });
             }
             catch (Exception ex)
@@ -21,6 +22,52 @@ namespace AlbinMicroService.Users.Infrastructure.Impls
             }
 
             return count;
+        }
+
+        public async Task<short> CheckEmailExistsOrNotInfraAsync(string email)
+        {
+            short count = 0;
+            try
+            {
+                count = await dapper.ExecuteScalarAsync<short>(UsersSqlQueries.EmailExistCount, new { email });
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error Occurred While Checking Email Count for @email");
+            }
+
+            return count;
+        }
+
+        public async Task<int> CreateUserAsync(UserRegisterDto userDto)
+        {
+            int InsertedRecord = 0;
+
+            using MySqlConnection connection = dapper.GetCreatedConnection();
+            await connection.OpenAsync();
+
+            using MySqlTransaction transaction = await connection.BeginTransactionAsync();
+
+            try
+            {
+                string UserRegisterQuery = SqlQueryCache.GetQuery("UserRegisterQuery");
+                string UserRoleAdd = SqlQueryCache.GetQuery("UserRoleAdd");
+
+                InsertedRecord = await connection.ExecuteScalarAsync<int>(UserRegisterQuery, new { username = userDto.Username, password = userDto.Password, email = userDto.Email }, transaction);
+                if (InsertedRecord > 0)
+                {
+                    await connection.ExecuteAsync(UserRoleAdd, new { userId = InsertedRecord, role = userDto.Role}, transaction );
+                }
+
+                await transaction.CommitAsync();
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                logger.LogError(ex, "Error occurred while registering the user. Transaction rolled back.");
+            }
+
+            return InsertedRecord;
         }
 
         public async Task<string?> GetUserRoleInfraAsync(string username)

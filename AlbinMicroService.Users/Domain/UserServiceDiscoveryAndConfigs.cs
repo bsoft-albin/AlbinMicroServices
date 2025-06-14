@@ -21,7 +21,7 @@ namespace AlbinMicroService.Users.Domain
                 client.BaseAddress = new Uri("http://localhost:9998/");
                 client.DefaultRequestHeaders.Add("Accept", "application/json");
                 client.DefaultRequestHeaders.Add("User-Agent", "Albin-MicroServices"); // Optional but recommended
-                client.Timeout = TimeSpan.FromSeconds(30);
+                client.Timeout = TimeSpan.FromSeconds(60);
             });
 
             // Add Kernel Services to the container.
@@ -32,8 +32,8 @@ namespace AlbinMicroService.Users.Domain
 
         public static WebApplicationBuilder AddDatabaseServices(this WebApplicationBuilder builder)
         {
-            string connectionString = builder.Configuration.GetConnectionString(DatabaseTypes.MySql) ?? string.Empty;
-            builder.Services.AddScoped<IDapperHelper>(sp => new DapperHelper(connectionString));
+            string? connectionString = builder.Configuration.GetConnectionString(DatabaseTypes.MySql);
+            builder.Services.AddScoped<IDapperHelper>(sp => new DapperHelper(connectionString ?? string.Empty));
 
             return builder;
         }

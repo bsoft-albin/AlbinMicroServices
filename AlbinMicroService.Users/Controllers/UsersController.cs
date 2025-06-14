@@ -18,7 +18,7 @@ namespace AlbinMicroService.Users.Controllers
         [HttpPost]
         //[MapToApiVersion("1.0")]
         [ActionName(UsersActionNames.RegisterUser)]
-        public async Task<IActionResult> CreateUserAsync([FromBody, Required] UserDto userDto)
+        public async Task<IActionResult> CreateUserAsync([FromBody, Required] UserRegisterDto userDto)
         {
             return ParseApiResponse(await appContract.CreateUserAppAsync(userDto), HttpVerbs.Post);
         }

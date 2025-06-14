@@ -9,7 +9,7 @@ namespace AlbinMicroService.Users.Domain.Contracts
         /// </summary>
         /// <param name="userDto"></param>
         /// <returns>The ValidatorTemplate instance.</returns>
-        ValidatorTemplate ValidateUserDto(UserDto userDto);
+        ValidatorTemplate ValidateUserDto(UserRegisterDto userDto);
         /// <summary>
         /// Hashes the user password
         /// </summary>
@@ -30,5 +30,6 @@ namespace AlbinMicroService.Users.Domain.Contracts
         /// <param name="username"></param>
         /// <returns>True or False</returns>
         Task<bool> VerifyUsernameExistsOrNotAsync(string username);
+        Task<bool> VerifyEmailExistsOrNotAsync(string email);
     }
 }

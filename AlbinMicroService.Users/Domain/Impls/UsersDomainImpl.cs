@@ -1,5 +1,4 @@
 ﻿using AlbinMicroService.Users.Domain.Contracts;
-using AlbinMicroService.Users.Domain.Models.Dtos;
 using AlbinMicroService.Users.Domain.Validator;
 using AlbinMicroService.Users.Infrastructure.Contracts;
 using FluentValidation.Results;
@@ -15,7 +14,7 @@ namespace AlbinMicroService.Users.Domain.Impls
                 throw new ArgumentNullException(nameof(userPassword), StaticMeths.GetNullOrEmptyOrWhiteSpaceErrorText(nameof(userPassword)));
             }
 
-            return _dynamicMeths.HashString(userPassword);
+            return _dynamicMeths.HashStringFullEncoded(userPassword);
         }
 
         public async Task<bool> SendWelcomeEmailToUserAsync(string toEmail, string receiverUsername)
@@ -40,7 +39,7 @@ namespace AlbinMicroService.Users.Domain.Impls
             return await _dynamicMeths.SendEmailAsync(emailTemplate);
         }
 
-        public ValidatorTemplate ValidateUserDto(UserDto userDto)
+        public ValidatorTemplate ValidateUserDto(UserRegisterDto userDto)
         {
             UserDtoValidator validator = new();
             ValidatorTemplate validatorTemplate = new();
@@ -63,14 +62,12 @@ namespace AlbinMicroService.Users.Domain.Impls
 
         public async Task<bool> VerifyUsernameExistsOrNotAsync(string username)
         {
-            if (await _usersInfra.CheckUsernameExistsOrNotInfraAsync(username) > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return await _usersInfra.CheckUsernameExistsOrNotInfraAsync(username) > 0;
+        }
+
+        public async Task<bool> VerifyEmailExistsOrNotAsync(string email)
+        {
+            return await _usersInfra.CheckEmailExistsOrNotInfraAsync(email) > 0;
         }
     }
 }

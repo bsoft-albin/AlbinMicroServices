@@ -8,7 +8,7 @@ namespace AlbinMicroService.Users.Application.Impls
 {
     public class UsersAppImpl(IUsersDomainContract usersDomain, IUsersInfraContract usersInfraContract) : IUsersAppContract
     {
-        public async Task<ApiBaseResponse> CreateUserAppAsync(UserDto userDto)
+        public async Task<ApiBaseResponse> CreateUserAppAsync(UserRegisterDto userDto)
         {
             ApiBaseResponse apiBaseResponse = new();
 
@@ -21,17 +21,20 @@ namespace AlbinMicroService.Users.Application.Impls
                     // check whether username exists
                     bool isUsernameExists = await usersDomain.VerifyUsernameExistsOrNotAsync(userDto.Username);
 
-                    if (!isUsernameExists)
+                    // check whether email exists
+                    bool isEmailExists = await usersDomain.VerifyEmailExistsOrNotAsync(userDto.Email);
+
+                    if (!isUsernameExists && !isEmailExists)
                     {
                         userDto.Password = usersDomain.HashUserPassword(userDto.Password);
 
                         if (!string.IsNullOrEmpty(userDto.Password))
                         {
                             // call Db to save user
-                            bool dbResponse = true; // here repo call to save in db
-                            await usersDomain.SendWelcomeEmailToUserAsync(userDto.Email, userDto.Username);
+                            int CreatedId = await usersInfraContract.CreateUserAsync(userDto);
+                            //await usersDomain.SendWelcomeEmailToUserAsync(userDto.Email, userDto.Username);
 
-                            if (dbResponse)
+                            if (CreatedId > 0)
                             {
                                 apiBaseResponse.StatusCode = HttpStatusCodes.Status201Created;
                                 apiBaseResponse.StatusMessage = HttpStatusMessages.Status201Created;
@@ -48,10 +51,20 @@ namespace AlbinMicroService.Users.Application.Impls
                             apiBaseResponse.StatusMessage = HttpStatusMessages.Status500InternalServerError;
                         }
                     }
-                    else
+                    else if(isUsernameExists)
                     {
                         apiBaseResponse.StatusCode = HttpStatusCodes.Status409Conflict;
                         apiBaseResponse.StatusMessage = CustomHttpStatusMessages.UsernameExists;
+                    }
+                    else if (isEmailExists)
+                    {
+                        apiBaseResponse.StatusCode = HttpStatusCodes.Status409Conflict;
+                        apiBaseResponse.StatusMessage = CustomHttpStatusMessages.EmailExists;
+                    }
+                    else
+                    {
+                        apiBaseResponse.StatusCode = CustomHttpStatusCodes.UnXpectedError;
+                        apiBaseResponse.StatusMessage = CustomHttpStatusMessages.UnXpectedError;
                     }
                 }
                 else

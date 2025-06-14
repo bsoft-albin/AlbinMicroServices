@@ -44,7 +44,7 @@ namespace AlbinMicroService.Identity
 
             string Query = @"select u.Id,u.Username,u.Password,ur.Role from users u
             INNER JOIN user_roles ur ON u.Id = ur.UserId
-            where Username = @username AND Password = @password AND IsDeleted = 0 AND IsActive = 1 AND IsVerified = 1;";
+            where Username = @username AND IsDeleted = 0 AND IsActive = 1 AND IsVerified = 1;";
 
             try
             {
