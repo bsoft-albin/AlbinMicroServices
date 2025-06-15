@@ -304,3 +304,7 @@ INSERT INTO SecurityQuestions (Question) VALUES
 ('What is your mother’s maiden name?'),
 ('What was your first pet’s name?'),
 ('What was the name of your elementary school?');
+
+
+--- Scafffold Command of Mysql -from the Root of the Project ----
+--dotnet ef dbcontext scaffold "Server=localhost;Port=3306;Database=master_data;Uid=root;Pwd=albin;" Pomelo.EntityFrameworkCore.MySql --context MasterDataDbContext --output-dir Domain/Models/Entities --context-dir Domain/ContextDb --data-annotations --no-onconfiguring --project . --startup-project .
