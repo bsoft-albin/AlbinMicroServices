@@ -1,15 +1,9 @@
 ﻿namespace AlbinMicroService.DataMappers.RawADO
 {
-    public class AdoHelper : IAdoHelper
+    public class AdoHelper(string providerInvariantName, string connectionString) : IAdoHelper
     {
-        private readonly string _connectionString;
-        private readonly DbProviderFactory _factory;
-
-        public AdoHelper(string providerInvariantName, string connectionString)
-        {
-            _connectionString = connectionString;
-            _factory = DbProviderFactories.GetFactory(providerInvariantName);
-        }
+        private readonly string _connectionString = connectionString;
+        private readonly DbProviderFactory _factory = DbProviderFactories.GetFactory(providerInvariantName);
 
         private DbConnection CreateConnection()
         {

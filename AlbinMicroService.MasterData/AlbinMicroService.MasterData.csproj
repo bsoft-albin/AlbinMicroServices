@@ -10,4 +10,9 @@
     <ProjectReference Include="..\AlbinMicroService.Kernel\AlbinMicroService.Kernel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Domain\Models\DbContext\" />
+    <Folder Include="Domain\Models\Entities\" />
+  </ItemGroup>
+
 </Project>

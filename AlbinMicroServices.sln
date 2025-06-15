@@ -48,6 +48,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Kubernetes", "Kubernetes", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{4472452C-FC47-4E8B-A59D-0E13A56FF536}"
 	ProjectSection(SolutionItems) = preProject
+		MasterData.sql = MasterData.sql
 		Users.sql = Users.sql
 	EndProjectSection
 EndProject
