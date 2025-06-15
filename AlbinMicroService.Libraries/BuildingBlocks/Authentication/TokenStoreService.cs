@@ -14,12 +14,12 @@ namespace AlbinMicroService.Libraries.BuildingBlocks.Authentication
         {
             if (_cache.TryGetValue<TokenResponse>($"token_{userId}", out var token))
             {
-                if (token.ExpiresAt > DateTime.UtcNow)
+                if (token.ExpiresAt > DateTime.Now)
                     return token.AccessToken;
 
                 // Refresh if expired
                 var refreshed = await _tokenClient.RefreshTokenAsync(token.RefreshToken);
-                _cache.Set($"token_{userId}", refreshed, refreshed.ExpiresAt - DateTime.UtcNow);
+                _cache.Set($"token_{userId}", refreshed, refreshed.ExpiresAt - DateTime.Now);
                 return refreshed.AccessToken;
             }
 

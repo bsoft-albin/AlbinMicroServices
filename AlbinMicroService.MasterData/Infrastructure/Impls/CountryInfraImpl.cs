@@ -1,4 +1,5 @@
 ﻿using AlbinMicroService.DataMappers.EntityFramework;
+using AlbinMicroService.MasterData.Domain.Models.Dtos;
 using AlbinMicroService.MasterData.Domain.Models.Entities;
 using AlbinMicroService.MasterData.Infrastructure.Contracts;
 
@@ -6,13 +7,47 @@ namespace AlbinMicroService.MasterData.Infrastructure.Impls
 {
     public class CountryInfraImpl(IGenericRepository<Country> countryRepo, ILogger<CountryInfraImpl> logger) : ICountryInfraContract
     {
-        public async Task<List<Country>> GetAllCountriesInfraAsync()
+        public async Task<bool?> DeleteCountryByIdInfraAsync(int countryId)
         {
-            List<Country> countryList = [];
+            bool? result = null;
+            try
+            {
+                Country? country = await countryRepo.GetByIdAsync(countryId);
+                if (country != null)
+                {
+                    country.UpdatedAt = DateTime.Now;
+                    country.DeletedAt = DateTime.Now;
+                    country.IsDeleted = true;
+
+                    countryRepo.Update(country);
+                    await countryRepo.SaveChangesAsync();
+
+                    result = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error");
+                result = false;
+            }
+
+            return result;
+        }
+
+        public async Task<List<CountryResponse>> GetAllCountriesInfraAsync()
+        {
+            List<CountryResponse> countryList = [];
             try
             {
                 IEnumerable<Country> data = await countryRepo.GetAllAsync();
-                countryList = data.Where(w => !w.IsDeleted).ToList();
+                countryList = data.Where(w => !w.IsDeleted)
+                    .Select(s => new CountryResponse
+                    {
+                        Code = s.Code,
+                        Name = s.Name,
+                        Id = s.Id,
+                        DialCode = s.DialCode
+                    }).ToList();
             }
             catch (Exception ex)
             {
@@ -20,6 +55,53 @@ namespace AlbinMicroService.MasterData.Infrastructure.Impls
             }
 
             return countryList;
+        }
+
+        public async Task<CountryResponse?> GetCountryByIdInfraAsync(int countryId)
+        {
+            try
+            {
+                Country? country = await countryRepo.GetByIdAsync(countryId);
+                if (country != null)
+                {
+                    return new CountryResponse { Code = country.Code, DialCode = country.DialCode, Id = country.Id, Name = country.Name };
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error");
+                return null;
+            }
+        }
+
+        public async Task<int> SaveCountryInfraAsync(Country country)
+        {
+            int result = 0;
+            try
+            {
+                if (country.Id > 0)
+                {
+                    countryRepo.Update(country);
+                }
+                else
+                {
+                    await countryRepo.AddAsync(country);
+                }
+                if (await countryRepo.SaveChangesAsync() > 0)
+                {
+                    result = country.Id;
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error");
+            }
+
+            return result;
         }
     }
 }
