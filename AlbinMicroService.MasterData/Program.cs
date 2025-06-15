@@ -1,12 +1,11 @@
 using AlbinMicroService.Kernel.DependencySetups;
+using AlbinMicroService.MasterData.Domain;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-WebAppBuilderConfigTemplate configs = ConfigurationSetup.BindSettings(builder.Configuration);
+WebAppBuilderConfigTemplate configs = builder.AddDefaultServices();
 
-builder.AddKernelServices(builder.WebHost, configs); // Adding Kernel Services to the container.
-
-builder.AddSeriloggings(builder.Host); // Adding Serilog to the container.
+builder.AddDatabaseServices().AddCustomServices().AddMasterDataServices();
 
 WebApplication app = builder.Build();
 

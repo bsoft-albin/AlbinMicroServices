@@ -1,4 +1,5 @@
 ﻿using AlbinMicroService.Core.Controller;
+using AlbinMicroService.MasterData.Application.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,13 +8,14 @@ namespace AlbinMicroService.MasterData.Controllers
     [Route(ApiRoutes.API_TEMPLATE)]
     [ApiController]
     [Authorize]
-    public class CountryController : BaseController
+    [AllowAnonymous]
+    public class CountryController(ICountryAppContract countryAppContract) : BaseController
     {
         [HttpGet]
-        [ActionName("sample-country-endpoint")]
-        public IActionResult Get()
+        [ActionName("get-all-counties")]
+        public async Task<IActionResult> GetAllCountries()
         {
-            return Ok("from Master Service !!!");
+            return ParseApiResponse(await countryAppContract.GetAllCountriesAppAsync(), HttpVerbs.Get);
         }
     }
 }
