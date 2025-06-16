@@ -66,6 +66,12 @@ namespace AlbinMicroService.Core
         public int PropsCount { get; set; }
     }
 
+    public class GenericObjectSwitcher<X> where X : new()
+    {
+        public X DataSwitcher { get; set; } = new();
+        public string? Error { get; set; }
+    }
+
     /// <summary>
     /// A Generic Class for Paginated Api Response Summary.
     /// </summary>

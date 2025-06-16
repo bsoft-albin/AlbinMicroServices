@@ -28,6 +28,11 @@ namespace AlbinMicroService.DataMappers.EntityFramework
             return _dbSet.AsNoTracking();
         }
 
+        public IQueryable<T> GetAllAsQueryable()
+        {
+            return _dbSet.AsQueryable();
+        }
+
         public async Task AddAsync(T entity)
         {
             await _dbSet.AddAsync(entity);
@@ -48,7 +53,7 @@ namespace AlbinMicroService.DataMappers.EntityFramework
             return await _context.SaveChangesAsync();
         }
 
-        // 🔄 Transaction Support
+        // Transaction Support
         public async Task BeginTransactionAsync()
         {
             _transaction ??= await _context.Database.BeginTransactionAsync();

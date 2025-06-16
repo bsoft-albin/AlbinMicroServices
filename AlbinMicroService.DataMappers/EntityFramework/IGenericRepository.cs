@@ -13,5 +13,6 @@
         Task CommitTransactionAsync();
         Task BeginTransactionAsync();
         IQueryable<T> GetAllNoTracking();
+        IQueryable<T> GetAllAsQueryable();
     }
 }

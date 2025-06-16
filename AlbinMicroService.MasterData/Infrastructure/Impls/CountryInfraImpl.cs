@@ -1,4 +1,5 @@
-﻿using AlbinMicroService.DataMappers.EntityFramework;
+﻿using AlbinMicroService.Core;
+using AlbinMicroService.DataMappers.EntityFramework;
 using AlbinMicroService.MasterData.Domain.Models.Dtos;
 using AlbinMicroService.MasterData.Domain.Models.Entities;
 using AlbinMicroService.MasterData.Infrastructure.Contracts;
@@ -7,9 +8,9 @@ namespace AlbinMicroService.MasterData.Infrastructure.Impls
 {
     public class CountryInfraImpl(IGenericRepository<Country> countryRepo, ILogger<CountryInfraImpl> logger) : ICountryInfraContract
     {
-        public async Task<bool?> DeleteCountryByIdInfraAsync(int countryId)
+        public async Task<GenericObjectSwitcher<bool>> DeleteCountryByIdInfraAsync(int countryId)
         {
-            bool? result = null;
+            GenericObjectSwitcher<bool> genericObjectSwitcher = new();
             try
             {
                 Country? country = await countryRepo.GetByIdAsync(countryId);
@@ -22,16 +23,17 @@ namespace AlbinMicroService.MasterData.Infrastructure.Impls
                     countryRepo.Update(country);
                     await countryRepo.SaveChangesAsync();
 
-                    result = true;
+                    genericObjectSwitcher.DataSwitcher = true;
                 }
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, "Error");
-                result = false;
+                genericObjectSwitcher.Error = ex.Message;
+                genericObjectSwitcher.DataSwitcher = false;
             }
 
-            return result;
+            return genericObjectSwitcher;
         }
 
         public async Task<List<CountryResponse>> GetAllCountriesInfraAsync()

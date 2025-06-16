@@ -3,6 +3,7 @@ using AlbinMicroService.MasterData.Application.Contracts;
 using AlbinMicroService.MasterData.Domain.Models.Dtos;
 using AlbinMicroService.MasterData.Domain.Models.Entities;
 using AlbinMicroService.MasterData.Infrastructure.Contracts;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AlbinMicroService.MasterData.Application.Impls
 {
@@ -11,21 +12,21 @@ namespace AlbinMicroService.MasterData.Application.Impls
         public async Task<ApiBaseResponse> DeleteCountryByIdAppAsync(int countryId)
         {
             ApiBaseResponse apiBaseResponse = new();
-            bool? result = await countryInfraContract.DeleteCountryByIdInfraAsync(countryId);
-            if (result != null && result == true)
+            GenericObjectSwitcher<bool> result = await countryInfraContract.DeleteCountryByIdInfraAsync(countryId);
+            if (result.DataSwitcher)
             {
                 apiBaseResponse.StatusCode = HttpStatusCodes.Status204NoContent;
                 apiBaseResponse.StatusMessage = HttpStatusMessages.Status204NoContent;
             }
-            else if (result == null)
-            {
-                apiBaseResponse.StatusCode = HttpStatusCodes.Status404NotFound;
-                apiBaseResponse.StatusMessage = HttpStatusMessages.Status404NotFound;
-            }
-            else
+            else if (!result.DataSwitcher && !result.Error.IsNullOrEmpty())
             {
                 apiBaseResponse.StatusCode = CustomHttpStatusCodes.UnXpectedError;
                 apiBaseResponse.StatusMessage = CustomHttpStatusMessages.UnXpectedError;
+            }
+            else
+            {
+                apiBaseResponse.StatusCode = HttpStatusCodes.Status404NotFound;
+                apiBaseResponse.StatusMessage = HttpStatusMessages.Status404NotFound;
             }
 
             return apiBaseResponse;
