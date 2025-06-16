@@ -14,13 +14,13 @@ namespace AlbinMicroService.MasterData.Application.Impls
             bool? result = await countryInfraContract.DeleteCountryByIdInfraAsync(countryId);
             if (result != null && result == true)
             {
-                apiBaseResponse.StatusCode = HttpStatusCodes.Status200OK;
-                apiBaseResponse.StatusMessage = HttpStatusMessages.Status200OK;
+                apiBaseResponse.StatusCode = HttpStatusCodes.Status204NoContent;
+                apiBaseResponse.StatusMessage = HttpStatusMessages.Status204NoContent;
             }
             else if (result == null)
             {
-                apiBaseResponse.StatusCode = HttpStatusCodes.Status204NoContent;
-                apiBaseResponse.StatusMessage = HttpStatusMessages.Status204NoContent;
+                apiBaseResponse.StatusCode = HttpStatusCodes.Status404NotFound;
+                apiBaseResponse.StatusMessage = HttpStatusMessages.Status404NotFound;
             }
             else
             {

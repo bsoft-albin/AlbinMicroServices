@@ -102,7 +102,7 @@
     {
         public const string ServerShutdown = "Temporarily the Server Shutdown";
         public const string UsernameExists = "Username Already Exists";
-        public const string EmailExists = "Email Already Registered With us.";
+        public const string EmailExists = "Email already Registered with us";
         public const string UnXpectedError = "Something went wrong please try again later";
         public const string UnKnownError = "UNKNOWN_ERROR";
     }

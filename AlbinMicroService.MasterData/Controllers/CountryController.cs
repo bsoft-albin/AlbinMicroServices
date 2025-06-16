@@ -9,7 +9,6 @@ namespace AlbinMicroService.MasterData.Controllers
 {
     [Route(ApiRoutes.API_TEMPLATE)]
     [ApiController]
-    [Authorize]
     [AllowAnonymous]
     public class CountryController(ICountryAppContract countryAppContract) : BaseController
     {

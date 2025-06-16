@@ -96,6 +96,17 @@ namespace AlbinMicroService.Core
         public object Data { get; set; } = new { };
     }
 
+    public class RuntimeErrorResponse : ApiBaseResponse
+    {
+        public ErrorObject? Error { get; set; }
+    }
+
+    public class ErrorObject
+    {
+        public string? Code { get; set; } = "DATABASE_TIMEOUT";
+        public string? Message { get; set; } = "Could not retrieve customer data due to timeout";
+    }
+
     /// <summary>
     /// Standard Api error response wrapper to ensure consistent error response structure.
     /// </summary>
