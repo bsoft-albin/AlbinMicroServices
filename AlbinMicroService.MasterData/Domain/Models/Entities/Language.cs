@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace AlbinMicroService.MasterData.Domain.Models.Entities;
 
@@ -7,6 +8,7 @@ namespace AlbinMicroService.MasterData.Domain.Models.Entities;
 /// Master table for supported languages
 /// </summary>
 [Table("languages")]
+[Index("Code", Name = "idx_languages_code")]
 public partial class Language
 {
     /// <summary>

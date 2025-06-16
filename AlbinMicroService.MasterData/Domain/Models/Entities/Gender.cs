@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace AlbinMicroService.MasterData.Domain.Models.Entities;
 
@@ -7,6 +8,7 @@ namespace AlbinMicroService.MasterData.Domain.Models.Entities;
 /// Master table for genders
 /// </summary>
 [Table("genders")]
+[Index("Code", Name = "idx_genders_code")]
 public partial class Gender
 {
     /// <summary>

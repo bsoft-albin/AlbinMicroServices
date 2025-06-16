@@ -1,4 +1,8 @@
-﻿-- 1. Languages
+﻿CREATE SCHEMA IF NOT EXISTS master_data;
+
+USE DATABASE master_data;
+
+-- 1. Languages
 CREATE TABLE Languages (
     Id INT PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary key',
     Name VARCHAR(100) NOT NULL COMMENT 'Language name (e.g., English)',
@@ -11,6 +15,8 @@ CREATE TABLE Languages (
     DeletedBy BIGINT NULL COMMENT 'User ID who deleted the record',
     IsDeleted BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Soft delete flag'
 ) COMMENT = 'Master table for supported languages';
+
+CREATE INDEX idx_languages_code ON Languages (Code);
 
 -- 2. Countries
 CREATE TABLE Countries (
@@ -27,6 +33,8 @@ CREATE TABLE Countries (
     IsDeleted BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Soft delete flag'
 ) COMMENT = 'Master table for countries';
 
+CREATE INDEX idx_countries_code ON Countries (Code);
+
 -- 3. Genders
 CREATE TABLE Genders (
     Id INT PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary key',
@@ -41,32 +49,36 @@ CREATE TABLE Genders (
     IsDeleted BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Soft delete flag'
 ) COMMENT = 'Master table for genders';
 
+CREATE INDEX idx_genders_code ON Genders (Code);
+
 -- 4. StatusCodes
 CREATE TABLE StatusCodes (
     Id INT PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary key',
     Code VARCHAR(50) NOT NULL COMMENT 'Status code (e.g., ACTIVE, INACTIVE)',
     Description TEXT COMMENT 'Detailed description of the status',
-    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    DeletedAt DATETIME NULL,
-    CreatedBy BIGINT NULL,
-    UpdatedBy BIGINT NULL,
-    DeletedBy BIGINT NULL,
-    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE
+    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The datetime when the record was created',
+    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'The datetime when the record was last updated',
+    DeletedAt DATETIME NULL COMMENT 'The datetime when the record was soft-deleted',
+    CreatedBy BIGINT NULL COMMENT 'User ID who created the record',
+    UpdatedBy BIGINT NULL COMMENT 'User ID who last updated the record',
+    DeletedBy BIGINT NULL COMMENT 'User ID who deleted the record',
+    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Soft delete flag'
 ) COMMENT = 'Master table for various status codes';
+
+CREATE INDEX idx_statuscodes_code ON StatusCodes (Code);
 
 -- 5. UserRoles
 CREATE TABLE UserRoles (
     Id INT PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary key',
     Name VARCHAR(100) NOT NULL COMMENT 'Role name (e.g., Admin, User)',
     Description TEXT COMMENT 'Description of the user role',
-    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    DeletedAt DATETIME NULL,
-    CreatedBy BIGINT NULL,
-    UpdatedBy BIGINT NULL,
-    DeletedBy BIGINT NULL,
-    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE
+    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The datetime when the record was created',
+    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'The datetime when the record was last updated',
+    DeletedAt DATETIME NULL COMMENT 'The datetime when the record was soft-deleted',
+    CreatedBy BIGINT NULL COMMENT 'User ID who created the record',
+    UpdatedBy BIGINT NULL COMMENT 'User ID who last updated the record',
+    DeletedBy BIGINT NULL COMMENT 'User ID who deleted the record',
+    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Soft delete flag'
 ) COMMENT = 'Master table for application user roles';
 
 -- 6. ContactTypes
@@ -74,13 +86,13 @@ CREATE TABLE ContactTypes (
     Id INT PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary key',
     Name VARCHAR(100) NOT NULL COMMENT 'Type of contact (e.g., Mobile, Email)',
     Description TEXT COMMENT 'Description of the contact type',
-    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    DeletedAt DATETIME NULL,
-    CreatedBy BIGINT NULL,
-    UpdatedBy BIGINT NULL,
-    DeletedBy BIGINT NULL,
-    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE
+    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The datetime when the record was created',
+    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'The datetime when the record was last updated',
+    DeletedAt DATETIME NULL COMMENT 'The datetime when the record was soft-deleted',
+    CreatedBy BIGINT NULL COMMENT 'User ID who created the record',
+    UpdatedBy BIGINT NULL COMMENT 'User ID who last updated the record',
+    DeletedBy BIGINT NULL COMMENT 'User ID who deleted the record',
+    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Soft delete flag'
 ) COMMENT = 'Master table for contact types';
 
 -- 7. FeatureFlags
@@ -89,13 +101,13 @@ CREATE TABLE FeatureFlags (
     KeyName VARCHAR(100) NOT NULL COMMENT 'Unique feature flag name/key',
     IsEnabled BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Feature toggle state',
     Description TEXT COMMENT 'Description or usage of the feature flag',
-    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    DeletedAt DATETIME NULL,
-    CreatedBy BIGINT NULL,
-    UpdatedBy BIGINT NULL,
-    DeletedBy BIGINT NULL,
-    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE
+    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The datetime when the record was created',
+    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'The datetime when the record was last updated',
+    DeletedAt DATETIME NULL COMMENT 'The datetime when the record was soft-deleted',
+    CreatedBy BIGINT NULL COMMENT 'User ID who created the record',
+    UpdatedBy BIGINT NULL COMMENT 'User ID who last updated the record',
+    DeletedBy BIGINT NULL COMMENT 'User ID who deleted the record',
+    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Soft delete flag'
 ) COMMENT = 'Master table for feature flags and toggles';
 
 -- 8. SystemSettings
@@ -104,13 +116,13 @@ CREATE TABLE SystemSettings (
     KeyName VARCHAR(100) NOT NULL COMMENT 'Unique setting key',
     Value TEXT NOT NULL COMMENT 'Setting value',
     Description TEXT COMMENT 'Optional description',
-    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    DeletedAt DATETIME NULL,
-    CreatedBy BIGINT NULL,
-    UpdatedBy BIGINT NULL,
-    DeletedBy BIGINT NULL,
-    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE
+    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The datetime when the record was created',
+    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'The datetime when the record was last updated',
+    DeletedAt DATETIME NULL COMMENT 'The datetime when the record was soft-deleted',
+    CreatedBy BIGINT NULL COMMENT 'User ID who created the record',
+    UpdatedBy BIGINT NULL COMMENT 'User ID who last updated the record',
+    DeletedBy BIGINT NULL COMMENT 'User ID who deleted the record',
+    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Soft delete flag'
 ) COMMENT = 'Master table for configurable system settings';
 
 -- 9. ApiVersions
@@ -119,13 +131,13 @@ CREATE TABLE ApiVersions (
     Version VARCHAR(20) NOT NULL COMMENT 'API version (e.g., v1, v2)',
     IsCurrent BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Indicates if this is the current version',
     ReleaseDate DATE COMMENT 'Date of release for this version',
-    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    DeletedAt DATETIME NULL,
-    CreatedBy BIGINT NULL,
-    UpdatedBy BIGINT NULL,
-    DeletedBy BIGINT NULL,
-    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE
+    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The datetime when the record was created',
+    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'The datetime when the record was last updated',
+    DeletedAt DATETIME NULL COMMENT 'The datetime when the record was soft-deleted',
+    CreatedBy BIGINT NULL COMMENT 'User ID who created the record',
+    UpdatedBy BIGINT NULL COMMENT 'User ID who last updated the record',
+    DeletedBy BIGINT NULL COMMENT 'User ID who deleted the record',
+    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Soft delete flag'
 ) COMMENT = 'Master table for API version info';
 
 -- 10. MaintenanceSchedules
@@ -135,13 +147,13 @@ CREATE TABLE MaintenanceSchedules (
     EndTime DATETIME NOT NULL COMMENT 'Scheduled end time for maintenance',
     Reason TEXT COMMENT 'Reason for maintenance',
     IsActive BOOLEAN NOT NULL DEFAULT TRUE COMMENT 'Is the maintenance window currently active?',
-    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    DeletedAt DATETIME NULL,
-    CreatedBy BIGINT NULL,
-    UpdatedBy BIGINT NULL,
-    DeletedBy BIGINT NULL,
-    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE
+    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The datetime when the record was created',
+    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'The datetime when the record was last updated',
+    DeletedAt DATETIME NULL COMMENT 'The datetime when the record was soft-deleted',
+    CreatedBy BIGINT NULL COMMENT 'User ID who created the record',
+    UpdatedBy BIGINT NULL COMMENT 'User ID who last updated the record',
+    DeletedBy BIGINT NULL COMMENT 'User ID who deleted the record',
+    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Soft delete flag'
 ) COMMENT = 'Table to schedule maintenance mode windows';
 
 -- 11. EmailTemplates
@@ -150,13 +162,13 @@ CREATE TABLE EmailTemplates (
     Name VARCHAR(100) NOT NULL COMMENT 'Template name',
     Subject VARCHAR(255) NOT NULL COMMENT 'Email subject line',
     Body TEXT NOT NULL COMMENT 'HTML or text body of the email',
-    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    DeletedAt DATETIME NULL,
-    CreatedBy BIGINT NULL,
-    UpdatedBy BIGINT NULL,
-    DeletedBy BIGINT NULL,
-    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE
+    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The datetime when the record was created',
+    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'The datetime when the record was last updated',
+    DeletedAt DATETIME NULL COMMENT 'The datetime when the record was soft-deleted',
+    CreatedBy BIGINT NULL COMMENT 'User ID who created the record',
+    UpdatedBy BIGINT NULL COMMENT 'User ID who last updated the record',
+    DeletedBy BIGINT NULL COMMENT 'User ID who deleted the record',
+    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Soft delete flag'
 ) COMMENT = 'Master table for email templates';
 
 -- 12. SmsTemplates
@@ -164,13 +176,13 @@ CREATE TABLE SmsTemplates (
     Id INT PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary key',
     Name VARCHAR(100) NOT NULL COMMENT 'Template name',
     Message TEXT NOT NULL COMMENT 'SMS body content',
-    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    DeletedAt DATETIME NULL,
-    CreatedBy BIGINT NULL,
-    UpdatedBy BIGINT NULL,
-    DeletedBy BIGINT NULL,
-    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE
+    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The datetime when the record was created',
+    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'The datetime when the record was last updated',
+    DeletedAt DATETIME NULL COMMENT 'The datetime when the record was soft-deleted',
+    CreatedBy BIGINT NULL COMMENT 'User ID who created the record',
+    UpdatedBy BIGINT NULL COMMENT 'User ID who last updated the record',
+    DeletedBy BIGINT NULL COMMENT 'User ID who deleted the record',
+    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Soft delete flag'
 ) COMMENT = 'Master table for SMS templates';
 
 -- 13. NotificationTypes
@@ -178,13 +190,13 @@ CREATE TABLE NotificationTypes (
     Id INT PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary key',
     TypeName VARCHAR(100) NOT NULL COMMENT 'Notification type name (e.g., Email, Push)',
     Description TEXT COMMENT 'Details about this notification type',
-    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    DeletedAt DATETIME NULL,
-    CreatedBy BIGINT NULL,
-    UpdatedBy BIGINT NULL,
-    DeletedBy BIGINT NULL,
-    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE
+    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The datetime when the record was created',
+    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'The datetime when the record was last updated',
+    DeletedAt DATETIME NULL COMMENT 'The datetime when the record was soft-deleted',
+    CreatedBy BIGINT NULL COMMENT 'User ID who created the record',
+    UpdatedBy BIGINT NULL COMMENT 'User ID who last updated the record',
+    DeletedBy BIGINT NULL COMMENT 'User ID who deleted the record',
+    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Soft delete flag'
 ) COMMENT = 'Master table for notification types';
 
 -- 14. ReportTypes
@@ -192,13 +204,13 @@ CREATE TABLE ReportTypes (
     Id INT PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary key',
     Name VARCHAR(100) NOT NULL COMMENT 'Name of the report type',
     Description TEXT COMMENT 'Description or usage of this report type',
-    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    DeletedAt DATETIME NULL,
-    CreatedBy BIGINT NULL,
-    UpdatedBy BIGINT NULL,
-    DeletedBy BIGINT NULL,
-    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE
+    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The datetime when the record was created',
+    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'The datetime when the record was last updated',
+    DeletedAt DATETIME NULL COMMENT 'The datetime when the record was soft-deleted',
+    CreatedBy BIGINT NULL COMMENT 'User ID who created the record',
+    UpdatedBy BIGINT NULL COMMENT 'User ID who last updated the record',
+    DeletedBy BIGINT NULL COMMENT 'User ID who deleted the record',
+    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Soft delete flag'
 ) COMMENT = 'Master table for report types';
 
 -- 15. DataSourceTypes
@@ -206,13 +218,13 @@ CREATE TABLE DataSourceTypes (
     Id INT PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary key',
     Name VARCHAR(100) NOT NULL COMMENT 'Name of the data source type (e.g., SQL, Excel)',
     Description TEXT COMMENT 'Additional information about the source type',
-    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    DeletedAt DATETIME NULL,
-    CreatedBy BIGINT NULL,
-    UpdatedBy BIGINT NULL,
-    DeletedBy BIGINT NULL,
-    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE
+    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The datetime when the record was created',
+    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'The datetime when the record was last updated',
+    DeletedAt DATETIME NULL COMMENT 'The datetime when the record was soft-deleted',
+    CreatedBy BIGINT NULL COMMENT 'User ID who created the record',
+    UpdatedBy BIGINT NULL COMMENT 'User ID who last updated the record',
+    DeletedBy BIGINT NULL COMMENT 'User ID who deleted the record',
+    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Soft delete flag'
 ) COMMENT = 'Master table for different types of data sources';
 
 -- 16. AccessLevels
@@ -220,26 +232,26 @@ CREATE TABLE AccessLevels (
     Id INT PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary key',
     Name VARCHAR(100) NOT NULL COMMENT 'Access level name (e.g., Read, Write)',
     Description TEXT COMMENT 'Permissions or limitations for this access level',
-    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    DeletedAt DATETIME NULL,
-    CreatedBy BIGINT NULL,
-    UpdatedBy BIGINT NULL,
-    DeletedBy BIGINT NULL,
-    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE
+    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The datetime when the record was created',
+    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'The datetime when the record was last updated',
+    DeletedAt DATETIME NULL COMMENT 'The datetime when the record was soft-deleted',
+    CreatedBy BIGINT NULL COMMENT 'User ID who created the record',
+    UpdatedBy BIGINT NULL COMMENT 'User ID who last updated the record',
+    DeletedBy BIGINT NULL COMMENT 'User ID who deleted the record',
+    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Soft delete flag'
 ) COMMENT = 'Master table for access levels';
 
 -- 17. SecurityQuestions
 CREATE TABLE SecurityQuestions (
     Id INT PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary key',
     Question VARCHAR(255) NOT NULL COMMENT 'Security question text',
-    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    DeletedAt DATETIME NULL,
-    CreatedBy BIGINT NULL,
-    UpdatedBy BIGINT NULL,
-    DeletedBy BIGINT NULL,
-    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE
+    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The datetime when the record was created',
+    UpdatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'The datetime when the record was last updated',
+    DeletedAt DATETIME NULL COMMENT 'The datetime when the record was soft-deleted',
+    CreatedBy BIGINT NULL COMMENT 'User ID who created the record',
+    UpdatedBy BIGINT NULL COMMENT 'User ID who last updated the record',
+    DeletedBy BIGINT NULL COMMENT 'User ID who deleted the record',
+    IsDeleted BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Soft delete flag'
 ) COMMENT = 'Master table for user security questions';
 
 ---- Sample Insert Queries for the Above Tables ----
@@ -306,5 +318,5 @@ INSERT INTO SecurityQuestions (Question) VALUES
 ('What was the name of your elementary school?');
 
 
---- Scafffold Command of Mysql -from the Root of the Project ----
---dotnet ef dbcontext scaffold "Server=localhost;Port=3306;Database=master_data;Uid=root;Pwd=albin;" Pomelo.EntityFrameworkCore.MySql --context MasterDataDbContext --output-dir Domain/Models/Entities --context-dir Domain/ContextDb --data-annotations --no-onconfiguring --project . --startup-project .
+-- Scafffold Command of Mysql -from the Root of the Project ----
+-- dotnet ef dbcontext scaffold "Server=localhost;Port=3306;Database=master_data;Uid=root;Pwd=albin;" Pomelo.EntityFrameworkCore.MySql --context MasterDataDbContext --output-dir Domain/Models/Entities --context-dir Domain/ContextDb --data-annotations --no-onconfiguring --project . --startup-project . --force
