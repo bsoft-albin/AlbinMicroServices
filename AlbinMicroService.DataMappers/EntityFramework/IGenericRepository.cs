@@ -9,5 +9,9 @@
         void Update(T entity);
         void Delete(T entity);
         Task<int> SaveChangesAsync();
+        Task RollbackTransactionAsync();
+        Task CommitTransactionAsync();
+        Task BeginTransactionAsync();
+        IQueryable<T> GetAllNoTracking();
     }
 }
