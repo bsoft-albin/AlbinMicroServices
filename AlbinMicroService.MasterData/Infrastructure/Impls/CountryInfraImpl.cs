@@ -30,6 +30,7 @@ namespace AlbinMicroService.MasterData.Infrastructure.Impls
             {
                 logger.LogError(ex, "Error");
                 genericObjectSwitcher.Error = ex.Message;
+                genericObjectSwitcher.IsErrorHappened = true;
                 genericObjectSwitcher.DataSwitcher = false;
             }
 

@@ -96,11 +96,17 @@
     {
         public const short ServerShutdown = 800;
         public const short UnXpectedError = 520;
+        public const short ResourceDeleted = 204;
+        public const short ResourceUpdated = 202;
+        public const short ResourceInserted = 201;
     }
 
     public static class CustomHttpStatusMessages
     {
         public const string ServerShutdown = "Temporarily the Server Shutdown";
+        public const string ResourceDeleted = "Resource Deleted";
+        public const string ResourceUpdated = "Resource Updated";
+        public const string ResourceInserted = "Resource Inserted";
         public const string UsernameExists = "Username Already Exists";
         public const string EmailExists = "Email already Registered with us";
         public const string UnXpectedError = "Something went wrong please try again later";

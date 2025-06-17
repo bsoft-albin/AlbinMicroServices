@@ -69,7 +69,8 @@ namespace AlbinMicroService.Core
     public class GenericObjectSwitcher<X> where X : new()
     {
         public X DataSwitcher { get; set; } = new();
-        public string? Error { get; set; }
+        public string Error { get; set; } = string.Empty;
+        public bool IsErrorHappened { get; set; }
     }
 
     /// <summary>

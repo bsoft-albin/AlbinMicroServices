@@ -3,7 +3,6 @@ using AlbinMicroService.MasterData.Application.Contracts;
 using AlbinMicroService.MasterData.Domain.Models.Dtos;
 using AlbinMicroService.MasterData.Domain.Models.Entities;
 using AlbinMicroService.MasterData.Infrastructure.Contracts;
-using Microsoft.IdentityModel.Tokens;
 
 namespace AlbinMicroService.MasterData.Application.Impls
 {
@@ -18,10 +17,10 @@ namespace AlbinMicroService.MasterData.Application.Impls
                 apiBaseResponse.StatusCode = HttpStatusCodes.Status204NoContent;
                 apiBaseResponse.StatusMessage = HttpStatusMessages.Status204NoContent;
             }
-            else if (!result.DataSwitcher && !result.Error.IsNullOrEmpty())
+            else if (!result.DataSwitcher && result.IsErrorHappened)
             {
-                apiBaseResponse.StatusCode = CustomHttpStatusCodes.UnXpectedError;
-                apiBaseResponse.StatusMessage = CustomHttpStatusMessages.UnXpectedError;
+                apiBaseResponse.StatusCode = HttpStatusCodes.Status500InternalServerError;
+                apiBaseResponse.StatusMessage = result.Error;
             }
             else
             {
