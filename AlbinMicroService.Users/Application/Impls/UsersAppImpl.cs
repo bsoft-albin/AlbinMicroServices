@@ -69,7 +69,7 @@ namespace AlbinMicroService.Users.Application.Impls
                 }
                 else
                 {
-                    return new ApiErrorResponse<List<string>>()
+                    return new ValidationErrorResponse<List<string>>()
                     {
                         StatusCode = HttpStatusCodes.Status400BadRequest,
                         StatusMessage = HttpStatusMessages.Status400BadRequest,

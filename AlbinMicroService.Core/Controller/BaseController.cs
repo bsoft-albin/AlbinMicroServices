@@ -15,7 +15,7 @@ namespace AlbinMicroService.Core.Controller
         /// <param name="isOtherDataStructure">If True means, as this response object is not List, IEnumerable and Our Custom Class Types. </param>
         /// <param name="isPaginated"></param>
         /// <returns>Formatted Ok Object Result.</returns>
-        protected IActionResult ParseApiResponse<T>(T response, HttpVerbs methodType, bool isOtherDataStructure = false, bool isPaginated = false)
+        protected IActionResult ParseApiResponse<T>(T? response, HttpVerbs methodType, bool isOtherDataStructure = false, bool isPaginated = false)
         {
             // supports both Nullable and Value types ==> default values checking...
             if (EqualityComparer<T>.Default.Equals(response, default))
@@ -100,7 +100,7 @@ namespace AlbinMicroService.Core.Controller
                     {
                         return StatusCode(runtime.StatusCode, runtime);
                     }
-                    else if (response is ApiErrorResponse<List<string>> errorResponse)
+                    else if (response is ValidationErrorResponse<List<string>> errorResponse)
                     {
                         return StatusCode(errorResponse.StatusCode, new
                         {
@@ -136,7 +136,7 @@ namespace AlbinMicroService.Core.Controller
             {
                 return ResponseSwitcher(baseResponse);
             }
-            else if (response is ApiErrorResponse<List<string>> errorResponse)
+            else if (response is ValidationErrorResponse<List<string>> errorResponse)
             {
                 return StatusCode(errorResponse.StatusCode, new
                 {

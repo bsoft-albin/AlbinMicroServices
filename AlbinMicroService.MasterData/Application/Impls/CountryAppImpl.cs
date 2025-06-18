@@ -1,4 +1,5 @@
 ﻿using AlbinMicroService.Core;
+using AlbinMicroService.Core.AbstractImpls;
 using AlbinMicroService.MasterData.Application.Contracts;
 using AlbinMicroService.MasterData.Domain.Models.Dtos;
 using AlbinMicroService.MasterData.Domain.Models.Entities;
@@ -6,7 +7,7 @@ using AlbinMicroService.MasterData.Infrastructure.Contracts;
 
 namespace AlbinMicroService.MasterData.Application.Impls
 {
-    public class CountryAppImpl(ICountryInfraContract countryInfraContract) : ICountryAppContract
+    public class CountryAppImpl(ICountryInfraContract countryInfraContract) : BaseAppImpls, ICountryAppContract
     {
         public async Task<ApiBaseResponse> DeleteCountryByIdAppAsync(int countryId)
         {
@@ -19,7 +20,7 @@ namespace AlbinMicroService.MasterData.Application.Impls
             }
             else if (!result.DataSwitcher && result.IsErrorHappened)
             {
-              return new RuntimeErrorResponse { StatusMessage = HttpStatusMessages.Status500InternalServerError, StatusCode = HttpStatusCodes.Status500InternalServerError, Error = result.ErrorData };
+                return ProduceRuntimeErrorResponse(result);
             }
             else
             {

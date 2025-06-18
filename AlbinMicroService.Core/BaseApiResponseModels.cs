@@ -119,7 +119,7 @@ namespace AlbinMicroService.Core
     /// Standard Api error response wrapper to ensure consistent error response structure.
     /// </summary>
     /// <typeparam name="X">Type of the error data (optional).</typeparam>
-    public class ApiErrorResponse<X> : ApiBaseResponse where X : new()
+    public class ValidationErrorResponse<X> : ApiBaseResponse where X : new()
     {
         /// <summary>
         /// Gets or sets any additional error details.
