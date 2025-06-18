@@ -16,22 +16,22 @@ namespace AlbinMicroService.MasterData.Infrastructure.Impls
                 Country? country = await countryRepo.GetByIdAsync(countryId);
                 if (country != null)
                 {
-                    country.UpdatedAt = DateTime.Now;
-                    country.DeletedAt = DateTime.Now;
-                    country.IsDeleted = true;
+                    country.DeletedAt = StaticProps.AppDateTimeNow;
+                    country.IsDeleted = Literals.Boolean.True;
 
                     countryRepo.Update(country);
                     await countryRepo.SaveChangesAsync();
 
-                    genericObjectSwitcher.DataSwitcher = true;
+                    genericObjectSwitcher.DataSwitcher = Literals.Boolean.True;
                 }
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, "Error");
+                genericObjectSwitcher.ErrorData = ex.ToErrorObject();
                 genericObjectSwitcher.Error = ex.Message;
-                genericObjectSwitcher.IsErrorHappened = true;
-                genericObjectSwitcher.DataSwitcher = false;
+                genericObjectSwitcher.IsErrorHappened = Literals.Boolean.True;
+                genericObjectSwitcher.DataSwitcher = Literals.Boolean.False;
             }
 
             return genericObjectSwitcher;
@@ -43,14 +43,14 @@ namespace AlbinMicroService.MasterData.Infrastructure.Impls
             try
             {
                 IEnumerable<Country> data = await countryRepo.GetAllAsync();
-                countryList = data.Where(w => !w.IsDeleted)
+                countryList = [.. data.Where(w => !w.IsDeleted)
                     .Select(s => new CountryResponse
                     {
                         Code = s.Code,
                         Name = s.Name,
                         Id = s.Id,
                         DialCode = s.DialCode
-                    }).ToList();
+                    })];
             }
             catch (Exception ex)
             {

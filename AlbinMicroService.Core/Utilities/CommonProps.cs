@@ -11,6 +11,9 @@ namespace AlbinMicroService.Core.Utilities
             public static bool IsProduction { get; set; }
         }
 
+        public static DateTime AppDateTimeNow => DateTime.Now;
+        public static DateTime AppDateUtcTimeNow => DateTime.UtcNow;
+
         public static GlobalWebAppSettings GlobalSettings { get; private set; } = new();
 
         public static void SetGlobalWebAppSettings()

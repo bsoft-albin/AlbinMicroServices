@@ -71,6 +71,7 @@ namespace AlbinMicroService.Core
         public X DataSwitcher { get; set; } = new();
         public string Error { get; set; } = string.Empty;
         public bool IsErrorHappened { get; set; }
+        public ErrorObject? ErrorData { get; set; } = null;
     }
 
     /// <summary>
@@ -110,8 +111,8 @@ namespace AlbinMicroService.Core
 
     public class ErrorObject
     {
-        public string? Code { get; set; } = "DATABASE_TIMEOUT";
-        public string? Message { get; set; } = "Could not retrieve customer data due to timeout";
+        public string? Code { get; set; } = "UNKNOWN_ERROR";
+        public string? Message { get; set; } = "An unexpected error occurred";
     }
 
     /// <summary>

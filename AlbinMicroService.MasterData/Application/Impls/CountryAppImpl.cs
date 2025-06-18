@@ -19,8 +19,7 @@ namespace AlbinMicroService.MasterData.Application.Impls
             }
             else if (!result.DataSwitcher && result.IsErrorHappened)
             {
-                apiBaseResponse.StatusCode = HttpStatusCodes.Status500InternalServerError;
-                apiBaseResponse.StatusMessage = result.Error;
+              return new RuntimeErrorResponse { StatusMessage = HttpStatusMessages.Status500InternalServerError, StatusCode = HttpStatusCodes.Status500InternalServerError, Error = result.ErrorData };
             }
             else
             {

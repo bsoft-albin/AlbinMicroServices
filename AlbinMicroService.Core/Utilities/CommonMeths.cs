@@ -112,24 +112,28 @@ namespace AlbinMicroService.Core.Utilities
 
         public async Task<bool> SendEmailAsync(EmailTemplate emailTemplate)
         {
-            ArgumentNullException.ThrowIfNull(emailTemplate, nameof(emailTemplate));
+            if (emailTemplate is null)
+            {
+                throw new ArgumentNullException(nameof(emailTemplate));
+            }
 
             try
             {
-                var message = new MimeMessage();
+                MimeMessage message = new();
                 message.From.Add(new MailboxAddress(emailTemplate.Title, emailTemplate.FromEmail));
                 message.To.Add(new MailboxAddress(emailTemplate.Username, emailTemplate.ToEmail));
                 message.Subject = emailTemplate.Subject;
 
                 // Create Email Body (HTML)
-                var bodyBuilder = new BodyBuilder
+                BodyBuilder bodyBuilder = new()
                 {
                     HtmlBody = emailTemplate.Body
                 };
+
                 message.Body = bodyBuilder.ToMessageBody();
 
                 // Send Email via SMTP
-                using var smtp = new SmtpClient();
+                using SmtpClient smtp = new();
                 await smtp.ConnectAsync(emailTemplate.SmtpServer, emailTemplate.SmtpPort, MailKit.Security.SecureSocketOptions.StartTls);
                 await smtp.AuthenticateAsync(emailTemplate.FromEmail, emailTemplate.EmailPassword);
                 await smtp.SendAsync(message);

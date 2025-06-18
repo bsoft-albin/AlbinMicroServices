@@ -17,7 +17,8 @@ namespace AlbinMicroService.Core.Controller
         /// <returns>Formatted Ok Object Result.</returns>
         protected IActionResult ParseApiResponse<T>(T response, HttpVerbs methodType, bool isOtherDataStructure = false, bool isPaginated = false)
         {
-            if (response == null)
+            // supports both Nullable and Value types ==> default values checking...
+            if (EqualityComparer<T>.Default.Equals(response, default))
             {
                 return NoContent();
             }
@@ -31,7 +32,7 @@ namespace AlbinMicroService.Core.Controller
                 {
                     if (response is ApiResponse data)
                     {
-                        if (data.Data != null && data.Data is IEnumerable<object> newList)
+                        if (data.Data is IEnumerable<object> newList)
                         {
                             if (newList != null && newList.Any())
                             {
@@ -52,7 +53,7 @@ namespace AlbinMicroService.Core.Controller
                     else if (isPaginated && response is PaginatedResponse paginatedData)
                     {
                         // further processing on Paging Response , do it below ...
-                        if (paginatedData.Data != null && paginatedData.Data is IEnumerable<object> pageList)
+                        if (paginatedData.Data is IEnumerable<object> pageList)
                         {
                             if (pageList != null && pageList.Any())
                             {
@@ -95,6 +96,10 @@ namespace AlbinMicroService.Core.Controller
                     {
                         return ResponseSwitcher(baseResponse);
                     }
+                    else if (response is RuntimeErrorResponse runtime)
+                    {
+                        return StatusCode(runtime.StatusCode, runtime);
+                    }
                     else if (response is ApiErrorResponse<List<string>> errorResponse)
                     {
                         return StatusCode(errorResponse.StatusCode, new
@@ -127,7 +132,7 @@ namespace AlbinMicroService.Core.Controller
 
         protected IActionResult MakeStatusCodeResponse(ApiBaseResponse response)
         {
-            if (response != null && response is ApiBaseResponse baseResponse)
+            if (response is ApiBaseResponse baseResponse)
             {
                 return ResponseSwitcher(baseResponse);
             }
@@ -139,7 +144,7 @@ namespace AlbinMicroService.Core.Controller
                     errorResponse.StatusMessage,
                     errorResponse.ErrorDetails
                 });
-            } 
+            }
             else
             {
                 return StatusCode(HttpStatusCodes.Status200OK, response);

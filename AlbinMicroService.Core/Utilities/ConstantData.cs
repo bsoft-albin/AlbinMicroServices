@@ -49,6 +49,29 @@
         }
     }
 
+    public abstract class Literals
+    {
+        public abstract class Boolean
+        {
+            public const bool True = true;
+            public const bool False = false;
+        }
+
+        public abstract class Integer
+        {
+            public const short Zero = 0;
+            public const short One = 1;
+            public const short Two = 2;
+            public const short Three = 3;
+            public const short Four = 4;
+            public const short Five = 5;
+            public const short Six = 6;
+            public const short Seven = 7;
+            public const short Eight = 8;
+            public const short Nine = 9;
+        }
+    }
+
     public abstract class SystemRoles
     {
         public const string USER = "User";
