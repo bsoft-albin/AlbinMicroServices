@@ -1,4 +1,6 @@
-﻿using AlbinMicroService.DataMappers.Dapper;
+﻿using AlbinMicroService.DataMappers.Contracts;
+using AlbinMicroService.DataMappers.Dapper;
+using AlbinMicroService.DataMappers.Impls;
 using AlbinMicroService.Kernel.DependencySetups;
 using AlbinMicroService.Users.Application.Contracts;
 using AlbinMicroService.Users.Application.Impls;
@@ -16,9 +18,9 @@ namespace AlbinMicroService.Users.Domain
             WebAppBuilderConfigTemplate configs = ConfigurationSetup.BindSettings(builder.Configuration);
 
             //adding one Named Http Client to the DI. (if you want ,move this to specific service..
-            builder.Services.AddHttpClient("IdentityServerHttpClient", client =>
+            builder.Services.AddHttpClient(Http.ClientNames.IdentityServer, client =>
             {
-                client.BaseAddress = new Uri("http://localhost:9998/");
+                client.BaseAddress = new Uri(Http.BaseUri.IdentityServer_Http);
                 client.DefaultRequestHeaders.Add("Accept", "application/json");
                 client.DefaultRequestHeaders.Add("User-Agent", "Albin-MicroServices"); // Optional but recommended
                 client.Timeout = TimeSpan.FromSeconds(60);
@@ -32,8 +34,8 @@ namespace AlbinMicroService.Users.Domain
 
         public static WebApplicationBuilder AddDatabaseServices(this WebApplicationBuilder builder)
         {
-            string? connectionString = builder.Configuration.GetConnectionString(DatabaseTypes.MySql);
-            builder.Services.AddScoped<IDapperHelper>(sp => new DapperHelper(connectionString ?? string.Empty));
+            string connectionString = builder.Configuration.GetConnectionString(DatabaseTypes.MySql) ?? string.Empty;
+            builder.Services.AddScoped<IDapperHelper>(sp => new DapperHelper(connectionString));
 
             return builder;
         }
@@ -41,6 +43,8 @@ namespace AlbinMicroService.Users.Domain
         public static WebApplicationBuilder AddCustomServices(this WebApplicationBuilder builder)
         {
             builder.AddSeriloggings(builder.Host);
+
+            builder.Services.AddTransient<IDataMapperExtensions, DataMapperExtensions>();
 
             return builder;
         }

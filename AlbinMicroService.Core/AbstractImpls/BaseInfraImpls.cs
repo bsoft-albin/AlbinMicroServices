@@ -10,7 +10,7 @@ namespace AlbinMicroService.Core.AbstractImpls
 
         public static GenericObjectSwitcher<X> ProduceGenericObjectSwitcher<X>(GenericObjectSwitcher<X> genericObjectSwitcher, Exception exception) where X : new()
         {
-            genericObjectSwitcher.ErrorData = exception.ToErrorObject();
+            //genericObjectSwitcher.ErrorData = exception.ToErrorObject();
             genericObjectSwitcher.Error = exception.Message;
             genericObjectSwitcher.IsErrorHappened = Literals.Boolean.True;
 

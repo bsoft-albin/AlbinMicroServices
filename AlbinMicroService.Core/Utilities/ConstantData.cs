@@ -81,6 +81,19 @@
         public const string SUPER_ADMIN = "SuperAdmin";
     }
 
+    public abstract class Http
+    {
+        public abstract class BaseUri
+        {
+            public const string IdentityServer_Http = "http://localhost:9998/";
+            public const string IdentityServer_Https = "https://localhost:9999/";
+        }
+        public abstract class ClientNames
+        {
+            public const string IdentityServer = "IdentityServerHttpClient";
+        }
+    }
+
     public abstract class SystemClientIds
     {
         public const string USER = "public-client";

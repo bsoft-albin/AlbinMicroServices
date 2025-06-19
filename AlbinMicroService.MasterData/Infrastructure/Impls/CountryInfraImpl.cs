@@ -30,7 +30,6 @@ namespace AlbinMicroService.MasterData.Infrastructure.Impls
             catch (Exception ex)
             {
                 logger.LogError(ex, "Error");
-                ProduceGenericObjectSwitcher(genericObjectSwitcher, ex); // here need to improve this..................
                 //genericObjectSwitcher.ErrorData = ex.ToErrorObject();
                 //genericObjectSwitcher.Error = ex.Message;
                 //genericObjectSwitcher.IsErrorHappened = Literals.Boolean.True;
