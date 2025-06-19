@@ -15,6 +15,7 @@ namespace AlbinMicroService.MasterData.Infrastructure.Impls
             try
             {
                 Country? country = await countryRepo.GetByIdAsync(countryId);
+
                 if (country != null)
                 {
                     country.DeletedAt = StaticProps.AppDateTimeNow;

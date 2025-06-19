@@ -47,8 +47,8 @@ namespace AlbinMicroService.Core
 
     public class ApiResponse : ApiBaseResponse
     {
-        public object Data { get; set; } = new { };
-        public object MetaData { get; set; } = new { };
+        public object Data { get; set; } = new();
+        public object MetaData { get; set; } = new();
     }
 
     /// <summary>
@@ -94,14 +94,14 @@ namespace AlbinMicroService.Core
     }
     public class PaginatedResponse : ApiBaseResponse
     {
-        public object Data { get; set; } = new { };
+        public object Data { get; set; } = new();
         public PaginatedResponseSummary PaginatedSummary { get; set; } = new();
         public ResponseSummary MetaData { get; set; } = new();
     }
 
     public class ApiObjectResponse : ApiBaseResponse
     {
-        public object Data { get; set; } = new { };
+        public object Data { get; set; } = new();
     }
 
     public class RuntimeErrorResponse : ApiBaseResponse

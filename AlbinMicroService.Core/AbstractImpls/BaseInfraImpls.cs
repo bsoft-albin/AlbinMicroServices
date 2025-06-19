@@ -6,7 +6,7 @@ namespace AlbinMicroService.Core.AbstractImpls
     {
         private int IntDataSwitcher { get; set; }
         private bool BooleanDataSwitcher { get; set; }
-        private string StringDataSwitcher { get; set; }
+        private string? StringDataSwitcher { get; set; }
 
         public static GenericObjectSwitcher<X> ProduceGenericObjectSwitcher<X>(GenericObjectSwitcher<X> genericObjectSwitcher, Exception exception) where X : new()
         {
