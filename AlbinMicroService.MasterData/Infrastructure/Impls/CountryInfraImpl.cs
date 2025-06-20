@@ -1,5 +1,6 @@
 ﻿using AlbinMicroService.Core;
 using AlbinMicroService.Core.AbstractImpls;
+using AlbinMicroService.DataMappers.Contracts;
 using AlbinMicroService.DataMappers.EntityFramework;
 using AlbinMicroService.MasterData.Domain.Models.Dtos;
 using AlbinMicroService.MasterData.Domain.Models.Entities;
@@ -7,7 +8,7 @@ using AlbinMicroService.MasterData.Infrastructure.Contracts;
 
 namespace AlbinMicroService.MasterData.Infrastructure.Impls
 {
-    public class CountryInfraImpl(IGenericRepository<Country> countryRepo, ILogger<CountryInfraImpl> logger) : BaseInfraImpls, ICountryInfraContract
+    public class CountryInfraImpl(IGenericRepository<Country> countryRepo, ILogger<CountryInfraImpl> logger, IDataMapperExtensions mapperExtensions) : BaseInfraImpls, ICountryInfraContract
     {
         public async Task<GenericObjectSwitcher<bool>> DeleteCountryByIdInfraAsync(int countryId)
         {
@@ -30,10 +31,11 @@ namespace AlbinMicroService.MasterData.Infrastructure.Impls
             catch (Exception ex)
             {
                 logger.LogError(ex, "Error");
-                //genericObjectSwitcher.ErrorData = ex.ToErrorObject();
-                //genericObjectSwitcher.Error = ex.Message;
-                //genericObjectSwitcher.IsErrorHappened = Literals.Boolean.True;
-                //genericObjectSwitcher.DataSwitcher = Literals.Boolean.False;
+
+                genericObjectSwitcher.Error = ex.Message;
+
+                genericObjectSwitcher.ErrorData = mapperExtensions.ToErrorObject(ex);
+                genericObjectSwitcher.DataSwitcher = Literals.Boolean.False;
             }
 
             return genericObjectSwitcher;

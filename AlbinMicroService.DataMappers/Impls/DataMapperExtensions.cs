@@ -10,16 +10,6 @@ namespace AlbinMicroService.DataMappers.Impls
         {
             return ex switch
             {
-                //UniqueConstraintException => new ErrorObject
-                //{
-                //    Code = "DUPLICATE_KEY",
-                //    Message = "A record with the same key already exists."
-                //},
-                //CannotInsertNullException => new ErrorObject
-                //{
-                //    Code = "NULL_VALUE",
-                //    Message = "A required field was null."
-                //},
                 MySqlException mySqlEx when mySqlEx.Number == 1045 => new ErrorObject
                 {
                     Code = "MYSQL_AUTH_ERROR",
