@@ -1,12 +1,12 @@
 ﻿using AlbinMicroService.Core;
-using AlbinMicroService.DataMappers.Contracts;
+using AlbinMicroService.Core.Utilities;
 using Npgsql;
 
-namespace AlbinMicroService.DataMappers.Impls
+namespace AlbinMicroService.DataMappers.Utilities
 {
-    public class DataMapperExtensions : IDataMapperExtensions
+    public static class DataMapperExtensions
     {
-        public ErrorObject ToErrorObject(Exception ex)
+        public static ErrorObject ToErrorObject(this Exception ex)
         {
             return ex switch
             {
@@ -63,7 +63,16 @@ namespace AlbinMicroService.DataMappers.Impls
             };
         }
 
-        public async Task<PaginatedResponse> ToPaginatedResponseAsync<DataSource>(IQueryable<DataSource> source, int page, int pageSize, bool includeMetaData = false, CancellationToken cancellationToken = default)
+        public static GenericObjectSwitcher<DataType> DoExceptionFlow<DataType>(this GenericObjectSwitcher<DataType> genericObject, Exception exception) where DataType : new()
+        {
+            genericObject.Error = exception.Message;
+            genericObject.IsErrorHappened = Literals.Boolean.True;
+            genericObject.ErrorData = exception.ToErrorObject();
+
+            return genericObject;
+        }
+
+        public static async Task<PaginatedResponse> ToPaginatedResponseAsync<DataSource>(this IQueryable<DataSource> source, int page, int pageSize, bool includeMetaData = false, CancellationToken cancellationToken = default)
         {
             if (page <= 0)
             {

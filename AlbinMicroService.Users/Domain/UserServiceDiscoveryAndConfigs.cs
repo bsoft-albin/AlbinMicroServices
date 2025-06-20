@@ -1,6 +1,4 @@
-﻿using AlbinMicroService.DataMappers.Contracts;
-using AlbinMicroService.DataMappers.Dapper;
-using AlbinMicroService.DataMappers.Impls;
+﻿using AlbinMicroService.DataMappers.Dapper;
 using AlbinMicroService.Kernel.DependencySetups;
 using AlbinMicroService.Users.Application.Contracts;
 using AlbinMicroService.Users.Application.Impls;
@@ -43,8 +41,6 @@ namespace AlbinMicroService.Users.Domain
         public static WebApplicationBuilder AddCustomServices(this WebApplicationBuilder builder)
         {
             builder.AddSeriloggings(builder.Host);
-
-            builder.Services.AddTransient<IDataMapperExtensions, DataMapperExtensions>();
 
             return builder;
         }
