@@ -13,12 +13,12 @@ namespace AlbinMicroService.MasterData.Application.Impls
         {
             ApiBaseResponse apiBaseResponse = new();
             GenericObjectSwitcher<bool> result = await countryInfraContract.DeleteCountryByIdInfraAsync(countryId);
-            if (result.DataSwitcher)
+            if (result.Data)
             {
                 apiBaseResponse.StatusCode = HttpStatusCodes.Status204NoContent;
                 apiBaseResponse.StatusMessage = HttpStatusMessages.Status204NoContent;
             }
-            else if (!result.DataSwitcher && result.IsErrorHappened)
+            else if (!result.Data && result.IsErrorHappened)
             {
                 return ProduceRuntimeErrorResponse(result);
             }
@@ -34,8 +34,8 @@ namespace AlbinMicroService.MasterData.Application.Impls
         public async Task<ApiObjectResponse> GetAllCountriesAppAsync()
         {
             ApiObjectResponse apiObjectResponse = new();
-            List<CountryResponse> countries = await countryInfraContract.GetAllCountriesInfraAsync();
-            if (countries.Count > 0)
+            GenericObjectSwitcher<List<CountryResponse>> countries = await countryInfraContract.GetAllCountriesInfraAsync();
+            if (countries.Data.Count > 0)
             {
                 apiObjectResponse.Data = countries;
                 apiObjectResponse.StatusCode = HttpStatusCodes.Status200OK;
@@ -53,12 +53,12 @@ namespace AlbinMicroService.MasterData.Application.Impls
         public async Task<ApiObjectResponse> GetCountryByIdAppAsync(int countryId)
         {
             ApiObjectResponse apiObjectResponse = new();
-            CountryResponse? countryResponse = await countryInfraContract.GetCountryByIdInfraAsync(countryId);
-            if (countryResponse != null)
+            GenericObjectSwitcherNull<CountryResponse> countryResponse = await countryInfraContract.GetCountryByIdInfraAsync(countryId);
+            if (countryResponse.Data != null)
             {
                 apiObjectResponse.StatusCode = HttpStatusCodes.Status200OK;
                 apiObjectResponse.StatusMessage = HttpStatusMessages.Status200OK;
-                apiObjectResponse.Data = countryResponse;
+                apiObjectResponse.Data = countryResponse.Data;
             }
             else
             {
@@ -72,11 +72,15 @@ namespace AlbinMicroService.MasterData.Application.Impls
         public async Task<ApiBaseResponse> SaveCountryAppAsync(Country country)
         {
             ApiBaseResponse apiBaseResponse = new();
-            int result = await countryInfraContract.SaveCountryInfraAsync(country);
-            if (result > 0)
+            GenericObjectSwitcher<int> result = await countryInfraContract.SaveCountryInfraAsync(country);
+            if (result.Data > Literals.Integer.Zero)
             {
                 apiBaseResponse.StatusMessage = HttpStatusMessages.Status200OK;
                 apiBaseResponse.StatusCode = HttpStatusCodes.Status200OK;
+            }
+            else if (result.IsErrorHappened && result.Data == Literals.Integer.Zero)
+            {
+                return ProduceRuntimeErrorResponse(result);
             }
             else
             {

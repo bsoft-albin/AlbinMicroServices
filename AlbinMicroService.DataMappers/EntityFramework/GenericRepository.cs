@@ -18,6 +18,11 @@ namespace AlbinMicroService.DataMappers.EntityFramework
             return await _dbSet.ToListAsync();
         }
 
+        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _dbSet.Where(predicate).ToListAsync();
+        }
+
         public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
         {
             return await _dbSet.Where(predicate).ToListAsync();
@@ -28,9 +33,19 @@ namespace AlbinMicroService.DataMappers.EntityFramework
             return _dbSet.AsNoTracking();
         }
 
+        public IQueryable<T> GetAllNoTracking(Expression<Func<T, bool>> predicate)
+        {
+            return _dbSet.AsNoTracking().Where(predicate);
+        }
+
         public IQueryable<T> GetAllAsQueryable()
         {
             return _dbSet.AsQueryable();
+        }
+
+        public IQueryable<T> GetAllAsQueryable(Expression<Func<T, bool>> predicate)
+        {
+            return _dbSet.Where(predicate);
         }
 
         public async Task AddAsync(T entity)
@@ -81,5 +96,34 @@ namespace AlbinMicroService.DataMappers.EntityFramework
         }
 
         // === Savepoint Support Needed !! ===
+        public async Task CreateSavepointAsync(string savepointName)
+        {
+            if (_transaction == null)
+            {
+                throw new InvalidOperationException("Transaction has not been started.");
+            }
+
+            await _transaction.CreateSavepointAsync(savepointName);
+        }
+
+        public async Task RollbackToSavepointAsync(string savepointName)
+        {
+            if (_transaction == null)
+            {
+                throw new InvalidOperationException("Transaction has not been started.");
+            }
+
+            await _transaction.RollbackToSavepointAsync(savepointName);
+        }
+
+        public async Task ReleaseSavepointAsync(string savepointName)
+        {
+            if (_transaction == null)
+            {
+                throw new InvalidOperationException("Transaction has not been started.");
+            }
+
+            await _transaction.ReleaseSavepointAsync(savepointName);
+        }
     }
 }

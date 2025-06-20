@@ -5,6 +5,7 @@ using AlbinMicroService.DataMappers.Utilities;
 using AlbinMicroService.MasterData.Domain.Models.Dtos;
 using AlbinMicroService.MasterData.Domain.Models.Entities;
 using AlbinMicroService.MasterData.Infrastructure.Contracts;
+using Microsoft.EntityFrameworkCore;
 
 namespace AlbinMicroService.MasterData.Infrastructure.Impls
 {
@@ -25,66 +26,73 @@ namespace AlbinMicroService.MasterData.Infrastructure.Impls
                     countryRepo.Update(country);
                     await countryRepo.SaveChangesAsync();
 
-                    genericObjectSwitcher.DataSwitcher = Literals.Boolean.True;
+                    genericObjectSwitcher.Data = Literals.Boolean.True;
                 }
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, "Error");
 
-                genericObjectSwitcher = genericObjectSwitcher.DoExceptionFlow(ex);
+                return genericObjectSwitcher.DoExceptionFlow(ex);
             }
 
             return genericObjectSwitcher;
         }
 
-        public async Task<List<CountryResponse>> GetAllCountriesInfraAsync()
+        public async Task<GenericObjectSwitcher<List<CountryResponse>>> GetAllCountriesInfraAsync()
         {
-            List<CountryResponse> countryList = [];
+            GenericObjectSwitcher<List<CountryResponse>> genericObjectSwitcher = new();
+
             try
             {
-                IEnumerable<Country> data = await countryRepo.GetAllAsync();
-                countryList = [.. data.Where(w => !w.IsDeleted)
-                    .Select(s => new CountryResponse
-                    {
-                        Code = s.Code,
-                        Name = s.Name,
-                        Id = s.Id,
-                        DialCode = s.DialCode
-                    })];
+                List<CountryResponse> countryList = await countryRepo.GetAllAsQueryable(Q => !Q.IsDeleted).
+                                Select(s => new CountryResponse
+                                {
+                                    Code = s.Code,
+                                    Name = s.Name,
+                                    Id = s.Id,
+                                    DialCode = s.DialCode
+                                }).ToListAsync();
+
+                if (countryList.Count > 0)
+                {
+                    genericObjectSwitcher.Data = countryList;
+                }
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, "Error");
+
+                return genericObjectSwitcher.DoExceptionFlow(ex);
             }
 
-            return countryList;
+            return genericObjectSwitcher;
         }
 
-        public async Task<CountryResponse?> GetCountryByIdInfraAsync(int countryId)
+        public async Task<GenericObjectSwitcherNull<CountryResponse>> GetCountryByIdInfraAsync(int countryId)
         {
+            GenericObjectSwitcherNull<CountryResponse> genericObjectSwitcher = new();
             try
             {
                 Country? country = await countryRepo.GetByIdAsync(countryId);
                 if (country != null)
                 {
-                    return new CountryResponse { Code = country.Code, DialCode = country.DialCode, Id = country.Id, Name = country.Name };
-                }
-                else
-                {
-                    return null;
+                    genericObjectSwitcher.Data = new CountryResponse { Code = country.Code, DialCode = country.DialCode, Id = country.Id, Name = country.Name };
                 }
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, "Error");
-                return null;
+
+                return genericObjectSwitcher.DoExceptionFlow(ex);
             }
+
+            return genericObjectSwitcher;
         }
 
-        public async Task<int> SaveCountryInfraAsync(Country country)
+        public async Task<GenericObjectSwitcher<int>> SaveCountryInfraAsync(Country country)
         {
-            int result = 0;
+            GenericObjectSwitcher<int> genericObjectSwitcher = new();
             try
             {
                 if (country.Id > 0)
@@ -97,15 +105,17 @@ namespace AlbinMicroService.MasterData.Infrastructure.Impls
                 }
                 if (await countryRepo.SaveChangesAsync() > 0)
                 {
-                    result = country.Id;
+                    genericObjectSwitcher.Data = country.Id;
                 }
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, "Error");
+
+                return genericObjectSwitcher.DoExceptionFlow(ex);
             }
 
-            return result;
+            return genericObjectSwitcher;
         }
     }
 }

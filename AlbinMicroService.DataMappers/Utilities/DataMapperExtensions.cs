@@ -72,6 +72,15 @@ namespace AlbinMicroService.DataMappers.Utilities
             return genericObject;
         }
 
+        public static GenericObjectSwitcherNull<DataType> DoExceptionFlow<DataType>(this GenericObjectSwitcherNull<DataType> genericObject, Exception exception) where DataType : class
+        {
+            genericObject.Error = exception.Message;
+            genericObject.IsErrorHappened = Literals.Boolean.True;
+            genericObject.ErrorData = exception.ToErrorObject();
+
+            return genericObject;
+        }
+
         public static async Task<PaginatedResponse> ToPaginatedResponseAsync<DataSource>(this IQueryable<DataSource> source, int page, int pageSize, bool includeMetaData = false, CancellationToken cancellationToken = default)
         {
             if (page <= 0)

@@ -6,9 +6,9 @@ namespace AlbinMicroService.MasterData.Infrastructure.Contracts
 {
     public interface ICountryInfraContract
     {
-        Task<List<CountryResponse>> GetAllCountriesInfraAsync();
-        Task<CountryResponse?> GetCountryByIdInfraAsync(int countryId);
+        Task<GenericObjectSwitcher<List<CountryResponse>>> GetAllCountriesInfraAsync();
+        Task<GenericObjectSwitcherNull<CountryResponse>> GetCountryByIdInfraAsync(int countryId);
         Task<GenericObjectSwitcher<bool>> DeleteCountryByIdInfraAsync(int countryId);
-        Task<int> SaveCountryInfraAsync(Country country);
+        Task<GenericObjectSwitcher<int>> SaveCountryInfraAsync(Country country);
     }
 }
