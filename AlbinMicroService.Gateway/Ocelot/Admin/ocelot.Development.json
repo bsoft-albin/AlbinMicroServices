@@ -17,6 +17,10 @@
                 "DurationOfBreak": 1000,
                 "TimeoutValue": 5000
             },
+            "RetryOptions": {
+                "RetryCount": 3,
+                "RetryInterval": 1000
+            },
             "LoadBalancerOptions": {
                 "Type": "RoundRobin"
             },

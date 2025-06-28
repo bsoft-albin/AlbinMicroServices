@@ -1,8 +1,10 @@
 ﻿using AlbinMicroService.Core.Utilities;
 using AlbinMicroService.Kernel.Middlewares;
 using AlbinMicroService.Libraries.BuildingBlocks.Authentication;
+using AlbinMicroService.Libraries.BuildingBlocks.BackgroundServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -44,6 +46,9 @@ namespace AlbinMicroService.Kernel.DependencySetups
 
             //adding (Default) HttpClient's to the DI.
             Services.AddHttpClient();
+
+            //adding WarmUpService to the DI.
+            builder.Services.AddHostedService<WarmUpService>();
 
             // Add Controllers to the container.
             Services.AddControllers();
@@ -94,8 +99,9 @@ namespace AlbinMicroService.Kernel.DependencySetups
             //Setting the Web App Mode.
             StaticMeths.SetGlobalWebAppMode(env.IsDevelopment(), env.IsStaging(), env.IsProduction());
 
-            // Configure the HTTP request pipeline.
+            string AppName = env.ApplicationName[18..];
 
+            // Configure the HTTP request pipeline.
             if ((env.IsDevelopment() || env.IsStaging()) && configs.IsSwaggerEnabled) // only show Swagger in Development and Staging [for Production Or Live using this ["Swagger:Enabled"]]
             {
                 app.UseSwagger();
@@ -114,7 +120,7 @@ namespace AlbinMicroService.Kernel.DependencySetups
                 //});
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{env.ApplicationName[18..]} Api v1");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{AppName} Api v1");
                     c.RoutePrefix = "swagger";
                 });
             }
@@ -145,6 +151,8 @@ namespace AlbinMicroService.Kernel.DependencySetups
             }
 
             route.MapControllers();
+
+            route.MapGet("/readiness", () => Results.Ok($"{AppName} Services are ready to Serve!!"));
 
             host.Run();
         }
