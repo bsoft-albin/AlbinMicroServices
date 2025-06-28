@@ -1,4 +1,43 @@
+# .NET 8.0 Microservices Architecture
 
+A high-performance, secure, and scalable microservices system built with .NET 8.0, designed using Clean Architecture principles, fully containerized with Docker, and leveraging cloud-native capabilities.
+
+---
+
+## Tech Stack & Architecture
+
+| Category              | Technology / Concept                                       |
+|-----------------------|------------------------------------------------------------|
+| Framework             | [.NET 8.0](https://dotnet.microsoft.com/)                  |
+| Architecture          | Clean Architecture (per-service layer separation)          |
+| Auth & Security       | OAuth 2.0 + JWT Tokens                                     |
+| Databases             | MySQL, PostgreSQL, MongoDB                                 |
+| Caching               | Redis                                                      |
+| Cloud Native          | Docker-based deployment (works on VMs & cloud platforms)   |
+| Reverse Proxy         | Ocelot API Gateway / YARP (future)                         |
+| Containerization      | Docker + Docker Compose                                    |
+| Communication         | REST APIs (future: gRPC / Event-Driven)                    |
+| Config Strategy       | Environment-based dynamic configs                          |
+| Open Source           | 100% open technologies and libraries                       |
+| API Design            | OpenAPI (Swagger)                                          |
+| Extensibility         | Modular & customizable service architecture                |
+
+---
+
+## Features
+
+- High-performance and asynchronous request handling  
+- JWT-based secure authentication and authorization  
+- Layered microservices separation with domain-driven design  
+- Configurable API Gateway with Ocelot  
+- Unified service discovery (Consul-ready)  
+- Redis for caching & performance boost  
+- Supports SQL & NoSQL storage flexibility  
+- Dockerized development & deployment  
+- Scalable and cloud-native foundation  
+- Secure communication practices and headers  
+- Developer-friendly structured logging and error handling  
+- Easy plug-and-play new service registration
 ---
 
 ## Authentication & Authorization
