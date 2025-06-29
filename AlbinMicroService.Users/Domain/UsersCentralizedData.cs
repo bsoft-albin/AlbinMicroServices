@@ -15,6 +15,6 @@
     {
         public const string UsernameExistCount = "SELECT COUNT(Id) as UsernameCounts FROM Users WHERE Username = @username;";
         public const string EmailExistCount = "SELECT COUNT(Id) as EmailCounts FROM Users WHERE Email = @email;";
-        public const string UserRoleGet = "SELECT ur.Role FROM users u INNER JOIN user_roles ur ON u.Id = ur.UserId WHERE Username = @username AND IsDeleted = 0 AND IsActive = 1 AND IsVerified = 1;";
+        public const string UserRoleGet = "SELECT ur.Role FROM users u INNER JOIN user_roles ur ON u.Id = ur.UserId WHERE u.Username = @username AND u.IsDeleted = 0 AND u.IsActive = 1 AND u.IsVerified = 1;";
     }
 }

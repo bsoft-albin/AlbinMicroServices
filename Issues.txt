@@ -24,14 +24,8 @@
 
 5. Structured Logging Need to in this.
 
-6. In Ocelot, some Problems Coming like, 
- ==> First Hit Takes some Time.
- ==> If the Response time too long, in Gateway getting 503 Service Unavilable instaed of 504 Gateway TimeOUt,
- ==> Some times, not Getting Accurate Statuscode and Message in Gateway , which is sended by Downstream Services.
-
 ===== UnExpected Issue happening Some Time ==========
-1. One Scenario , i don't know which time, but that time, call come though gateway => says 503 Service unavaible, this comes 
- for First request, but for Subsequent requests it works, I think issue with (Ocelot or My Custom Delegate or Custom Middleware).
+
 
 ==== Working By default Wihtout any [External Code] ===========
 1. Uri (Case - insensitive Making Needed) ==> (Resolved . by Default , it works for Routes from Gateway, as Well as Direct Downstream Services)

@@ -23,11 +23,13 @@
             return CreateConnection();
         }
 
-        public async Task<T> ExecuteScalarAsync<T>(string sql, object? parameters = null)
+#pragma warning disable CS8613 // Nullability of reference types in return type doesn't match implicitly implemented member.
+        public async Task<T?> ExecuteScalarAsync<T>(string sql, object? parameters = null)
+#pragma warning restore CS8613 // Nullability of reference types in return type doesn't match implicitly implemented member.
         {
             using var connection = CreateConnection();
-            var result = await connection.ExecuteScalarAsync<T>(sql, parameters);
-            return result ?? throw new NullReferenceException("No Value Returned from the Database.");
+            var result = await connection.ExecuteScalarAsync<T?>(sql, parameters);
+            return result;
         }
 
         public async Task<IEnumerable<T>> QueryAsync<T>(string sql, object? parameters = null)

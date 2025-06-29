@@ -42,9 +42,9 @@ namespace AlbinMicroService.Identity
                 return testUser;
             }
 
-            string Query = @"select u.Id,u.Username,u.Password,ur.Role from users u
+            string Query = @"SELECT u.Id,u.Username,u.Password,ur.Role from users u
             INNER JOIN user_roles ur ON u.Id = ur.UserId
-            where Username = @username AND IsDeleted = 0 AND IsActive = 1 AND IsVerified = 1;";
+            where u.Username = @username AND u.IsDeleted = 0 AND u.IsActive = 1 AND u.IsVerified = 1;";
 
             try
             {
