@@ -5,7 +5,7 @@ using Duende.IdentityServer.Validation;
 namespace AlbinMicroService.Identity
 {
     // Legacy Way of calling the program
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
@@ -27,7 +27,7 @@ namespace AlbinMicroService.Identity
 
             // Service Registrations
             builder.Services.AddSingleton<IDynamicMeths, DynamicMeths>();
-            builder.Services.AddScoped<IDapperHelper>(sp => new DapperHelper("Server=localhost;Port=3306;Database=users;Uid=root;Pwd=albin;"));
+            builder.Services.AddScoped<IDapperHelper>(sp => new DapperHelper(builder.Configuration.GetConnectionString("AuthDb") ?? string.Empty));
             builder.Services.AddScoped<IResourceOwnerPasswordValidator, CustomResourceOwnerPasswordValidator>();
             builder.Services.AddScoped<IUserService, UserService>();
 
@@ -36,7 +36,7 @@ namespace AlbinMicroService.Identity
             //using OAuth 2.0 Authentication with Jwt Authorization Token
             app.UseIdentityServer();
 
-            app.MapGet("/", () => "Identity Server is running!");
+            app.MapGet("/", () => "Identity Server is running!!!");
 
             app.Run();
         }
