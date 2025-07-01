@@ -74,16 +74,25 @@ namespace AlbinMicroService.Users.Controllers
 
         [HttpPost]
         [ActionName("refresh-token")]
-        public async Task<IActionResult> RefreshToken([FromBody, Required] RefreshTokenRequestDto refreshTokenRequestDto)
+        public async Task<IActionResult> RefreshToken([FromBody, Required] RefreshTokenResult refreshTokenResult)
         {
-            if (string.IsNullOrWhiteSpace(refreshTokenRequestDto.RefreshToken))
+            if (string.IsNullOrWhiteSpace(refreshTokenResult.RefreshToken))
             {
                 return BadRequest("Refresh token is required.");
             }
 
             try
             {
-                TokenResponse tokenResponse = await tokenClient.RefreshTokenAsync(refreshTokenRequestDto.RefreshToken);
+
+                Dictionary<string, string> form = new()
+                {
+                    { TokenRequestKeys.grant_type, GrantTypes.refresh_token },
+                    { TokenRequestKeys.client_id, SystemClientIds.ADMIN },
+                    { TokenRequestKeys.client_secret, SystemClientSecrets.ADMIN },
+                    { TokenRequestKeys.refresh_token, refreshTokenResult.RefreshToken }
+                };
+
+                TokenResponse tokenResponse = await tokenClient.RefreshTokenAsync(new RefreshTokenPayload { RefreshToken = refreshTokenResult.RefreshToken, RefreshPayload = form });
 
                 return Ok(new
                 {

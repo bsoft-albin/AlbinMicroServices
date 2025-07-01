@@ -71,7 +71,8 @@ namespace AlbinMicroService.Gateway.Ocelot
 
             // 5. Load Ocelot config from merged file
             builder.Configuration.AddJsonFile(mergedPath, optional: false, reloadOnChange: true).AddJsonFile(swaggerOcelotConfig, optional: false, reloadOnChange: true);
-            builder.Services.AddOcelot().AddPolly().AddDelegatingHandler<TokenHandler>(true).AddDelegatingHandler<GatewayHeaderHandler>(true).AddDelegatingHandler<RequestIdHandler>(true); // optional: tracking handler;
+            //builder.Services.AddOcelot().AddPolly().AddDelegatingHandler<TokenHandler>(true).AddDelegatingHandler<GatewayHeaderHandler>(true).AddDelegatingHandler<RequestIdHandler>(true); // optional: tracking handler;
+            builder.Services.AddOcelot().AddPolly().AddDelegatingHandler<GatewayHeaderHandler>(true).AddDelegatingHandler<RequestIdHandler>(true); // optional: tracking handler;
         }
     }
 }

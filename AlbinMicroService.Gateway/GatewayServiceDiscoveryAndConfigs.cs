@@ -22,8 +22,8 @@ namespace AlbinMicroService.Gateway
 
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddMemoryCache();
-            builder.Services.AddSingleton<ITokenStoreService, TokenStoreService>();
-            builder.Services.AddTransient<TokenHandler>();
+            //builder.Services.AddSingleton<ITokenStoreService, TokenStoreService>();
+            //builder.Services.AddTransient<TokenHandler>();
 
             //Adding Response Compressions to DI. (Both Brotli and GZip)
             builder.Services.AddResponseCompression(options =>

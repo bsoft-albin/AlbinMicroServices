@@ -3,7 +3,7 @@ using Duende.IdentityServer.Models;
 
 namespace AlbinMicroService.Identity
 {
-    public class IdentityServerConfigs
+    public static class IdentityServerConfigs
     {
         public static IEnumerable<IdentityResource> IdentityResources =>
         [
@@ -55,7 +55,7 @@ namespace AlbinMicroService.Identity
                 ClientId = "admin-client",
                 AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                 RequireClientSecret = true, // more secure for admin
-                ClientSecrets = { new Secret(SystemClientSecrets.ADMIN.Sha512()) },
+                ClientSecrets = { new Secret(SystemClientSecrets.ADMIN) },
                 AllowedScopes = { "openid", "profile", "admin.read", "admin.write" },
                 AllowOfflineAccess = true,
                 AccessTokenLifetime = 60
@@ -65,7 +65,7 @@ namespace AlbinMicroService.Identity
                 ClientId = "superadmin-client",
                 AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                 RequireClientSecret = true, // more secure for admin
-                ClientSecrets = { new Secret(SystemClientSecrets.SUPER_ADMIN.Sha512()) },
+                ClientSecrets = { new Secret(SystemClientSecrets.SUPER_ADMIN) },
                 AllowedScopes = {
                     "openid", "profile",
                     "user.read", "master.read", "user.write","master.write",
