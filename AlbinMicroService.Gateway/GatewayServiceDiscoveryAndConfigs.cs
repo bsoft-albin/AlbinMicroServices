@@ -1,8 +1,10 @@
-﻿using AlbinMicroService.Core.Utilities;
+﻿using System.IO.Compression;
+using AlbinMicroService.Core.Utilities;
 using AlbinMicroService.Gateway.Ocelot;
 using AlbinMicroService.Kernel.Delegates;
 using AlbinMicroService.Kernel.DependencySetups;
 using AlbinMicroService.Libraries.BuildingBlocks.Authentication;
+using Microsoft.AspNetCore.ResponseCompression;
 
 namespace AlbinMicroService.Gateway
 {
@@ -22,6 +24,24 @@ namespace AlbinMicroService.Gateway
             builder.Services.AddMemoryCache();
             builder.Services.AddSingleton<ITokenStoreService, TokenStoreService>();
             builder.Services.AddTransient<TokenHandler>();
+
+            //Adding Response Compressions to DI. (Both Brotli and GZip)
+            builder.Services.AddResponseCompression(options =>
+            {
+                options.EnableForHttps = true;
+                options.Providers.Add<GzipCompressionProvider>();
+                options.Providers.Add<BrotliCompressionProvider>();
+            });
+
+            builder.Services.Configure<GzipCompressionProviderOptions>(options =>
+            {
+                options.Level = CompressionLevel.Optimal;
+            });
+
+            builder.Services.Configure<BrotliCompressionProviderOptions>(options =>
+            {
+                options.Level = CompressionLevel.Optimal;
+            });
 
             // adding Ocelot configuration to the builder
             builder.AddOcelotConfigurations();

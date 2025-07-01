@@ -21,7 +21,7 @@ namespace AlbinMicroService.Kernel.DependencySetups
 
             if (!builder.Environment.IsDevelopment()) // Apply redirection only in Staging/Prod
             {
-                builder.Services.AddHttpsRedirection(options =>
+                Services.AddHttpsRedirection(options =>
                 {
                     options.HttpsPort = configTemplate.HttpsPort; // Redirect HTTP to HTTPS in non-dev environments
                 });
@@ -41,6 +41,15 @@ namespace AlbinMicroService.Kernel.DependencySetups
                 }
             });
 
+            //adding one Named Http Client to the DI.
+            builder.Services.AddHttpClient(Http.ClientNames.IdentityServer, client =>
+            {
+                client.BaseAddress = new Uri(Http.BaseUri.IdentityServer_Http);
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+                client.DefaultRequestHeaders.Add("User-Agent", "Albin-MicroServices"); // Optional but recommended
+                client.Timeout = TimeSpan.FromSeconds(60);
+            });
+
             //adding common DI services to Container.
             Services.AddSingletonServices().AddScopedServices().AddTransientServices();
 
@@ -48,7 +57,7 @@ namespace AlbinMicroService.Kernel.DependencySetups
             Services.AddHttpClient();
 
             //adding WarmUpService to the DI.
-            builder.Services.AddHostedService<WarmUpService>();
+            Services.AddHostedService<WarmUpService>();
 
             // Add Controllers to the container.
             Services.AddControllers();
@@ -152,7 +161,7 @@ namespace AlbinMicroService.Kernel.DependencySetups
 
             route.MapControllers();
 
-            route.MapGet("/readiness", () => Results.Ok($"{AppName} Services are ready to Serve!!"));
+            route.MapGet("/readiness", () => Results.Ok($"{AppName} Service is ready to Serve!!!"));
 
             host.Run();
         }

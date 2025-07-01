@@ -8,6 +8,7 @@ WebAppBuilderConfigTemplate configs = builder.AddDefaultServices();
 
 WebApplication app = builder.Build();
 
+//Http Pipieline Starts Here...
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
@@ -41,6 +42,9 @@ if ((app.Environment.IsDevelopment() || app.Environment.IsStaging()) && configs.
 // Enable endpoint routing
 app.UseRouting();
 
+app.UseResponseCompression(); // adding Response Compression Middleware to Pipeline.
+
 await app.UseOcelot();
 
-app.Run();
+await app.RunAsync(); //why not app.Run(0, ==> because in previous line, awaitbale operation called !!
+//Http Pipeline Ends Here ...

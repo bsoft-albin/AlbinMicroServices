@@ -1,4 +1,7 @@
-﻿using AlbinMicroService.Core.Controller;
+﻿using System.ComponentModel.DataAnnotations;
+using AlbinMicroService.Core.Controller;
+using AlbinMicroService.Libraries.BuildingBlocks.Authentication;
+using AlbinMicroService.Libraries.Common.Entities;
 using AlbinMicroService.Users.Application.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,11 +12,11 @@ namespace AlbinMicroService.Users.Controllers
     [Route(ApiRoutes.API_TEMPLATE)]
     [ApiController]
     [AllowAnonymous]
-    public class AuthenticationController(IHttpClientFactory clientFactory, IUsersAppContract usersAppContract) : BaseController
+    public class AuthenticationController(IHttpClientFactory clientFactory, IUsersAppContract usersAppContract, ITokenClient tokenClient, ILogger<AuthenticationController> logger) : BaseController
     {
         [HttpPost]
         [ActionName("login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequestDto model)
+        public async Task<IActionResult> Login([FromBody, Required] LoginRequestDto model)
         {
             if (string.IsNullOrWhiteSpace(model.Username) || string.IsNullOrWhiteSpace(model.Password))
             {
@@ -67,6 +70,33 @@ namespace AlbinMicroService.Users.Controllers
             JsonElement data = JsonSerializer.Deserialize<JsonElement>(content);
 
             return ParseApiResponse(data, HttpVerbs.Post);
+        }
+
+        [HttpPost]
+        [ActionName("refresh-token")]
+        public async Task<IActionResult> RefreshToken([FromBody, Required] RefreshTokenRequestDto refreshTokenRequestDto)
+        {
+            if (string.IsNullOrWhiteSpace(refreshTokenRequestDto.RefreshToken))
+            {
+                return BadRequest("Refresh token is required.");
+            }
+
+            try
+            {
+                TokenResponse tokenResponse = await tokenClient.RefreshTokenAsync(refreshTokenRequestDto.RefreshToken);
+
+                return Ok(new
+                {
+                    access_token = tokenResponse.AccessToken,
+                    refresh_token = tokenResponse.RefreshToken,
+                    expires_at = tokenResponse.ExpiresAt
+                });
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error Thrown");
+                return Unauthorized(new { message = "Failed to get refresh token", error = ex.Message });
+            }
         }
     }
 }

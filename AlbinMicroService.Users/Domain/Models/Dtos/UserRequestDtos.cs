@@ -13,4 +13,9 @@
         public string Email { get; init; } = null!;
         public string Role { get; set; } = null!;
     }
+
+    public class RefreshTokenRequestDto
+    {
+        public string RefreshToken { get; set; } = null!;
+    }
 }

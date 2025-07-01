@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using AlbinMicroService.Core;
 using AlbinMicroService.Core.Controller;
 using AlbinMicroService.Users.Application.Contracts;
 using AlbinMicroService.Users.Domain;
@@ -18,6 +19,9 @@ namespace AlbinMicroService.Users.Controllers
         [HttpPost]
         //[MapToApiVersion("1.0")]
         [ActionName(UsersActionNames.RegisterUser)]
+        [ProducesResponseType(typeof(ApiBaseResponse), HttpStatusCodes.Status201Created)]
+        [ProducesResponseType(HttpStatusCodes.Status400BadRequest)]
+        [ProducesResponseType(HttpStatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateUserAsync([FromBody, Required] UserRegisterDto userDto)
         {
             return ParseApiResponse(await appContract.CreateUserAppAsync(userDto), HttpVerbs.Post);
