@@ -1,6 +1,7 @@
-﻿using AlbinMicroService.Core.Utilities;
+﻿using System.Net.Http.Json;
+using AlbinMicroService.Core.Utilities;
 using AlbinMicroService.Libraries.Common.Entities;
-using System.Net.Http.Json;
+using static AlbinMicroService.Core.Utilities.ApiAuthorization;
 
 namespace AlbinMicroService.Libraries.BuildingBlocks.Authentication
 {
@@ -17,10 +18,9 @@ namespace AlbinMicroService.Libraries.BuildingBlocks.Authentication
 
             Dictionary<string, string> form = new()
             {
-                { "grant_type", "refresh_token" },
-                { "client_id", "albin-microservice-client" },
-                { "client_secret", "albin-microservice_client_secret" },
-                { "refresh_token", refreshToken }
+                { TokenRequestKeys.grant_type, GrantTypes.refresh_token },
+                { TokenRequestKeys.client_id, SystemClientIds.ADMIN },
+                { TokenRequestKeys.refresh_token, refreshToken }
             };
 
             HttpResponseMessage response = await client.PostAsync("http://localhost:9998/connect/token", new FormUrlEncodedContent(form));

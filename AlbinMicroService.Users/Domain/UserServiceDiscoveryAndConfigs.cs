@@ -1,6 +1,7 @@
 ﻿using AlbinMicroService.DataMappers.Dapper;
 using AlbinMicroService.DataMappers.RawADO;
 using AlbinMicroService.Kernel.DependencySetups;
+using AlbinMicroService.Libraries.BuildingBlocks.Authentication;
 using AlbinMicroService.Users.Application.Contracts;
 using AlbinMicroService.Users.Application.Impls;
 using AlbinMicroService.Users.Domain.Contracts;
@@ -16,6 +17,8 @@ namespace AlbinMicroService.Users.Domain
         public static WebAppBuilderConfigTemplate AddDefaultServices(this WebApplicationBuilder builder)
         {
             WebAppBuilderConfigTemplate configs = ConfigurationSetup.BindSettings(builder.Configuration);
+
+            builder.Services.AddSingleton<ITokenClient, TokenClient>();
 
             // Add Kernel Services to the container.
             builder.AddKernelServices(builder.WebHost, configs);

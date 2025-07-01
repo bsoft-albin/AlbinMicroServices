@@ -40,11 +40,13 @@
             public const string password = nameof(password);
             public const string username = nameof(username);
             public const string client_secret = nameof(client_secret);
+            public const string refresh_token = nameof(refresh_token);
         }
 
         public abstract class GrantTypes
         {
             public const string password = nameof(password);
+            public const string refresh_token = nameof(refresh_token);
             public const string code = nameof(code);
         }
     }
