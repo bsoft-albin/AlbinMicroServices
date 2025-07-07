@@ -88,7 +88,7 @@ namespace AlbinMicroService.Libraries.Common.QueryManager
                     int colonIndex = line.IndexOf(':', StringComparison.Ordinal);
                     if (colonIndex != -1 && colonIndex + 1 < line.Length)
                     {
-                        currentKey = line.Substring(colonIndex + 1).Trim();
+                        currentKey = line[(colonIndex + 1)..].Trim();
                     }
                 }
                 else if (currentKey != null)
