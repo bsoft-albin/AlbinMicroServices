@@ -29,3 +29,9 @@
 
 ==== Working By default Wihtout any [External Code] ===========
 1. Uri (Case - insensitive Making Needed) ==> (Resolved . by Default , it works for Routes from Gateway, as Well as Direct Downstream Services)
+
+
+===============> Licensing and Copyrights for Packages used in this Project <==================
+
+1. Duende.IdentityServer (Requires Paid License for Prodcution use)
+2. Isopoh.Cryptography.Argon2 (Licensed under specific person)
