@@ -1,4 +1,6 @@
-﻿namespace AlbinMicroService.Libraries.Common.Entities
+﻿using System.Text.Json.Serialization;
+
+namespace AlbinMicroService.Libraries.Common.Entities
 {
     public class TokenResponse
     {
@@ -9,10 +11,14 @@
 
     public class TokenResult
     {
+        [JsonPropertyName("access_token")]
         public string AccessToken { get; set; } = string.Empty;
+        [JsonPropertyName("refresh_token")]
         public string RefreshToken { get; set; } = string.Empty;
+        [JsonPropertyName("expires_in")]
         public int ExpiresIn { get; set; }
     }
+
     public class RefreshTokenResult
     {
         public string RefreshToken { get; set; } = null!;

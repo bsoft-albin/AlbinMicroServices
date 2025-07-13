@@ -96,6 +96,18 @@ namespace AlbinMicroService.Kernel.DependencySetups
                 //});
             });
 
+            // Add CORS policy for Frontend applications
+            Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend", policy =>
+                {
+                    policy.WithOrigins("http://localhost:3000", "https://localhost:3000", "http://localhost:5173", "https://localhost:5173") // your frontend URL
+                          .AllowAnyHeader()
+                          .AllowAnyMethod()
+                          .AllowCredentials(); // Important! (for getting the HttpOnly Cookies)
+                });
+            });
+
             // Add Authentication and Authorization services
             if (configTemplate.IsServiceAuthorizationNeeded)
             {
@@ -151,6 +163,8 @@ namespace AlbinMicroService.Kernel.DependencySetups
             }
 
             app.UseSerilogRequestLogging(); // Enable Serilog request logging (Optional but recommended)
+
+            app.UseCors("AllowFrontend");
 
             //Auth Middlewares
             if (configs.IsServiceAuthorizationNeeded)

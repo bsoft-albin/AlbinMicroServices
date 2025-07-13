@@ -1,17 +1,13 @@
 
 ====== Current Issue Need to Solve =========
 1. OAuth With Jwt Authentication and Authorization
- ==> The Refersh Token Logic Not working automatically when the user's Token Expired
- ==> Also The Users token not storing in the In-Memory, instead we are sending it through Headers of Api Request.
- ==> for first time Request calling , i am Getting 503 service unavailable error. then following it works fine.
- ==> Check Throughly for all Services After the above Issues Fixed.
+ ==> Also The Users token not storing in the In-Memory.
 
  Authentication now working with Basic Configs
  --> check Roles and Scopes , more powerfully
 
  additonlly need to do ==> SSO, MFA and Third Party Auths
- PLUS ==> Refresh Tokens Need to Check Properly working or not
- FINALLY ==> setting Token only in Backend only ,is this possible , store the Token in HTTPS Cookie only....
+ FINALLY ==> setting Token only in Backend only ,is this possible , store the Token in HTTPS only Cookie only....
 
 2. Gateway Routing need to check with Nginx.
   
@@ -35,3 +31,9 @@
 
 1. Duende.IdentityServer (Requires Paid License for Prodcution use)
 2. Isopoh.Cryptography.Argon2 (Licensed under specific person)
+
+
+=================> Issues Resolved (however may Occur anytime!!!) <=================
+1. for first time Request calling , i am Getting 503 service unavailable error. then following it works fine.
+2. downstaream Services (statuscodes and messages) are not coming properly to gateway, sometimes in gateway it shows some other statuscodes and messages, instaed of correct
+statuscodes and messages which is returned from downstream services!!!.

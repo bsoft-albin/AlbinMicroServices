@@ -83,7 +83,6 @@ namespace AlbinMicroService.Users.Controllers
 
             try
             {
-
                 Dictionary<string, string> form = new()
                 {
                     { TokenRequestKeys.grant_type, GrantTypes.refresh_token },

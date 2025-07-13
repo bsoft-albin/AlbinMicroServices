@@ -48,24 +48,24 @@ namespace AlbinMicroService.Identity
                 RequireClientSecret = false,
                 AllowedScopes = { "openid", "profile", "user.read" },
                 AllowOfflineAccess = true,
-                AccessTokenLifetime = 60
+                AccessTokenLifetime = 120
             },
             // 🔸 Admin Client — Access to admin-only APIs
             new Client {
                 ClientId = "admin-client",
                 AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                 RequireClientSecret = true, // more secure for admin
-                ClientSecrets = { new Secret(SystemClientSecrets.ADMIN) },
+                ClientSecrets = { new Secret(SystemClientSecrets.ADMIN.Sha256()) },
                 AllowedScopes = { "openid", "profile", "admin.read", "admin.write" },
                 AllowOfflineAccess = true,
-                AccessTokenLifetime = 60
+                AccessTokenLifetime = 120
             },
             // 🔺 Super Admin Client — Full access to all APIs
             new Client {
                 ClientId = "superadmin-client",
                 AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                 RequireClientSecret = true, // more secure for admin
-                ClientSecrets = { new Secret(SystemClientSecrets.SUPER_ADMIN) },
+                ClientSecrets = { new Secret(SystemClientSecrets.SUPER_ADMIN.Sha256()) },
                 AllowedScopes = {
                     "openid", "profile",
                     "user.read", "master.read", "user.write","master.write",
@@ -73,7 +73,7 @@ namespace AlbinMicroService.Identity
                     "system.full"
                 },
                 AllowOfflineAccess = true,
-                AccessTokenLifetime = 60
+                AccessTokenLifetime = 120
             }
 
             // Later if you move to Authorization Code + PKCE, the frontend itself will get the token (via browser redirection). The backend (UserService) won't need to issue Token, manually anymore.

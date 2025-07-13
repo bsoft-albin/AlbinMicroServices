@@ -29,7 +29,7 @@ namespace AlbinMicroService.Libraries.BuildingBlocks.Authentication
             {
                 AccessToken = result?.AccessToken,
                 RefreshToken = result?.RefreshToken,
-                ExpiresAt = DateTime.Now.AddSeconds(result?.ExpiresIn ?? 0)
+                ExpiresAt = StaticProps.AppDateUtcTimeNow.AddSeconds(result?.ExpiresIn ?? 0)
             };
         }
     }
