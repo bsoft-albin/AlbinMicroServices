@@ -117,7 +117,7 @@ namespace AlbinMicroService.Users.Controllers
 
                 TokenResponse tokenResponse = await tokenClient.RefreshTokenAsync(new RefreshTokenPayload { RefreshToken = refreshTokenResult.RefreshToken, RefreshPayload = form });
 
-                Response.Cookies.Append("access_token", tokenResponse.AccessToken, new CookieOptions
+                Response.Cookies.Append("access_token", tokenResponse.AccessToken ?? string.Empty, new CookieOptions
                 {
                     HttpOnly = true,
                     Secure = webAppConfigs.IsHavingSSL, // Only false in dev
@@ -125,7 +125,7 @@ namespace AlbinMicroService.Users.Controllers
                     Expires = tokenResponse.ExpiresAt
                 });
 
-                Response.Cookies.Append("refresh_token", tokenResponse.RefreshToken, new CookieOptions
+                Response.Cookies.Append("refresh_token", tokenResponse.RefreshToken ?? string.Empty, new CookieOptions
                 {
                     HttpOnly = true,
                     Secure = webAppConfigs.IsHavingSSL, // Only false in dev
