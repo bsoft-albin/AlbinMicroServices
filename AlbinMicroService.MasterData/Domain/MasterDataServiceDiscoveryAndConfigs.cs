@@ -11,9 +11,9 @@ namespace AlbinMicroService.MasterData.Domain
 {
     public static class MasterDataServiceDiscoveryAndConfigs
     {
-        public static WebAppBuilderConfigTemplate AddDefaultServices(this WebApplicationBuilder builder)
+        public static WebAppConfigs AddDefaultServices(this WebApplicationBuilder builder)
         {
-            WebAppBuilderConfigTemplate configs = ConfigurationSetup.BindSettings(builder.Configuration);
+            WebAppConfigs configs = ConfigurationSetup.BindSettings(builder.Configuration);
 
             // Add Kernel Services to the container.
             builder.AddKernelServices(builder.WebHost, configs);

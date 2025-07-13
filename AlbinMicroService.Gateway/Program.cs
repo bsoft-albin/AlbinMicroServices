@@ -4,7 +4,7 @@ using Ocelot.Middleware;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-WebAppBuilderConfigTemplate configs = builder.AddDefaultServices();
+WebAppConfigs configs = builder.AddDefaultServices();
 
 WebApplication app = builder.Build();
 
@@ -43,6 +43,8 @@ if ((app.Environment.IsDevelopment() || app.Environment.IsStaging()) && configs.
 app.UseRouting();
 
 app.UseResponseCompression(); // adding Response Compression Middleware to Pipeline.
+
+app.UseCors("AllowFrontend"); // Enable CORS for Frontend applications
 
 await app.UseOcelot();
 

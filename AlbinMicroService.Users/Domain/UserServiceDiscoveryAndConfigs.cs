@@ -14,9 +14,9 @@ namespace AlbinMicroService.Users.Domain
 {
     public static class UserServiceDiscoveryAndConfigs
     {
-        public static WebAppBuilderConfigTemplate AddDefaultServices(this WebApplicationBuilder builder)
+        public static WebAppConfigs AddDefaultServices(this WebApplicationBuilder builder)
         {
-            WebAppBuilderConfigTemplate configs = ConfigurationSetup.BindSettings(builder.Configuration);
+            WebAppConfigs configs = ConfigurationSetup.BindSettings(builder.Configuration);
 
             builder.Services.AddSingleton<ITokenClient, TokenClient>();
 

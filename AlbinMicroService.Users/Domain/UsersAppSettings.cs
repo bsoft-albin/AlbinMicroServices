@@ -39,7 +39,7 @@
     }
 
     // Preventing using a static class modifications (use a static helper if needed)
-    public static class WebAppConfigs
+    public static class WebAppSettings
     {
         public static AppSettings Settings { get; private set; } = new();
 

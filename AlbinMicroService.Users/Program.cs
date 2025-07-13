@@ -9,11 +9,13 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 AppSettings appSettings = builder.Configuration.Get<AppSettings>() ?? new();
 
 // Initialize Config with app settings
-WebAppConfigs.Initialize(appSettings);
+WebAppSettings.Initialize(appSettings);
 
 builder.Services.ConfigureApiVersioning();
 
-WebAppBuilderConfigTemplate configs = builder.AddDefaultServices();
+WebAppConfigs configs = builder.AddDefaultServices();
+
+builder.Services.AddSingleton(configs);
 
 // we are Using Chain of Responsibility Pattern
 builder.AddDatabaseServices().AddCustomServices().AddUserServices();

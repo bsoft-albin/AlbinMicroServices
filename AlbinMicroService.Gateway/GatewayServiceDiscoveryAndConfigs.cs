@@ -3,14 +3,15 @@ using AlbinMicroService.Core.Utilities;
 using AlbinMicroService.Gateway.Ocelot;
 using AlbinMicroService.Kernel.DependencySetups;
 using Microsoft.AspNetCore.ResponseCompression;
+using Ocelot.Values;
 
 namespace AlbinMicroService.Gateway
 {
     public static class GatewayServiceDiscoveryAndConfigs
     {
-        public static WebAppBuilderConfigTemplate AddDefaultServices(this WebApplicationBuilder builder)
+        public static WebAppConfigs AddDefaultServices(this WebApplicationBuilder builder)
         {
-            WebAppBuilderConfigTemplate configTemplate = ConfigurationSetup.BindSettings(builder.Configuration);
+            WebAppConfigs configTemplate = ConfigurationSetup.BindSettings(builder.Configuration);
 
             //you still need to call AddControllers() (or AddMvcCore()), even if you don’t have any controllers, because Swagger and SwaggerForOcelot depend
             //on the IApiDescriptionProvider and related services, which are only registered when MVC services are added.
@@ -37,6 +38,18 @@ namespace AlbinMicroService.Gateway
             builder.Services.Configure<BrotliCompressionProviderOptions>(options =>
             {
                 options.Level = CompressionLevel.Optimal;
+            });
+
+            // Add CORS policy for Frontend applications
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend", policy =>
+                {
+                    policy.WithOrigins("http://localhost:3000", "https://localhost:3000", "http://localhost:5173", "https://localhost:5173") // your frontend URL
+                          .AllowAnyHeader()
+                          .AllowAnyMethod()
+                          .AllowCredentials(); // Important! (for getting the HttpOnly Cookies)
+                });
             });
 
             // adding Ocelot configuration to the builder
