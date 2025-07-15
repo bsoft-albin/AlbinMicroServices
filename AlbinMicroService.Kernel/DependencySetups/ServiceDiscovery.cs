@@ -42,7 +42,7 @@ namespace AlbinMicroService.Kernel.DependencySetups
             });
 
             //adding one Named Http Client to the DI.
-            builder.Services.AddHttpClient(Http.ClientNames.IdentityServer, client =>
+            Services.AddHttpClient(Http.ClientNames.IdentityServer, client =>
             {
                 client.BaseAddress = new Uri(Http.BaseUri.IdentityServer_Http);
                 client.DefaultRequestHeaders.Add("Accept", "application/json");

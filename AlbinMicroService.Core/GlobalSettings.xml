@@ -2,7 +2,7 @@
 <GlobalSettings>
 	<DefaultUserRole>Viewer</DefaultUserRole>
 	<EnableAuditLogs>true</EnableAuditLogs>
-	<SupportEmail>support@gmail.com</SupportEmail>
+	<SupportEmail>support@albinmicroservices.com</SupportEmail>
 	<MaxConcurrentUsers>100</MaxConcurrentUsers>
 	<EnableMaintenanceMode>false</EnableMaintenanceMode>
 </GlobalSettings>

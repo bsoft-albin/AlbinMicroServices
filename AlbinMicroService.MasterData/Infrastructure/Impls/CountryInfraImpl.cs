@@ -45,7 +45,7 @@ namespace AlbinMicroService.MasterData.Infrastructure.Impls
 
             try
             {
-                List<CountryResponse> countryList = await countryRepo.GetAllAsQueryable(Q => !Q.IsDeleted).
+                List<CountryResponse> countryList = await countryRepo.GetAllNoTracking().
                                 Select(s => new CountryResponse
                                 {
                                     Code = s.Code,

@@ -15,6 +15,7 @@
         Task RollbackTransactionAsync();
         Task CommitTransactionAsync();
         Task BeginTransactionAsync();
+        IQueryable<T> GetAllAsQueryable();
         IQueryable<T> GetAllAsQueryable(Expression<Func<T, bool>> predicate);
         Task ReleaseSavepointAsync(string savepointName);
         Task RollbackToSavepointAsync(string savepointName);
