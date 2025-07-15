@@ -12,7 +12,7 @@
         public List<string> Errors { get; set; } = [];
     }
 
-    public class WebAppBuilderConfigTemplate
+    public class WebAppConfigs
     {
         public bool IsHavingSSL { get; set; }
         public bool IsSwaggerEnabled { get; set; }

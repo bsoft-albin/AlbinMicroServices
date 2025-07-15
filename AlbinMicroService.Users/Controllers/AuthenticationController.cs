@@ -12,7 +12,7 @@ namespace AlbinMicroService.Users.Controllers
     [Route(ApiRoutes.API_TEMPLATE)]
     [ApiController]
     [AllowAnonymous]
-    public class AuthenticationController(IHttpClientFactory clientFactory, IUsersAppContract usersAppContract, ITokenClient tokenClient, ILogger<AuthenticationController> logger) : BaseController
+    public class AuthenticationController(IHttpClientFactory clientFactory, IUsersAppContract usersAppContract, ITokenClient tokenClient, ILogger<AuthenticationController> logger, WebAppConfigs webAppConfigs) : BaseController
     {
         [HttpPost]
         [ActionName("login")]
@@ -69,7 +69,31 @@ namespace AlbinMicroService.Users.Controllers
 
             JsonElement data = JsonSerializer.Deserialize<JsonElement>(content);
 
-            return ParseApiResponse(data, HttpVerbs.Post);
+            // Extract token details
+            string accessToken = data.GetProperty("access_token").GetString()!;
+            string refreshToken = data.GetProperty("refresh_token").GetString()!;
+            string tokenType = data.GetProperty("token_type").GetString()!;
+            string scopes = data.GetProperty("scope").GetString()!;
+            int expiresIn = data.GetProperty("expires_in").GetInt32();
+            DateTime expiresAt = StaticProps.AppDateUtcTimeNow.AddSeconds(expiresIn);
+
+            Response.Cookies.Append("access_token", accessToken, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = webAppConfigs.IsHavingSSL, // Only false in dev
+                SameSite = SameSiteMode.Lax,
+                Expires = expiresAt
+            });
+
+            Response.Cookies.Append("refresh_token", refreshToken, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = webAppConfigs.IsHavingSSL, // Only false in dev
+                SameSite = SameSiteMode.Lax,
+                Expires = expiresAt.AddDays(7) //refresh token lives longer
+            });
+
+            return ParseApiResponse(new { TokenType = tokenType, Scopes = scopes }, HttpVerbs.Post);
         }
 
         [HttpPost]
@@ -92,6 +116,22 @@ namespace AlbinMicroService.Users.Controllers
                 };
 
                 TokenResponse tokenResponse = await tokenClient.RefreshTokenAsync(new RefreshTokenPayload { RefreshToken = refreshTokenResult.RefreshToken, RefreshPayload = form });
+
+                Response.Cookies.Append("access_token", tokenResponse.AccessToken ?? string.Empty, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = webAppConfigs.IsHavingSSL, // Only false in dev
+                    SameSite = SameSiteMode.Lax,
+                    Expires = tokenResponse.ExpiresAt
+                });
+
+                Response.Cookies.Append("refresh_token", tokenResponse.RefreshToken ?? string.Empty, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = webAppConfigs.IsHavingSSL, // Only false in dev
+                    SameSite = SameSiteMode.Lax,
+                    Expires = tokenResponse.ExpiresAt.AddDays(7) //refresh token lives longer
+                });
 
                 return Ok(new
                 {

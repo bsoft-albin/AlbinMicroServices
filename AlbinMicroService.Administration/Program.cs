@@ -3,7 +3,7 @@ using AlbinMicroService.Kernel.DependencySetups;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-WebAppBuilderConfigTemplate configs = ConfigurationSetup.BindSettings(builder.Configuration);
+WebAppConfigs configs = ConfigurationSetup.BindSettings(builder.Configuration);
 
 builder.AddKernelServices(builder.WebHost, configs); // Adding Kernel Services to the container.
 

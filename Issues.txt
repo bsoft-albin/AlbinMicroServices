@@ -4,9 +4,9 @@
  ==> Also The Users token not storing in the In-Memory.
 
  Authentication now working with Basic Configs
- --> check Roles and Scopes , more powerfully
+ --> check Roles and Scopes working correctly in the Authorizations, more powerfully
 
- additonlly need to do ==> SSO, MFA and Third Party Auths
+ additonlly need to do ==> SSO,2FA/MFA and Third Party Auths
  FINALLY ==> setting Token only in Backend only ,is this possible , store the Token in HTTPS only Cookie only....
 
 2. Gateway Routing need to check with Nginx.
@@ -18,10 +18,11 @@
 ==> also change the Overall container name from [my-micros] to some other name.
 ==> also order the PORT number's of each Services.
 
-5. Structured Logging Need to in this.
+5. Structured(Serilog) Logging Need to in this.
+
 
 ===== UnExpected Issue happening Some Time ==========
-
+-- None --
 
 ==== Working By default Wihtout any [External Code] ===========
 1. Uri (Case - insensitive Making Needed) ==> (Resolved . by Default , it works for Routes from Gateway, as Well as Direct Downstream Services)
@@ -30,7 +31,7 @@
 ===============> Licensing and Copyrights for Packages used in this Project <==================
 
 1. Duende.IdentityServer (Requires Paid License for Prodcution use)
-2. Isopoh.Cryptography.Argon2 (Licensed under specific person)
+2. Isopoh.Cryptography.Argon2 (Licensed under specific person) ==> alternative (Brcypt use...)
 
 
 =================> Issues Resolved (however may Occur anytime!!!) <=================

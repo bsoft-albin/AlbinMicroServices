@@ -15,7 +15,7 @@ namespace AlbinMicroService.Kernel.DependencySetups
 {
     public static class ServiceDiscovery
     {
-        public static void AddKernelServices(this IHostApplicationBuilder builder, IWebHostBuilder webHost, WebAppBuilderConfigTemplate configTemplate)
+        public static void AddKernelServices(this IHostApplicationBuilder builder, IWebHostBuilder webHost, WebAppConfigs configTemplate)
         {
             IServiceCollection Services = builder.Services;
 
@@ -96,18 +96,6 @@ namespace AlbinMicroService.Kernel.DependencySetups
                 //});
             });
 
-            // Add CORS policy for Frontend applications
-            Services.AddCors(options =>
-            {
-                options.AddPolicy("AllowFrontend", policy =>
-                {
-                    policy.WithOrigins("http://localhost:3000", "https://localhost:3000", "http://localhost:5173", "https://localhost:5173") // your frontend URL
-                          .AllowAnyHeader()
-                          .AllowAnyMethod()
-                          .AllowCredentials(); // Important! (for getting the HttpOnly Cookies)
-                });
-            });
-
             // Add Authentication and Authorization services
             if (configTemplate.IsServiceAuthorizationNeeded)
             {
@@ -115,7 +103,7 @@ namespace AlbinMicroService.Kernel.DependencySetups
             }
         }
 
-        public static void UseKernelMiddlewares(this IApplicationBuilder app, IHost host, IEndpointRouteBuilder route, IWebHostEnvironment env, WebAppBuilderConfigTemplate configs)
+        public static void UseKernelMiddlewares(this IApplicationBuilder app, IHost host, IEndpointRouteBuilder route, IWebHostEnvironment env, WebAppConfigs configs)
         {
             //Setting the Web App Mode.
             StaticMeths.SetGlobalWebAppMode(env.IsDevelopment(), env.IsStaging(), env.IsProduction());
@@ -163,8 +151,6 @@ namespace AlbinMicroService.Kernel.DependencySetups
             }
 
             app.UseSerilogRequestLogging(); // Enable Serilog request logging (Optional but recommended)
-
-            app.UseCors("AllowFrontend");
 
             //Auth Middlewares
             if (configs.IsServiceAuthorizationNeeded)

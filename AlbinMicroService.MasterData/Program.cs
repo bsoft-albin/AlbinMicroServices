@@ -3,7 +3,7 @@ using AlbinMicroService.MasterData.Domain;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-WebAppBuilderConfigTemplate configs = builder.AddDefaultServices();
+WebAppConfigs configs = builder.AddDefaultServices();
 
 builder.AddDatabaseServices().AddCustomServices().AddMasterDataServices();
 

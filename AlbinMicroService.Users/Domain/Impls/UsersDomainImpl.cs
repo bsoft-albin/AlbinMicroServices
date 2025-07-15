@@ -28,7 +28,7 @@ namespace AlbinMicroService.Users.Domain.Impls
                 throw new ArgumentNullException(nameof(receiverUsername), StaticMeths.GetNullOrEmptyOrWhiteSpaceErrorText(nameof(receiverUsername)));
             }
 
-            EmailTemplate emailTemplate = new(WebAppConfigs.Settings.Email.SmtpPort, WebAppConfigs.Settings.Email.SmtpServer, WebAppConfigs.Settings.Email.FromEmail, WebAppConfigs.Settings.Email.EmailPassword, toEmail)
+            EmailTemplate emailTemplate = new(WebAppSettings.Settings.Email.SmtpPort, WebAppSettings.Settings.Email.SmtpServer, WebAppSettings.Settings.Email.FromEmail, WebAppSettings.Settings.Email.EmailPassword, toEmail)
             {
                 Title = "AlbinMicroServices Inc",
                 Subject = "Welcome to AlbinMicroServices",

@@ -5,11 +5,11 @@ namespace AlbinMicroService.Kernel.DependencySetups
 {
     public static class ConfigurationSetup
     {
-        public static WebAppBuilderConfigTemplate BindSettings(IConfiguration configuration)
+        public static WebAppConfigs BindSettings(IConfiguration configuration)
         {
 #pragma warning disable CS8604 // Possible null reference argument.
 
-            WebAppBuilderConfigTemplate webAppBuilderConfigTemplate = new()
+            WebAppConfigs WebAppConfigs = new()
             {
                 HttpPort = int.Parse(configuration["Configs:HttpPort"]),
                 HttpsPort = int.Parse(configuration["Configs:HttpsPort"]),
@@ -19,17 +19,17 @@ namespace AlbinMicroService.Kernel.DependencySetups
                 IsSwaggerEnabled = bool.Parse(configuration["Swagger:Enabled"])
             };
 
-            if (!webAppBuilderConfigTemplate.IsThisGateway) // these configs, are not available in the Gateway Appsettings
+            if (!WebAppConfigs.IsThisGateway) // these configs, are not available in the Gateway Appsettings
             {
-                webAppBuilderConfigTemplate.ApiVersion = configuration["Configs:ApiVersion"] ?? "v1";
-                webAppBuilderConfigTemplate.ApiTitle = configuration["Configs:ApiTitle"] ?? "AlbinMicroServices Api's";
-                webAppBuilderConfigTemplate.OnlyViaGateway = bool.Parse(configuration["Configs:OnlyViaGateway"]);
-                webAppBuilderConfigTemplate.IsServiceAuthorizationNeeded = bool.Parse(configuration["Configs:IsServiceAuthorizationNeeded"]);
+                WebAppConfigs.ApiVersion = configuration["Configs:ApiVersion"] ?? "v1";
+                WebAppConfigs.ApiTitle = configuration["Configs:ApiTitle"] ?? "AlbinMicroServices Api's";
+                WebAppConfigs.OnlyViaGateway = bool.Parse(configuration["Configs:OnlyViaGateway"]);
+                WebAppConfigs.IsServiceAuthorizationNeeded = bool.Parse(configuration["Configs:IsServiceAuthorizationNeeded"]);
             }
 
 #pragma warning restore CS8604 // Possible null reference argument.
 
-            return webAppBuilderConfigTemplate;
+            return WebAppConfigs;
         }
     }
 }
