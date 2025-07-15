@@ -28,12 +28,10 @@ namespace AlbinMicroService.Users.Domain
 
         public static WebApplicationBuilder AddDatabaseServices(this WebApplicationBuilder builder)
         {
-            string mysqlConnection = builder.Configuration.GetConnectionString(DatabaseTypes.MySql) ?? string.Empty;
-            //string postgreSqlConnection = builder.Configuration.GetConnectionString(DatabaseTypes.PostgreSQL) ?? string.Empty;
+            string mysqlConnection = builder.Configuration.GetConnectionString(DatabaseTypes.MySql)!;
 
             builder.Services.AddScoped<IDapperHelper>(sp => new DapperHelper(mysqlConnection));
             builder.Services.AddScoped(db => new DbTransactionHelper(MySqlClientFactory.Instance, mysqlConnection));
-            //builder.Services.AddScoped(db => new DbTransactionHelper(NpgsqlFactory.Instance, postgreSqlConnection));
 
             return builder;
         }

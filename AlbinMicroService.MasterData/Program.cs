@@ -5,7 +5,8 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 WebAppConfigs configs = builder.AddDefaultServices();
 
-builder.AddDatabaseServices().AddCustomServices().AddMasterDataServices();
+//the below order must be crucial, as the services are dependent on each other.
+builder.AddCustomServices().AddDatabaseServices().AddMasterDataServices();
 
 WebApplication app = builder.Build();
 

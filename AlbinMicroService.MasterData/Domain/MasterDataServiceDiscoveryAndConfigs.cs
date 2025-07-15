@@ -24,12 +24,24 @@ namespace AlbinMicroService.MasterData.Domain
         public static WebApplicationBuilder AddDatabaseServices(this WebApplicationBuilder builder)
         {
             // Add DbContext with MySQL
-            builder.Services.AddDbContext<MasterDataDbContext>(options =>
-                options.UseMySql(
-                    builder.Configuration.GetConnectionString("MySqlConnection"),
-                    ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("MySqlConnection"))
-                )
-            );
+            builder.Services.AddDbContext<MasterDataDbContext>((serviceProvider, options) =>
+            {
+                string connectionString = builder.Configuration.GetConnectionString("MySqlConnection")!;
+
+                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), mySqlOptions =>
+                {
+                    mySqlOptions
+                        .UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery) // Prevents cartesian explosion on includes
+                        .MaxBatchSize(100); // Improve SaveChanges batching
+                });
+
+                //Get logger factory that includes Serilog
+                ILoggerFactory loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+                options
+                    .UseLoggerFactory(loggerFactory)
+                    .EnableSensitiveDataLogging()
+                    .EnableDetailedErrors();
+            });
 
             // 👇 This maps DbContext (base) to MasterDataDbContext (your actual class)
             builder.Services.AddScoped<DbContext>(provider => provider.GetRequiredService<MasterDataDbContext>());

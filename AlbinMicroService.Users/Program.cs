@@ -18,7 +18,7 @@ WebAppConfigs configs = builder.AddDefaultServices();
 builder.Services.AddSingleton(configs);
 
 // we are Using Chain of Responsibility Pattern
-builder.AddDatabaseServices().AddCustomServices().AddUserServices();
+builder.AddCustomServices().AddDatabaseServices().AddUserServices();
 
 WebApplication app = builder.Build();
 
