@@ -1,4 +1,3 @@
-
 ====== Current Issue Need to Solve =========
 1. OAuth With Jwt Authentication and Authorization
  ==> Also The Users token not storing in the In-Memory.
@@ -20,6 +19,7 @@
 
 5. Structured(Serilog) Logging Need to in this.
 
+6.Response Data Formatting (Proper Flow)!!!!!!
 
 ===== UnExpected Issue happening Some Time ==========
 -- None --
@@ -29,8 +29,7 @@
 
 
 ===============> Licensing and Copyrights for Packages used in this Project <==================
-
-1. Duende.IdentityServer (Requires Paid License for Prodcution use)
+1. Duende.IdentityServer (Requires Paid License for Prodcution use) ==> alternative (OpenIddict, Keycloak ...)
 2. Isopoh.Cryptography.Argon2 (Licensed under specific person) ==> alternative (Brcypt use...)
 
 

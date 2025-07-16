@@ -26,21 +26,12 @@ if ((app.Environment.IsDevelopment() || app.Environment.IsStaging()) && configs.
 {
     app.UseSwagger();
     app.UseSwaggerForOcelotUI();
-
-    //app.UseSwaggerForOcelotUI(opt =>
-    //{
-    //    opt.PathToSwaggerGenerator = "/swagger/docs";
-    //});
-
-    //app.UseSwaggerForOcelotUI(opt =>
-    //{
-    //    opt.PathToSwaggerGenerator = "/swagger/docs";
-    //    opt.RoutePrefix = "swagger"; // sets /swagger/index.html
-    //});
 }
 
 // Enable endpoint routing
 app.UseRouting();
+
+app.UseStaticFiles();
 
 app.UseResponseCompression(); // adding Response Compression Middleware to Pipeline.
 

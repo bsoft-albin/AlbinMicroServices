@@ -3,6 +3,7 @@ using AlbinMicroService.Core.Controller;
 using AlbinMicroService.Libraries.BuildingBlocks.Authentication;
 using AlbinMicroService.Libraries.Common.Entities;
 using AlbinMicroService.Users.Application.Contracts;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static AlbinMicroService.Core.Utilities.ApiAuthorization;
@@ -11,11 +12,15 @@ namespace AlbinMicroService.Users.Controllers
 {
     [Route(ApiRoutes.API_TEMPLATE)]
     [ApiController]
+    //[Route(ApiRoutes.API_VERSION_TEMPLATE)]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
     [AllowAnonymous]
     public class AuthenticationController(IHttpClientFactory clientFactory, IUsersAppContract usersAppContract, ITokenClient tokenClient, ILogger<AuthenticationController> logger, WebAppConfigs webAppConfigs) : BaseController
     {
         [HttpPost]
         [ActionName("login")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> Login([FromBody, Required] LoginRequestDto model)
         {
             if (string.IsNullOrWhiteSpace(model.Username) || string.IsNullOrWhiteSpace(model.Password))
@@ -98,6 +103,7 @@ namespace AlbinMicroService.Users.Controllers
 
         [HttpPost]
         [ActionName("refresh-token")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> RefreshToken([FromBody, Required] RefreshTokenResult refreshTokenResult)
         {
             if (string.IsNullOrWhiteSpace(refreshTokenResult.RefreshToken))

@@ -41,6 +41,9 @@ namespace AlbinMicroService.Kernel.DependencySetups
                 }
             });
 
+            //adding (Default) HttpClient's to the DI.
+            Services.AddHttpClient();
+
             //adding one Named Http Client to the DI.
             Services.AddHttpClient(Http.ClientNames.IdentityServer, client =>
             {
@@ -52,9 +55,6 @@ namespace AlbinMicroService.Kernel.DependencySetups
 
             //adding common DI services to Container.
             Services.AddSingletonServices().AddScopedServices().AddTransientServices();
-
-            //adding (Default) HttpClient's to the DI.
-            Services.AddHttpClient();
 
             //adding WarmUpService to the DI.
             Services.AddHostedService<WarmUpService>();
@@ -70,30 +70,6 @@ namespace AlbinMicroService.Kernel.DependencySetups
                     Title = configTemplate.ApiTitle,
                     Version = configTemplate.ApiVersion
                 });
-
-                //var provider = builder.Services.BuildServiceProvider()
-                //         .GetRequiredService<IApiVersionDescriptionProvider>();
-
-                //foreach (var description in provider.ApiVersionDescriptions)
-                //{
-                //    options.SwaggerDoc(description.GroupName, new OpenApiInfo
-                //    {
-                //        Title = $"UserService Api {description.ApiVersion}",
-                //        Version = description.ApiVersion.ToString()
-                //    });
-                //}
-
-                //options.DocInclusionPredicate((docName, apiDesc) =>
-                //{
-                //    var actionApiVersionModel = apiDesc.ActionDescriptor
-                //        .GetApiVersionModel(ApiVersionMapping.Explicit | ApiVersionMapping.Implicit);
-
-                //    if (actionApiVersionModel == null)
-                //        return false;
-
-                //    return actionApiVersionModel.DeclaredApiVersions
-                //        .Any(v => $"v{v.ToString()}" == docName);
-                //});
             });
 
             // Add Authentication and Authorization services

@@ -32,3 +32,53 @@
         }
     ]
 }
+
+//{
+//    "SwaggerEndPoints": [
+//        {
+//            "Key": "UserService",
+//            "Config": [
+//                {
+//                    "Name": "User Service API",
+//                    "Version": "v1",
+//                    "Url": "/user-service/swagger/v1/swagger.json"
+//                },
+//                {
+//                    "Name": "User Service API",
+//                    "Version": "v2",
+//                    "Url": "/user-service/swagger/v2/swagger.json"
+//                }
+//            ]
+//        },
+//        {
+//            "Key": "MasterService",
+//            "Config": [
+//                {
+//                    "Name": "MasterData Service API",
+//                    "Version": "v1",
+//                    "Url": "/master-service/swagger/v1/swagger.json"
+//                },
+//                {
+//                    "Name": "MasterData Service API",
+//                    "Version": "v2",
+//                    "Url": "/master-service/swagger/v2/swagger.json"
+//                }
+//            ]
+//        },
+//        {
+//            "Key": "AdminService",
+//            "Config": [
+//                {
+//                    "Name": "Administration Service API",
+//                    "Version": "v1",
+//                    "Url": "/admin-service/swagger/v1/swagger.json"
+//                },
+//                {
+//                    "Name": "Administration Service API",
+//                    "Version": "v2",
+//                    "Url": "/admin-service/swagger/v2/swagger.json"
+//                }
+//            ]
+//        }
+//    ]
+//}

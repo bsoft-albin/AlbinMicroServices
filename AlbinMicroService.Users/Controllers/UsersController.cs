@@ -3,21 +3,22 @@ using AlbinMicroService.Core;
 using AlbinMicroService.Core.Controller;
 using AlbinMicroService.Users.Application.Contracts;
 using AlbinMicroService.Users.Domain;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AlbinMicroService.Users.Controllers
 {
     //[Route(ApiRoutes.API_VERSION_TEMPLATE)]
-    //[ApiVersion("1.0")]
-    //[ApiVersion("2.0")]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
     [Route(ApiRoutes.API_TEMPLATE)]
     [ApiController]
     [AllowAnonymous]
     public class UsersController(IUsersAppContract appContract, ILogger<UsersController> logger) : BaseController
     {
         [HttpPost]
-        //[MapToApiVersion("1.0")]
+        [MapToApiVersion("1.0")]
         [ActionName(UsersActionNames.RegisterUser)]
         [ProducesResponseType(typeof(ApiBaseResponse), HttpStatusCodes.Status201Created)]
         [ProducesResponseType(HttpStatusCodes.Status400BadRequest)]
@@ -29,7 +30,7 @@ namespace AlbinMicroService.Users.Controllers
 
         [Authorize(Policy = "AdminOnly")]
         [HttpGet]
-        //[MapToApiVersion("1.0")]
+        [MapToApiVersion("2.0")]
         [ActionName("get-custom-header")]
         public IActionResult AppendCustomHeader()
         {
@@ -39,14 +40,14 @@ namespace AlbinMicroService.Users.Controllers
 
         [Authorize(Policy = ApiAuthorization.Policies.AdminOnly)]
         [HttpGet]
+        [MapToApiVersion("2.0")]
         [ActionName("get-v1")]
-        //[MapToApiVersion("1.0")]
         public IActionResult GetV1() => Ok("Users V1");
 
         [Authorize(Policy = "UserReadScope")]
         [HttpGet]
         [ActionName("get-v2")]
-        //[MapToApiVersion("1.0")]
+        [MapToApiVersion("1.0")]
         public IActionResult GetV2() => Ok("Users V2");
     }
 }

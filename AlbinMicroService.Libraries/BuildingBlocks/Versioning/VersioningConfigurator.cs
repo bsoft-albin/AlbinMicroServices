@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Versioning;
+﻿using Asp.Versioning;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AlbinMicroService.Libraries.BuildingBlocks.Versioning
@@ -10,13 +9,16 @@ namespace AlbinMicroService.Libraries.BuildingBlocks.Versioning
         {
             services.AddApiVersioning(options =>
             {
-                options.DefaultApiVersion = new ApiVersion(1, 0);
+                options.DefaultApiVersion = new ApiVersion(1.0);
                 options.AssumeDefaultVersionWhenUnspecified = true;
                 options.ReportApiVersions = true;
-                options.ApiVersionReader = new UrlSegmentApiVersionReader(); // URL segment versioning, if need some other types of versioning, add here...
-            });
-
-            services.AddVersionedApiExplorer(options =>
+                options.Policies.Sunset(0.9)
+                  .Effective(DateTimeOffset.Now.AddDays(60))
+                  .Link("policy.html")
+                  .Title("Versioning Policy")
+                  .Type("text/html");
+               // options.ApiVersionReader = new UrlSegmentApiVersionReader(); // URL segment versioning, if need some other types of versioning, add here...
+            }).AddMvc().AddApiExplorer(options =>
             {
                 options.GroupNameFormat = "'v'VVV";
                 options.SubstituteApiVersionInUrl = true;
