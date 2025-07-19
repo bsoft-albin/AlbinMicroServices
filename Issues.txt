@@ -31,7 +31,6 @@
 
 ===============> Licensing and Copyrights for Packages used in this Project <==================
 1. Duende.IdentityServer (Requires Paid License for Prodcution use) ==> alternative (OpenIddict, Keycloak ...)
-2. Isopoh.Cryptography.Argon2 (Licensed under specific person) ==> alternative (Brcypt use...)
 
 
 =================> Issues Resolved (however may Occur anytime!!!) <=================
