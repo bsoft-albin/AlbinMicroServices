@@ -10,9 +10,9 @@ using static AlbinMicroService.Core.Utilities.ApiAuthorization;
 
 namespace AlbinMicroService.Users.Controllers
 {
-    [Route(ApiRoutes.API_TEMPLATE)]
+    //[Route(ApiRoutes.API_TEMPLATE)]
     [ApiController]
-    //[Route(ApiRoutes.API_VERSION_TEMPLATE)]
+    [Route(ApiRoutes.API_VERSION_TEMPLATE)]
     [ApiVersion("1.0")]
     [ApiVersion("2.0")]
     [AllowAnonymous]

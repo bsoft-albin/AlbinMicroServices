@@ -11,9 +11,9 @@ AppSettings appSettings = builder.Configuration.Get<AppSettings>() ?? new();
 // Initialize Config with app settings
 WebAppSettings.Initialize(appSettings);
 
-builder.Services.ConfigureApiVersioning();
-
 WebAppConfigs configs = builder.AddDefaultServices();
+
+builder.Services.ConfigureApiVersioning(configs);
 
 builder.Services.AddSingleton(configs);
 

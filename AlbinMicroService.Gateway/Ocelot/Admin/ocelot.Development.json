@@ -1,7 +1,7 @@
 {
     "Routes": [
         {
-            "DownstreamPathTemplate": "/api/SampleAdmin/{everything}",
+            "DownstreamPathTemplate": "/api/v1/SampleAdmin/{everything}",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
@@ -9,7 +9,7 @@
                     "Port": 8005
                 }
             ],
-            "UpstreamPathTemplate": "/admin/api/admin-service/{everything}",
+            "UpstreamPathTemplate": "/admin/api/v1/admin-service/{everything}",
             "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
             "SwaggerKey": "AdminService",
             "QoSOptions": {
@@ -32,7 +32,7 @@
             }
         },
         {
-            "DownstreamPathTemplate": "/api/Home/{everything}",
+            "DownstreamPathTemplate": "/api/v2/SampleAdmin/{everything}",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
@@ -40,7 +40,38 @@
                     "Port": 8005
                 }
             ],
-            "UpstreamPathTemplate": "/admin/api/home-service/{everything}",
+            "UpstreamPathTemplate": "/admin/api/v2/admin-service/{everything}",
+            "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+            "SwaggerKey": "AdminService",
+            "QoSOptions": {
+                "ExceptionsAllowedBeforeBreaking": 3,
+                "DurationOfBreak": 1000,
+                "TimeoutValue": 5000
+            },
+            "RetryOptions": {
+                "RetryCount": 3,
+                "RetryInterval": 1000
+            },
+            "LoadBalancerOptions": {
+                "Type": "RoundRobin"
+            },
+            "RateLimitOptions": {
+                "ClientWhitelist": [],
+                "EnableRateLimiting": true,
+                "Period": "1s",
+                "Limit": 100
+            }
+        },
+        {
+            "DownstreamPathTemplate": "/api/v1/Home/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 8005
+                }
+            ],
+            "UpstreamPathTemplate": "/admin/api/v1/home-service/{everything}",
             "UpstreamHttpMethod": [ "GET" ],
             "SwaggerKey": "AdminService"
         },

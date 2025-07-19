@@ -7,6 +7,11 @@ namespace AlbinMicroService.Gateway.Ocelot
 {
     public static class OcelotConfiguration
     {
+        private static readonly JsonSerializerOptions _jsonOptionsIndented = new()
+        {
+            WriteIndented = true
+        };
+
         public static void AddOcelotConfigurations(this WebApplicationBuilder builder)
         {
             bool IsRunsInContainer = bool.Parse(builder.Configuration["Configs:IsRunningInContainer"] ?? "false");
@@ -63,7 +68,7 @@ namespace AlbinMicroService.Gateway.Ocelot
                 GlobalConfiguration = globalConfig
             };
 
-            string finalJson = JsonSerializer.Serialize(finalConfig, new JsonSerializerOptions { WriteIndented = true });
+            string finalJson = JsonSerializer.Serialize(finalConfig, _jsonOptionsIndented);
 
             // 4. Save temporary merged config file
             string mergedPath = Path.Combine(AppContext.BaseDirectory, "ocelot.merged.json");
@@ -71,7 +76,7 @@ namespace AlbinMicroService.Gateway.Ocelot
 
             // 5. Load Ocelot config from merged file
             builder.Configuration.AddJsonFile(mergedPath, optional: false, reloadOnChange: true).AddJsonFile(swaggerOcelotConfig, optional: false, reloadOnChange: true);
-            builder.Services.AddOcelot().AddPolly().AddDelegatingHandler<GatewayHeaderHandler>(true).AddDelegatingHandler<RequestIdHandler>(true); // optional: tracking handler;
+            builder.Services.AddOcelot().AddPolly().AddDelegatingHandler<GatewayHeaderHandler>(true).AddDelegatingHandler<RequestIdHandler>(true);
         }
     }
 }

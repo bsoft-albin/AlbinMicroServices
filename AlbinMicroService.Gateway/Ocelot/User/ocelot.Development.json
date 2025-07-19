@@ -1,7 +1,7 @@
 {
     "Routes": [
         {
-            "DownstreamPathTemplate": "/api/Users/{everything}",
+            "DownstreamPathTemplate": "/api/v1/Users/{everything}",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
@@ -9,7 +9,7 @@
                     "Port": 8001
                 }
             ],
-            "UpstreamPathTemplate": "/user/api/users-service/{everything}",
+            "UpstreamPathTemplate": "/user/api/v1/users-service/{everything}",
             "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
             "SwaggerKey": "UserService",
             "QoSOptions": {
@@ -32,7 +32,7 @@
             }
         },
         {
-            "DownstreamPathTemplate": "/api/Authentication/{everything}",
+            "DownstreamPathTemplate": "/api/v2/Users/{everything}",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
@@ -40,7 +40,38 @@
                     "Port": 8001
                 }
             ],
-            "UpstreamPathTemplate": "/user/api/auth-service/{everything}",
+            "UpstreamPathTemplate": "/user/api/v2/users-service/{everything}",
+            "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+            "SwaggerKey": "UserService",
+            "QoSOptions": {
+                "ExceptionsAllowedBeforeBreaking": 3,
+                "DurationOfBreak": 1000,
+                "TimeoutValue": 5000
+            },
+            "RetryOptions": {
+                "RetryCount": 3,
+                "RetryInterval": 1000
+            },
+            "LoadBalancerOptions": {
+                "Type": "RoundRobin"
+            },
+            "RateLimitOptions": {
+                "ClientWhitelist": [],
+                "EnableRateLimiting": true,
+                "Period": "1s",
+                "Limit": 100
+            }
+        },
+        {
+            "DownstreamPathTemplate": "/api/v1/Authentication/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 8001
+                }
+            ],
+            "UpstreamPathTemplate": "/user/api/v1/auth-service/{everything}",
             "UpstreamHttpMethod": [ "GET", "POST" ],
             "SwaggerKey": "UserService"
         }

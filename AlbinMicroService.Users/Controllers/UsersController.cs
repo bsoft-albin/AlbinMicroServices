@@ -9,10 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AlbinMicroService.Users.Controllers
 {
-    //[Route(ApiRoutes.API_VERSION_TEMPLATE)]
+    [Route(ApiRoutes.API_VERSION_TEMPLATE)]
     [ApiVersion("1.0")]
     [ApiVersion("2.0")]
-    [Route(ApiRoutes.API_TEMPLATE)]
     [ApiController]
     [AllowAnonymous]
     public class UsersController(IUsersAppContract appContract, ILogger<UsersController> logger) : BaseController
@@ -41,12 +40,14 @@ namespace AlbinMicroService.Users.Controllers
         [Authorize(Policy = ApiAuthorization.Policies.AdminOnly)]
         [HttpGet]
         [MapToApiVersion("2.0")]
+        [ProducesResponseType(HttpStatusCodes.Status200OK)]
         [ActionName("get-v1")]
         public IActionResult GetV1() => Ok("Users V1");
 
         [Authorize(Policy = "UserReadScope")]
         [HttpGet]
         [ActionName("get-v2")]
+        [ProducesResponseType(HttpStatusCodes.Status200OK)]
         [MapToApiVersion("1.0")]
         public IActionResult GetV2() => Ok("Users V2");
     }

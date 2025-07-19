@@ -9,8 +9,6 @@
  FINALLY ==> setting Token only in Backend only ,is this possible , store the Token in HTTPS only Cookie only....
 
 2. Gateway Routing need to check with Nginx.
-  
-3. Versioning need to do Properly (IP).
 
 4. Docker Side
 ==> If Possible change the Docker Network name.

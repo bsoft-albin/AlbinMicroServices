@@ -1,18 +1,22 @@
 ﻿using AlbinMicroService.Core.Controller;
 using AlbinMicroService.Core.Utilities;
 using AlbinMicroService.Kernel.Interfaces;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AlbinMicroService.Administration.Controllers
 {
     [ApiController]
-    [Route(ApiRoutes.API_TEMPLATE)]
+    [Route(ApiRoutes.API_VERSION_TEMPLATE)]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
     [AllowAnonymous]
     public class HomeController(IKernelMeths _kernelMeths) : BaseController
     {
         [HttpGet]
         [Route("/")]
+        [MapToApiVersion("1.0")]
         [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult Get()
         {
@@ -20,6 +24,7 @@ namespace AlbinMicroService.Administration.Controllers
         }
 
         [HttpGet]
+        [MapToApiVersion("1.0")]
         [ActionName("latest-version")]
         public IActionResult GetVersion()
         {
@@ -27,6 +32,7 @@ namespace AlbinMicroService.Administration.Controllers
         }
         
         [HttpGet]
+        [MapToApiVersion("1.0")]
         [ActionName("is-running")]
         public IActionResult RunsOrNot()
         {
@@ -34,6 +40,7 @@ namespace AlbinMicroService.Administration.Controllers
         }
 
         [HttpGet]
+        [MapToApiVersion("1.0")]
         [ActionName("health")]
         public IActionResult GetHealth()
         {

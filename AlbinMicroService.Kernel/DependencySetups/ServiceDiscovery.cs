@@ -2,6 +2,7 @@
 using AlbinMicroService.Kernel.Middlewares;
 using AlbinMicroService.Libraries.BuildingBlocks.Authentication;
 using AlbinMicroService.Libraries.BuildingBlocks.BackgroundServices;
+using Asp.Versioning.ApiExplorer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -62,16 +63,6 @@ namespace AlbinMicroService.Kernel.DependencySetups
             // Add Controllers to the container.
             Services.AddControllers();
 
-            Services.AddEndpointsApiExplorer();
-            Services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc(configTemplate.ApiVersion, new()
-                {
-                    Title = configTemplate.ApiTitle,
-                    Version = configTemplate.ApiVersion
-                });
-            });
-
             // Add Authentication and Authorization services
             if (configTemplate.IsServiceAuthorizationNeeded)
             {
@@ -90,23 +81,15 @@ namespace AlbinMicroService.Kernel.DependencySetups
             if ((env.IsDevelopment() || env.IsStaging()) && configs.IsSwaggerEnabled) // only show Swagger in Development and Staging [for Production Or Live using this ["Swagger:Enabled"]]
             {
                 app.UseSwagger();
-                //app.UseSwaggerUI(c =>
-                //{
-                //    var provider = app.ApplicationServices.GetRequiredService<IApiVersionDescriptionProvider>();
-
-                //    foreach (var description in provider.ApiVersionDescriptions)
-                //    {
-                //        string version = description.GroupName; // e.g., "v1"
-                //        string appName = env.ApplicationName[18..]; // Assuming this is correct for your app name trimming
-                //        c.SwaggerEndpoint($"/swagger/{version}/swagger.json", $"{appName} Api {version.ToUpperInvariant()}");
-                //    }
-
-                //    c.RoutePrefix = "swagger"; // URL will be /swagger/index.html
-                //});
-                app.UseSwaggerUI(c =>
+                app.UseSwaggerUI(options =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{AppName} Api v1");
-                    c.RoutePrefix = "swagger";
+                    IApiVersionDescriptionProvider provider = host.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+                    for (int i = 0; i < provider.ApiVersionDescriptions.Count; i++)
+                    {
+                        ApiVersionDescription? description = provider.ApiVersionDescriptions[i];
+                        options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", $"{AppName} API {description.GroupName}");
+                    }
+                    options.RoutePrefix = "swagger";
                 });
             }
 
@@ -136,6 +119,9 @@ namespace AlbinMicroService.Kernel.DependencySetups
             }
 
             route.MapControllers();
+
+            //to serve static files like images, css, js, etc.
+            app.UseStaticFiles();
 
             route.MapGet("/readiness", () => Results.Ok($"{AppName} Service is ready to Serve!!!"));
 

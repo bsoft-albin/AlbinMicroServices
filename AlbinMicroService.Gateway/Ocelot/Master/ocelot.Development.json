@@ -1,7 +1,7 @@
 {
     "Routes": [
         {
-            "DownstreamPathTemplate": "/api/Country/{everything}",
+            "DownstreamPathTemplate": "/api/v1/Country/{everything}",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
@@ -9,7 +9,38 @@
                     "Port": 8003
                 }
             ],
-            "UpstreamPathTemplate": "/master/api/country-service/{everything}",
+            "UpstreamPathTemplate": "/master/api/v1/country-service/{everything}",
+            "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+            "SwaggerKey": "MasterService",
+            "QoSOptions": {
+                "ExceptionsAllowedBeforeBreaking": 3,
+                "DurationOfBreak": 1000,
+                "TimeoutValue": 5000
+            },
+            "RetryOptions": {
+                "RetryCount": 3,
+                "RetryInterval": 1000
+            },
+            "LoadBalancerOptions": {
+                "Type": "RoundRobin"
+            },
+            "RateLimitOptions": {
+                "ClientWhitelist": [],
+                "EnableRateLimiting": true,
+                "Period": "1s",
+                "Limit": 100
+            }
+        },
+        {
+            "DownstreamPathTemplate": "/api/v2/Country/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 8003
+                }
+            ],
+            "UpstreamPathTemplate": "/master/api/v2/country-service/{everything}",
             "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
             "SwaggerKey": "MasterService",
             "QoSOptions": {

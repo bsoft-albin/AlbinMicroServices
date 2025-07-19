@@ -3,7 +3,6 @@ using AlbinMicroService.Core.Utilities;
 using AlbinMicroService.Gateway.Ocelot;
 using AlbinMicroService.Kernel.DependencySetups;
 using Microsoft.AspNetCore.ResponseCompression;
-using Ocelot.Values;
 
 namespace AlbinMicroService.Gateway
 {
