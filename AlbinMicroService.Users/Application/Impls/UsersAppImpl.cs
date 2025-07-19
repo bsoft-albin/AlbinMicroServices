@@ -51,7 +51,7 @@ namespace AlbinMicroService.Users.Application.Impls
                             apiBaseResponse.StatusMessage = HttpStatusMessages.Status500InternalServerError;
                         }
                     }
-                    else if(isUsernameExists)
+                    else if (isUsernameExists)
                     {
                         apiBaseResponse.StatusCode = HttpStatusCodes.Status409Conflict;
                         apiBaseResponse.StatusMessage = CustomHttpStatusMessages.UsernameExists;

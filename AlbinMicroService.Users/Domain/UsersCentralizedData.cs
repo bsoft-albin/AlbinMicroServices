@@ -9,7 +9,7 @@
     /// Provides SQL query strings for operations related to user data in the database.
     /// </summary>
     /// <remarks>This class contains predefined SQL queries for common user-related operations, such as
-    /// checking  if a username exists or retrieving a user's role. These queries are intended to be used with 
+    /// checking  if a username exists or retrieving a user's role. These queries are intended to be used with
     /// parameterized commands to prevent SQL injection.</remarks>
     public static class UsersSqlQueries
     {

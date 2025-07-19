@@ -5,7 +5,6 @@ namespace AlbinMicroService.UnitTests
         [Fact]
         public void Test1()
         {
-
         }
     }
 }
