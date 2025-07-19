@@ -19,8 +19,11 @@
 
 6.Response Data Formatting (Proper Flow)!!!!!!
 
+----------------------------------------------------------------------------------------------------------------------------------
+
 ===== UnExpected Issue happening Some Time ==========
 -- None --
+
 
 ==== Working By default Wihtout any [External Code] ===========
 1. Uri (Case - insensitive Making Needed) ==> (Resolved . by Default , it works for Routes from Gateway, as Well as Direct Downstream Services)
