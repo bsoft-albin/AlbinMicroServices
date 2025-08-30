@@ -19,6 +19,8 @@
 
 6.Response Data Formatting (Proper Flow)!!!!!!
 
+7. Need to change the App Settings and Docker-comspose, Docker files for Each Project... bescause now i chnaged everything
+
 ----------------------------------------------------------------------------------------------------------------------------------
 
 ===== UnExpected Issue happening Some Time ==========

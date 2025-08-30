@@ -92,6 +92,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlbinMicroService.UnitTests", "AlbinMicroService.UnitTests\AlbinMicroService.UnitTests.csproj", "{3F29D18F-02DA-48D3-A1EB-C10AA23E6880}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IaC", "IaC", "{49E57D61-388F-47DE-A619-A07B98EA4B74}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
